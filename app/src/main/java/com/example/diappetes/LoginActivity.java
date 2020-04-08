@@ -44,9 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                         profilename = "Sample1";
                         break;
                 }
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("com.example.diappetes", profilename);
-                startActivity(intent);
+                
 
                 // PROFILE LIST
 
