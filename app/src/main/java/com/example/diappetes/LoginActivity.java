@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
                         profilename = "Sample1";
                         break;
                 }
-                
 
                 // PROFILE LIST
 
