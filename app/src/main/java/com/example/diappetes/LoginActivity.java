@@ -10,53 +10,39 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity {
-
+    CheckInput c;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button signinbtn = findViewById(R.id.signinbtn);
-        signinbtn.setOnClickListener(new View.OnClickListener() {
+        Button signInBtn = findViewById(R.id.signinbtn);
+        signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText emailid = findViewById(R.id.logintxt);
-                String emailinput = emailid.getText().toString();
-                EditText passwordid = findViewById(R.id.passwordtxt);
-                String passwordinput = passwordid.getText().toString();
+                EditText emailId = findViewById(R.id.logintxt);
+                EditText passwordId = findViewById(R.id.passwordtxt);
+                c = new CheckInput(emailId.getText().toString(),passwordId.getText().toString());
+                /*
+                String emailInput = emailId.getText().toString();
+                String passwordInput = passwordId.getText().toString();*/
+                TextView errorTxt = (TextView) findViewById(R.id.loginerrortxt);
 
-                TextView errortxt = (TextView) findViewById(R.id.loginerrortxt);
-
-                // PROFILE LIST
-                String profilename="";
-                String password ="";
-                switch (emailinput){
-                    case "olafwarzocha1998@gmail.com":
-                        password = "1234";
-                        profilename = "Admin";
-                        break;
-                    case "sample0@gmail.com":
-                        password = "sample0";
-                        profilename = "Sample0";
-                        break;
-                    case "sample1@gmail.com":
-                        password ="sample1";
-                        profilename = "Sample1";
-                        break;
+                if(c.checkEmail()) {
+                    if(c.checkPassword()) {
+                        Intent starthomeintent4 = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(starthomeintent4);
+                    }else{
+                        errorTxt.setText("error: your password is wrong");
+                    }
+                }else{
+                    errorTxt.setText("error: your Email is not registered, please do so");
                 }
-
-                // PROFILE LIST
-
-                if(passwordinput.equals(password)){
-                    Intent starthomeintent4 = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(starthomeintent4);
-                }
-                else errortxt.setText("error");
             }
         });
 
-        Button signupbtn2 = findViewById(R.id.signupbtn2);
-        signupbtn2.setOnClickListener(new View.OnClickListener() {
+        Button signInBtn2 = findViewById(R.id.signupbtn2);
+        signInBtn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent startregisterintent = new Intent(getApplicationContext(), RegisterActivity.class);
