@@ -55,22 +55,11 @@ public class RegisterActivity extends AppCompatActivity {
                                                                  //Register placeholder
                         Intent startloginintent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(startloginintent);
-                    }
-                    else error2="Passwords does not match";
-                }
-                else error1="Email is incorrect";
-
-
-
+                    } else error2="Passwords does not match";
+                } else error1="Email is incorrect";
 
             }
         });
-
-
-
-
-
-
 
     }
 }
