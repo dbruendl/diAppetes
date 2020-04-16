@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         TvSteps = (TextView) findViewById(R.id.tv_steps);
         tb = (ToggleButton) findViewById(R.id.toggleButton);
-        tb.get
+        
         tb.setOnClickListener(new View.OnClickListener(){
 
             @Override
