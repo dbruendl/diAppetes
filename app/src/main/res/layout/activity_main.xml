@@ -51,7 +51,7 @@
         android:layout_width="235dp"
         android:layout_height="64dp"
         android:layout_marginTop="108dp"
-        android:textAppearance="Do you want to go for a walk?"
+        android:textAppearance="@string/walking"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.176"
