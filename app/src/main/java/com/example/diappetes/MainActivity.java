@@ -10,6 +10,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -35,12 +36,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         TvSteps = (TextView) findViewById(R.id.tv_steps);
         tb = (ToggleButton) findViewById(R.id.toggleButton);
-        
-        tb.setOnClickListener(new View.OnClickListener(){
 
-            @Override
-            public void onClick(View view) {
-                sensorManager.registerListener(MainActivity.this, accel, SensorManager.SENSOR_DELAY_FASTEST);
+        tb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    sensorManager.registerListener(MainActivity.this, accel, SensorManager.SENSOR_DELAY_FASTEST);
+                } else {
+                    sensorManager.unregisterListener(MainActivity.this);
+                }
             }
         });
 
