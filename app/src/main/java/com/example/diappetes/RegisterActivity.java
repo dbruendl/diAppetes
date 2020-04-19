@@ -15,51 +15,69 @@ import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    EditText emailId;
+    Editable email;
+    EditText passwordId;
+    Editable password;
+    EditText passwordId2;
+    Editable password2;
+    Matcher matcher;    //Checking if email input is correct
+    boolean cMail;
+    boolean cPassword;
+    Button signupBtn;
+    String error1;
+    String error2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        EditText emailid = findViewById(R.id.signupemailtxt);   // Obtaining data from user input
-        Editable email = emailid.getText();
-        EditText passwordid = findViewById(R.id.signuppasswordtxt);
-        Editable password = passwordid.getText();
-        EditText passwordid2 = findViewById(R.id.signuppasswordtxt2);
-        Editable password2 = passwordid.getText();
-        final TextView signuperrortxt = findViewById(R.id.signuperrortxt);
+        emailId = findViewById(R.id.signupemailtxt);   // Obtaining data from user input
+        email = emailId.getText();
+        passwordId = findViewById(R.id.signuppasswordtxt);
+        password = passwordId.getText();
+        passwordId2 = findViewById(R.id.signuppasswordtxt2);
+        password2 = passwordId2.getText();
+        final TextView signupErrorTxt = findViewById(R.id.signuperrortxt);
+        cMail = checkEmail(email);
+        cPassword = checkPassword(password,password2);
 
-        Matcher matcher;    //Checking if email input is correct
-        final boolean[][] checkemail = {{false}};
+
+        signupBtn = (Button) findViewById(R.id.signupbtn);
+        signupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (cMail){
+                    if (cPassword){
+                         //Register placeholder
+                        Intent startLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(startLoginIntent);
+                    } else{
+                        signupErrorTxt.setText("The Passwords does not match, please make sure that they do");
+                    }
+                } else {
+                    signupErrorTxt.setText("The Email is not valid");
+                }
+            }
+        });
+
+    }
+
+    private boolean checkPassword(Editable password, Editable password2) {
+        if (password == password2){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkEmail(Editable email) {
         if (email != null) {
             String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
             Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
             matcher = pattern.matcher(email);
-            checkemail[0][0] = matcher.matches();
+            return matcher.matches();
         }
-
-        final boolean[] checkpassword = {false};   //Checking if password input is correct
-        if (password == password2){
-            checkpassword[0] = true;
-        }
-
-        Button signupbtn = (Button) findViewById(R.id.signupbtn);
-        signupbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String errormessage;
-                String error1;
-                String error2;
-
-                if (checkemail[0][0] = true){
-                    if (checkpassword[0] = true){
-                                                                 //Register placeholder
-                        Intent startloginintent = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(startloginintent);
-                    } else error2="Passwords does not match";
-                } else error1="Email is incorrect";
-
-            }
-        });
-
+        return false;
     }
 }
