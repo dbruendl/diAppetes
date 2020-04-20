@@ -6,11 +6,10 @@ public class RegisterModel {
     private String password;
     private String password2;
 
-    public RegisterModel(int id, String name, String password, String password2) {
+    public RegisterModel(int id, String name, String password) {
         this.id = id;
         this.name = name;
         this.password = password;
-        this.password2 = password2;
     }
 
     @Override
