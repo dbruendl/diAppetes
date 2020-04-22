@@ -35,7 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
         password = passwordId.getText();
         passwordId2 = findViewById(R.id.signuppasswordtxt2);
         password2 = passwordId2.getText();
-        final TextView signupErrorTxt = findViewById(R.id.signuperrortxt);
+        final TextView signUpErrorTxt = findViewById(R.id.signuperrortxt);
 
 
         signUpBtn = (Button) findViewById(R.id.signupbtn);
@@ -52,12 +52,14 @@ public class RegisterActivity extends AppCompatActivity {
                         if(success) {
                             Intent startLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(startLoginIntent);
+                        }else{
+                            signUpErrorTxt.setText("The Database input wasn´t succesful");
                         }
                     } else{
-                        signupErrorTxt.setText("The Passwords does not match, please make sure that they do");
+                        signUpErrorTxt.setText("The Passwords does not match, please make sure that they do");
                     }
                 } else {
-                    signupErrorTxt.setText("The Email is not valid");
+                    signUpErrorTxt.setText("The Email is not valid");
                 }
             }
         });

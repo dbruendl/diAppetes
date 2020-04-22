@@ -19,6 +19,7 @@ public class CheckInput {
     }
 
     public boolean checkEmail(){
+        //SELECT * FROM USER_TABLE WHERE COLUMN_EMAIL = this.email; If this comes back with one row it is true
         switch (email){
             case "olafwarzocha1998@gmail.com":
             case "sample0@gmail.com":
@@ -29,6 +30,7 @@ public class CheckInput {
     }
 
     public boolean checkPassword(){
+        //SELECT COLUMN_PASSWORD FROM USER_TABLE WHERE email = email;
         switch (password){
             case "1234":
             case "sample0":

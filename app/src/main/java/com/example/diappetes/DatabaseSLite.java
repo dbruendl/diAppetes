@@ -45,4 +45,10 @@ public class DatabaseSLite extends SQLiteOpenHelper {
             return true;
         }
     }
+
+    public boolean find(String select){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+    }
 }

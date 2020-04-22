@@ -41,6 +41,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
+        //Changes to RegisterPage
         Button signInBtn2 = findViewById(R.id.signupbtn2);
         signInBtn2.setOnClickListener(new View.OnClickListener() {
             @Override
