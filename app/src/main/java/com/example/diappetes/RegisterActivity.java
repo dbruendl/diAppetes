@@ -23,8 +23,6 @@ public class RegisterActivity extends AppCompatActivity {
     EditText passwordId2;
     Editable password2;
     Button signUpBtn;
-    String error1;
-    String error2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
