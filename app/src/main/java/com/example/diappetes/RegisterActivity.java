@@ -22,9 +22,7 @@ public class RegisterActivity extends AppCompatActivity {
     Editable password;
     EditText passwordId2;
     Editable password2;
-    boolean cMail;
-    boolean cPassword;
-    Button signupBtn;
+    Button signUpBtn;
     String error1;
     String error2;
 
@@ -40,20 +38,23 @@ public class RegisterActivity extends AppCompatActivity {
         passwordId2 = findViewById(R.id.signuppasswordtxt2);
         password2 = passwordId2.getText();
         final TextView signupErrorTxt = findViewById(R.id.signuperrortxt);
-        cMail = ci.checkEmail(email);
-        cPassword = ci.checkPassword(password,password2);
 
 
-        signupBtn = (Button) findViewById(R.id.signupbtn);
-        signupBtn.setOnClickListener(new View.OnClickListener() {
+        signUpBtn = (Button) findViewById(R.id.signupbtn);
+        signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (cMail){
-                    if (cPassword){
+                RegisterModel rm;
+                if (ci.checkEmail(email)){
+                    if (ci.checkPassword(password,password2)){
+                        rm = new RegisterModel(email.toString(),password.toString());
                          //Register placeholder
-                        Intent startLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
-                        startActivity(startLoginIntent);
+                        DatabaseSLite dbsl = new DatabaseSLite(RegisterActivity.this);
+                        boolean success = dbsl.addOne(rm);
+                        if(success) {
+                            Intent startLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(startLoginIntent);
+                        }
                     } else{
                         signupErrorTxt.setText("The Passwords does not match, please make sure that they do");
                     }
