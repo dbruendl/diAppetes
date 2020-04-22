@@ -49,6 +49,6 @@ public class DatabaseSLite extends SQLiteOpenHelper {
     public boolean find(String select){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-
+        return true;
     }
 }
