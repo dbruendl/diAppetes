@@ -51,5 +51,14 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(startregisterintent);
             }
         });
+
+        Button takemetostat = findViewById(R.id.takemetostat);
+        takemetostat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startstatintent = new Intent(getApplicationContext(), StatActivity.class);
+                startActivity(startstatintent);
+            }
+        });
     }
 }
