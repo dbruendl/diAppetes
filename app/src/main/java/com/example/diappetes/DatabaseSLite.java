@@ -2,10 +2,14 @@ package com.example.diappetes;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseSLite extends SQLiteOpenHelper {
     public static final String USER_TABLE = "User_Table";
@@ -39,7 +43,7 @@ public class DatabaseSLite extends SQLiteOpenHelper {
 
         long insert = db.insert(USER_TABLE, null, cv);
 
-        if(insert == 1){
+        if(insert == -1){
             return false;
         }else{
             return true;
@@ -51,4 +55,33 @@ public class DatabaseSLite extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         return true;
     }
+    public List<RegisterModel> getEveryone(){
+        List<RegisterModel> returnlist = new ArrayList<>();
+
+        //get data from database
+        String queryString = "SELECT * FROM " + USER_TABLE;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(queryString, null);
+        if (cursor.moveToFirst()){
+            do {
+                int userID = cursor.getInt(0);
+                String userEmail = cursor.getString(1);
+                String userPassword = cursor.getString(2);
+
+                RegisterModel newUser = new RegisterModel(userID, userEmail, userPassword);
+                returnlist.add(newUser);
+
+            }while (cursor.moveToNext());
+
+        }
+        else //failure nothing happens
+
+            //closing
+            cursor.close();
+        db.close();
+        return returnlist;
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.example.diappetes;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.text.Editable;
 
 import java.util.regex.Matcher;
@@ -8,7 +10,8 @@ import java.util.regex.Pattern;
 public class CheckInput {
     String email;
     String password;
-    Matcher matcher;    //Checking if email input is correct
+    Matcher matcher; //Checking if email input is correct
+
 
     public CheckInput(String email, String password) {
         this.email = email;
@@ -18,7 +21,7 @@ public class CheckInput {
     public CheckInput() {
     }
 
-    public boolean checkEmail(){
+    public boolean logincheckEmail(){
         //SELECT * FROM USER_TABLE WHERE COLUMN_EMAIL = this.email; If this comes back with one row it is true
         switch (email){
             case "olafwarzocha1998@gmail.com":
@@ -29,7 +32,7 @@ public class CheckInput {
         }
     }
 
-    public boolean checkPassword(){
+    public boolean logincheckPassword(){
         //SELECT COLUMN_PASSWORD FROM USER_TABLE WHERE email = email;
         switch (password){
             case "1234":
@@ -41,7 +44,9 @@ public class CheckInput {
     }
 
     public boolean checkPassword(Editable password, Editable password2) {
-        if (password == password2){
+        String pass1 = password.toString();
+        String pass2 = password2.toString();
+        if (pass1.equals(pass2)){
             return true;
         }
         return false;

@@ -45,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
                 RegisterModel rm;
                 if (ci.checkEmail(email)){
                     if (ci.checkPassword(password,password2)){
-                        rm = new RegisterModel(email.toString(),password.toString());
+                        rm = new RegisterModel(-1,email.toString(),password.toString());
                          //Register placeholder
                         DatabaseSLite dbsl = new DatabaseSLite(RegisterActivity.this);
                         boolean success = dbsl.addOne(rm);

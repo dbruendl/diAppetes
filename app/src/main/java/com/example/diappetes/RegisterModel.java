@@ -1,10 +1,12 @@
 package com.example.diappetes;
 
 public class RegisterModel {
+    private int userID;
     private String email;
     private String password;
 
-    public RegisterModel(String email, String password) {
+    public RegisterModel(Integer userID, String email, String password) {
+        this.userID = userID;
         this.email = email;
         this.password = password;
     }
@@ -15,6 +17,13 @@ public class RegisterModel {
                 ", name='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+    public Integer getUserID() {
+        return userID;
+    }
+
+    public void setUserID(Integer name) {
+        this.userID = name;
     }
 
     public String getEmail() {
