@@ -94,7 +94,7 @@ public class DatabaseSLite extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         CheckInput checkInput = new CheckInput();
 
-        String inputEmail = checkInput.email;
+        String inputEmail = checkInput.email;      // EMAIL = NULL for some reason
 
         String queryString = "SELECT * FROM " + USER_TABLE;
         Cursor cursor = db.rawQuery(queryString, null);
