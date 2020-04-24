@@ -98,6 +98,7 @@ public class DatabaseSLite extends SQLiteOpenHelper {
 
         String queryString = "SELECT * FROM " + USER_TABLE;
         Cursor cursor = db.rawQuery(queryString, null);
+        
 
         if (inputEmail == null) {
             return false;

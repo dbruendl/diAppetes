@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private static final String TEXT_NUM_STEPS = "Number of Steps: ";
     private int numSteps;
     private TextView TvSteps;
+    private ProgressBar pb;
     private ToggleButton tb;
 
     @Override
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         simpleStepDetector = new StepDetector();
         simpleStepDetector.registerListener(this);
+        pb = findViewById(R.id.pb_steps);
 
         TvSteps = (TextView) findViewById(R.id.tv_steps);
         tb = (ToggleButton) findViewById(R.id.toggleButton);
@@ -99,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void step(long timeNs) {
         numSteps++;
+        pb.setProgress(numSteps);
         TvSteps.setText(TEXT_NUM_STEPS + numSteps);
     }
 
