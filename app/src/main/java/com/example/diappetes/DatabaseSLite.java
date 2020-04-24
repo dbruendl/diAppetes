@@ -62,7 +62,7 @@ public class DatabaseSLite extends SQLiteOpenHelper {
     }
 
     public List<RegisterModel> getEveryone() {
-        List<RegisterModel> returnlist = new ArrayList<>();
+        List<RegisterModel> returnList = new ArrayList<>();
 
         //get data from database
         String queryString = "SELECT * FROM " + USER_TABLE;
@@ -77,7 +77,7 @@ public class DatabaseSLite extends SQLiteOpenHelper {
                 String userPassword = cursor.getString(2);
 
                 RegisterModel newUser = new RegisterModel(userID, userEmail, userPassword);
-                returnlist.add(newUser);
+                returnList.add(newUser);
 
             } while (cursor.moveToNext());
 
@@ -86,20 +86,20 @@ public class DatabaseSLite extends SQLiteOpenHelper {
             //closing
             cursor.close();
         db.close();
-        return returnlist;
+        return returnList;
     }
 
-    public boolean logincheck(RegisterModel rm) {
+    public boolean loginCheck() {
         SQLiteDatabase db = this.getReadableDatabase();
         CheckInput checkInput = new CheckInput();
-        String inputemail = checkInput.email;
+        String inputEmail = checkInput.email;
         String queryString = "SELECT * FROM " + USER_TABLE;
         Cursor cursor = db.rawQuery(queryString, null);
 
         cursor.moveToFirst();
         int userID = cursor.getInt(0);
         String dbEmail = cursor.getString(1);
-        while (!dbEmail.equals(inputemail)){
+        while (!dbEmail.equals(inputEmail)){
             if (userID == 254){
                 return false;
             }

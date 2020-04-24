@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
                 //String passwordInput = passwordId.getText().toString();
                 TextView errorTxt = (TextView) findViewById(R.id.loginerrortxt);
 
-                if(c.logincheckEmail()) {
+                if(c.logincheckEmail(LoginActivity.this)) {
                     if(c.logincheckPassword()) {
                         Intent starthomeintent4 = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(starthomeintent4);

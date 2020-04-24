@@ -1,7 +1,6 @@
 package com.example.diappetes;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.content.Context;
 import android.text.Editable;
 
 import java.util.regex.Matcher;
@@ -11,6 +10,7 @@ public class CheckInput {
     String email;
     String password;
     Matcher matcher; //Checking if email input is correct
+    DatabaseSLite db;
 
 
     public CheckInput(String email, String password) {
@@ -21,14 +21,13 @@ public class CheckInput {
     public CheckInput() {
     }
 
-    public boolean logincheckEmail(){
+    public boolean logincheckEmail(Context c){
         // How to access logincheck method from DatabaseSlite?  !!!!
 
-        DatabaseSLite db = new DatabaseSLite(CheckInput.this);
-        if (db.logincheck()){
+        db = new DatabaseSLite(c);
+        if (db.loginCheck()){
             return true;
-        }
-        else {
+        }else {
             return false;
         }
 
