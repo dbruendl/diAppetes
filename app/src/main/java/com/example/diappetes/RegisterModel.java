@@ -5,6 +5,7 @@ public class RegisterModel {
     private String email;
     private String password;
 
+
     public RegisterModel(Integer userID, String email, String password) {
         this.userID = userID;
         this.email = email;

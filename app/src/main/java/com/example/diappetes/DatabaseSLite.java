@@ -17,8 +17,13 @@ public class DatabaseSLite extends SQLiteOpenHelper {
     public static final String COLUMN_PASSWORD = "Password";
     public static final String COLUMN_ID = "ID";
 
+
     public DatabaseSLite(@Nullable Context context) {
         super(context, "user.db", null, 1);
+    }
+
+    public DatabaseSLite(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, name, factory, version);
     }
 
     @Override
@@ -82,6 +87,21 @@ public class DatabaseSLite extends SQLiteOpenHelper {
             cursor.close();
         db.close();
         return returnlist;
+    }
+    public boolean logincheck(RegisterModel rm){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String queryString = "SELECT " + COLUMN_EMAIL +  "FROM " +USER_TABLE;
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if (cursor.moveToFirst()){
+            do {
+
+                String dbEmail = cursor.getString(1);
+                if (dbEmail.equals())
+
+            }while (cursor.moveToNext());
+
     }
 
 }

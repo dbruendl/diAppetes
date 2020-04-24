@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 public class LoginActivity extends AppCompatActivity {
     CheckInput c;
+    DatabaseSLite dbl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,9 +24,9 @@ public class LoginActivity extends AppCompatActivity {
                 EditText emailId = findViewById(R.id.logintxt);
                 EditText passwordId = findViewById(R.id.passwordtxt);
                 c = new CheckInput(emailId.getText().toString(),passwordId.getText().toString());
-                /*
-                String emailInput = emailId.getText().toString();
-                String passwordInput = passwordId.getText().toString();*/
+                dbl = new DatabaseSLite(emailId.getText().toString(),passwordId.getText().toString());
+                //String emailInput = emailId.getText().toString();
+                //String passwordInput = passwordId.getText().toString();
                 TextView errorTxt = (TextView) findViewById(R.id.loginerrortxt);
 
                 if(c.logincheckEmail()) {
