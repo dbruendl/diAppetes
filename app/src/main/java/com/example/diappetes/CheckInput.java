@@ -22,8 +22,15 @@ public class CheckInput {
     }
 
     public boolean logincheckEmail(Context c){
-        // How to access logincheck method from DatabaseSlite?  !!!!
-
+        /*
+        switch (email){
+            case "sample17@gmail.com":
+            case "sample0":
+            case "sample1":
+                return true;
+            default: return false;
+        }
+        */
         db = new DatabaseSLite(c);
         if (db.loginCheck()){
             return true;

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -92,33 +93,27 @@ public class DatabaseSLite extends SQLiteOpenHelper {
     public boolean loginCheck() {
         SQLiteDatabase db = this.getReadableDatabase();
         CheckInput checkInput = new CheckInput();
+
         String inputEmail = checkInput.email;
+
         String queryString = "SELECT * FROM " + USER_TABLE;
         Cursor cursor = db.rawQuery(queryString, null);
 
-        cursor.moveToFirst();
-        int userID = cursor.getInt(0);
-        String dbEmail = cursor.getString(1);
-        while (!dbEmail.equals(inputEmail)){
-            if (userID == 254){
-                return false;
-            }
-            cursor.moveToNext();
-            userID = cursor.getInt(0);
-            dbEmail = cursor.getString(1);
-            
-        }
-        return true;
-
-        /*if (cursor.moveToFirst()) {
-            do {
-                String dbEmail = cursor.getString(1);
-                if (dbEmail.equals(inputemail)) {
-                    return true;
-                }
-            } while (cursor.moveToNext());
-        } else {
+        if (inputEmail == null) {
             return false;
-        } // This method returns true or false and java doesnt detect it. Why? !!!! */
+        }
+        /*
+        if (cursor.moveToFirst()) {
+                int userID = cursor.getInt(0);
+                String dbEmail = cursor.getString(1);
+                boolean match = inputEmail.equals(dbEmail);
+
+                while (cursor.moveToNext() == true) {
+                    if (inputEmail.equals(dbEmail))
+                        break;
+                }
+        }
+        */
+        return true;
     }
 }
