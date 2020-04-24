@@ -24,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
                 EditText emailId = findViewById(R.id.logintxt);
                 EditText passwordId = findViewById(R.id.passwordtxt);
                 c = new CheckInput(emailId.getText().toString(),passwordId.getText().toString());
-                dbl = new DatabaseSLite(emailId.getText().toString(),passwordId.getText().toString());
+                //dbl = new DatabaseSLite(emailId.getText().toString(),passwordId.getText().toString());
                 //String emailInput = emailId.getText().toString();
                 //String passwordInput = passwordId.getText().toString();
                 TextView errorTxt = (TextView) findViewById(R.id.loginerrortxt);

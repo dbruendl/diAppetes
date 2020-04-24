@@ -39,7 +39,7 @@ public class DatabaseSLite extends SQLiteOpenHelper {
 
     }
 
-    public boolean addOne(RegisterModel rm){
+    public boolean addOne(RegisterModel rm) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -48,19 +48,20 @@ public class DatabaseSLite extends SQLiteOpenHelper {
 
         long insert = db.insert(USER_TABLE, null, cv);
 
-        if(insert == -1){
+        if (insert == -1) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
 
-    public boolean find(String select){
+    public boolean find(String select) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         return true;
     }
-    public List<RegisterModel> getEveryone(){
+
+    public List<RegisterModel> getEveryone() {
         List<RegisterModel> returnlist = new ArrayList<>();
 
         //get data from database
@@ -69,7 +70,7 @@ public class DatabaseSLite extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.rawQuery(queryString, null);
-        if (cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             do {
                 int userID = cursor.getInt(0);
                 String userEmail = cursor.getString(1);
@@ -78,30 +79,46 @@ public class DatabaseSLite extends SQLiteOpenHelper {
                 RegisterModel newUser = new RegisterModel(userID, userEmail, userPassword);
                 returnlist.add(newUser);
 
-            }while (cursor.moveToNext());
+            } while (cursor.moveToNext());
 
-        }
-        else //failure nothing happens
+        } else //failure nothing happens
 
             //closing
             cursor.close();
         db.close();
         return returnlist;
     }
-    public boolean logincheck(RegisterModel rm){
-        SQLiteDatabase db = this.getReadableDatabase();
 
-        String queryString = "SELECT " + COLUMN_EMAIL +  "FROM " +USER_TABLE;
+    public boolean logincheck(RegisterModel rm) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        CheckInput checkInput = new CheckInput();
+        String inputemail = checkInput.email;
+        String queryString = "SELECT * FROM " + USER_TABLE;
         Cursor cursor = db.rawQuery(queryString, null);
 
-        if (cursor.moveToFirst()){
+        cursor.moveToFirst();
+        int userID = cursor.getInt(0);
+        String dbEmail = cursor.getString(1);
+        while (!dbEmail.equals(inputemail)){
+            if (userID == 254){
+                return false;
+            }
+            cursor.moveToNext();
+            userID = cursor.getInt(0);
+            dbEmail = cursor.getString(1);
+            
+        }
+        return true;
+
+        /*if (cursor.moveToFirst()) {
             do {
-
                 String dbEmail = cursor.getString(1);
-                if (dbEmail.equals())
-
-            }while (cursor.moveToNext());
-
+                if (dbEmail.equals(inputemail)) {
+                    return true;
+                }
+            } while (cursor.moveToNext());
+        } else {
+            return false;
+        } // This method returns true or false and java doesnt detect it. Why? !!!! */
     }
-
 }

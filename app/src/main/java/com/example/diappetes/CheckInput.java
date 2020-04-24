@@ -22,14 +22,16 @@ public class CheckInput {
     }
 
     public boolean logincheckEmail(){
-        //SELECT * FROM USER_TABLE WHERE COLUMN_EMAIL = this.email; If this comes back with one row it is true
-        switch (email){
-            case "olafwarzocha1998@gmail.com":
-            case "sample0@gmail.com":
-            case "sample1@gmail.com":
-                return true;
-            default: return false;
+        // How to access logincheck method from DatabaseSlite?  !!!!
+
+        DatabaseSLite db = new DatabaseSLite(CheckInput.this);
+        if (db.logincheck()){
+            return true;
         }
+        else {
+            return false;
+        }
+
     }
 
     public boolean logincheckPassword(){
