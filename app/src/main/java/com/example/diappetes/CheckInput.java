@@ -21,34 +21,15 @@ public class CheckInput {
     public CheckInput() {
     }
 
-    public boolean logincheckEmail(Context c){
-        /*
-        switch (email){
-            case "sample17@gmail.com":
-            case "sample0":
-            case "sample1":
-                return true;
-            default: return false;
-        }
-        */
+    public boolean loginCheckEmail(Context c){
         db = new DatabaseSLite(c);
-        if (db.loginCheck()){
-            return true;
-        }else {
-            return false;
-        }
-
+        return db.checkEmail(this.email);
     }
 
-    public boolean logincheckPassword(){
-        //SELECT COLUMN_PASSWORD FROM USER_TABLE WHERE email = email;
-        switch (password){
-            case "1234":
-            case "sample0":
-            case "sample1":
-                return true;
-            default: return false;
-        }
+    public boolean loginCheckPassword(Context c){
+        db = new DatabaseSLite(c);
+        return db.checkPassword(this.email,this.password);
+
     }
 
     public boolean checkPassword(Editable password, Editable password2) {

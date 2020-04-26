@@ -82,39 +82,59 @@ public class DatabaseSLite extends SQLiteOpenHelper {
 
             } while (cursor.moveToNext());
 
-        } else //failure nothing happens
+        } else {
+            //failure nothing happens
+        }
 
-            //closing
-            cursor.close();
+        //closing
+        cursor.close();
         db.close();
         return returnList;
     }
 
-    public boolean loginCheck() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        CheckInput checkInput = new CheckInput();
-
-        String inputEmail = checkInput.email;      // EMAIL = NULL for some reason
-
+    public boolean checkEmail(String email) {
+        //get data from database
         String queryString = "SELECT * FROM " + USER_TABLE;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
         Cursor cursor = db.rawQuery(queryString, null);
-        
-
-        if (inputEmail == null) {
-            return false;
-        }
-        /*
         if (cursor.moveToFirst()) {
-                int userID = cursor.getInt(0);
-                String dbEmail = cursor.getString(1);
-                boolean match = inputEmail.equals(dbEmail);
-
-                while (cursor.moveToNext() == true) {
-                    if (inputEmail.equals(dbEmail))
-                        break;
+            do {
+                String userEmail = cursor.getString(1);
+                if(email.equals(userEmail)){
+                    //closing
+                    cursor.close();
+                    db.close();
+                    return true;
                 }
+            } while (cursor.moveToNext());
+
         }
-        */
-        return true;
+        return false;
+    }
+
+    public boolean checkPassword(String email,String password) {
+        //get data from database
+        String queryString = "SELECT * FROM " + USER_TABLE;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(queryString, null);
+        if (cursor.moveToFirst()) {
+            do {
+                String userEmail = cursor.getString(1);
+                if(email.equals(userEmail)) {
+                    String userPassword = cursor.getString(2);
+                    if (password.equals(userPassword)) {
+                        //closing
+                        cursor.close();
+                        db.close();
+                        return true;
+                    }
+                }
+            } while (cursor.moveToNext());
+        }
+        return false;
     }
 }
