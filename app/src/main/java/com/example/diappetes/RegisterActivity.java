@@ -50,8 +50,8 @@ public class RegisterActivity extends AppCompatActivity {
                         DatabaseSLite dbsl = new DatabaseSLite(RegisterActivity.this);
                         boolean success = dbsl.addOne(rm);
                         if(success) {
-                            Intent startLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
-                            startActivity(startLoginIntent);
+                            Intent startRegisterFormIntent = new Intent(getApplicationContext(), RegisterFormActivity.class);
+                            startActivity(startRegisterFormIntent);
                         }else{
                             signUpErrorTxt.setText("The Database input wasn´t succesful");
                         }
