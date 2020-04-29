@@ -38,12 +38,14 @@ public class RegisterActivity extends AppCompatActivity {
         password2 = passwordId2.getText();
         final TextView signUpErrorTxt = findViewById(R.id.signuperrortxt);
 
-        signUpBtn = findViewById(R.id.signupbtn);
-        // In android error record there is info about null error inside setOnClickListener below 
+        signUpBtn = findViewById(R.id.finishregisterbtn);
+        // In android error record there is info about null error inside setOnClickListener below
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 RegisterModel rm;
+
                 if (ci.checkEmail(email)){
                     if (ci.checkPassword(password,password2)){
                         rm = new RegisterModel(-1,email.toString(),password.toString());
@@ -62,6 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
                 } else {
                     signUpErrorTxt.setText("The Email is not valid");
                 }
+
             }
         });
 
