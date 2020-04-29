@@ -42,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
         Button registerbtn = findViewById(R.id.registerbtn);
         registerbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,9 +55,10 @@ public class LoginActivity extends AppCompatActivity {
         takemetostat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startstatintent = new Intent(getApplicationContext(), StatActivity.class);
-                startActivity(startstatintent);
+                Intent takemetostatintent = new Intent(getApplicationContext(), StatActivity.class);
+                startActivity(takemetostatintent);
             }
         });
-    }
+
+        }
 }

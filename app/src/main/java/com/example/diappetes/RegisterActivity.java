@@ -27,6 +27,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_register);
         ci = new CheckInput();
         emailId = findViewById(R.id.signupemailtxt);   // Obtaining data from user input
@@ -38,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
         final TextView signUpErrorTxt = findViewById(R.id.signuperrortxt);
 
 
-        signUpBtn = (Button) findViewById(R.id.signupbtn);
+        signUpBtn = findViewById(R.id.signupbtn);
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (ci.checkEmail(email)){
                     if (ci.checkPassword(password,password2)){
                         rm = new RegisterModel(-1,email.toString(),password.toString());
-                         //Register placeholder
+                        //Register placeholder
                         DatabaseSLite dbsl = new DatabaseSLite(RegisterActivity.this);
                         boolean success = dbsl.addOne(rm);
                         if(success) {
