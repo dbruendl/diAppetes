@@ -11,8 +11,8 @@ import android.widget.EditText;
 public class RegisterFormActivity extends AppCompatActivity {
 
     Button nextbtn;
-    EditText nametxt, surnametxt, proffesiontxt, heihttxt, weighttxt, animaltxt, activenesstxt;
-    double height, weight, activeness;
+    EditText nametxt, surnametxt, proffesiontxt, heihttxt, weighttxt;
+    double height, weight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +25,6 @@ public class RegisterFormActivity extends AppCompatActivity {
         proffesiontxt = findViewById(R.id.professiontxt);
         heihttxt = findViewById(R.id.heighttxt);
         weighttxt = findViewById(R.id.weighttxt);
-        animaltxt = findViewById(R.id.animaltxt);
-        activenesstxt = findViewById(R.id.activenesstxt);
 
         nametxt.getText();
         surnametxt.getText();
@@ -36,14 +34,13 @@ public class RegisterFormActivity extends AppCompatActivity {
 
         height = Double.parseDouble(heihttxt.toString());  //Converting to double from text
         weight = Double.parseDouble(weighttxt.toString());
-        activeness = Double.parseDouble(activenesstxt.toString());
 
 
         nextbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startloginIntent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(startloginIntent);
+                Intent startLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(startLoginIntent);
             }
         });
 

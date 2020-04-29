@@ -43,9 +43,8 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-        //Changes to RegisterPage
-        Button signInBtn2 = findViewById(R.id.signupbtn2);
-        signInBtn2.setOnClickListener(new View.OnClickListener() {
+        Button registerbtn = findViewById(R.id.registerbtn);
+        registerbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent startregisterintent = new Intent(getApplicationContext(), RegisterActivity.class);
