@@ -39,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
         final TextView signUpErrorTxt = findViewById(R.id.signuperrortxt);
 
         signUpBtn = findViewById(R.id.signupbtn);
+        // In android error record there is info about null error inside setOnClickListener below 
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
