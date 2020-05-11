@@ -24,12 +24,14 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener, StepListener{
-    private static final String CHANNEL_ID = "69";
+    private static final String CHANNEL_ID = "69"; //nice
     private StepDetector simpleStepDetector;
     private SensorManager sensorManager;
     private Sensor accel;
-    private static final String TEXT_NUM_STEPS = "Number of Steps: ";
+    private static final String TEXT_NUM_STEPS = "Steps taken "; //Number of Steps:
     private int numSteps;
+    private int goalSteps;
+    private int progress;
     private TextView TvSteps;
     private ProgressBar pb;
     private ToggleButton tb;
@@ -129,7 +131,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void step(long timeNs) {
         numSteps++;
-        pb.setProgress(numSteps);
+        goalSteps = 10;
+
+        int progress = (numSteps*100)/goalSteps;
+
+        pb.setProgress(progress);
         TvSteps.setText(TEXT_NUM_STEPS + numSteps);
     }
 
