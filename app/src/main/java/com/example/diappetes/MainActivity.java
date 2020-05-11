@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void step(long timeNs) {
         numSteps++;
         goalSteps = 10;
+        // Average step is 0.74m and takes 0.5 sec (to verify)
 
         int progress = (numSteps*100)/goalSteps;
 
