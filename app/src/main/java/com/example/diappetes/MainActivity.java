@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        SentiloConnector sc = new SentiloConnector(this);
         // Create an explicit intent for an Activity in your app
         Intent intent = new Intent(this, AlertDialog.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
