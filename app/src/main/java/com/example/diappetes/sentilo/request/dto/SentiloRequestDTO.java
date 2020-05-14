@@ -1,16 +1,19 @@
 package com.example.diappetes.sentilo.request.dto;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Arrays;
 import java.util.List;
 
 public class SentiloRequestDTO {
-    private final List<ObservationDTO> observationDTOList;
+    @SerializedName("observations")
+    private final List<BatteryObservationDTO> batteryObservationDTOList;
 
-    public SentiloRequestDTO(ObservationDTO ... observationDTOS) {
-        this.observationDTOList = Arrays.asList(observationDTOS);
+    public SentiloRequestDTO(BatteryObservationDTO... batteryObservationDTOS) {
+        this.batteryObservationDTOList = Arrays.asList(batteryObservationDTOS);
     }
 
-    public List<ObservationDTO> getObservationDTOList() {
-        return observationDTOList;
+    public List<BatteryObservationDTO> getBatteryObservationDTOList() {
+        return batteryObservationDTOList;
     }
 }

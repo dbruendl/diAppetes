@@ -23,6 +23,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.android.volley.toolbox.JsonObjectRequest;
+
 public class MainActivity extends AppCompatActivity implements SensorEventListener, StepListener {
     private static final String CHANNEL_ID = "69"; //nice
     private StepDetector simpleStepDetector;
