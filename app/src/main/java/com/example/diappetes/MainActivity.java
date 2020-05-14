@@ -1,10 +1,5 @@
 package com.example.diappetes;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -23,7 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener, StepListener{
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
+public class MainActivity extends AppCompatActivity implements SensorEventListener, StepListener {
     private static final String CHANNEL_ID = "69"; //nice
     private StepDetector simpleStepDetector;
     private SensorManager sensorManager;
@@ -40,7 +40,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         SentiloConnector sc = new SentiloConnector(this);
+
         // Create an explicit intent for an Activity in your app
         Intent intent = new Intent(this, AlertDialog.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -79,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         });
 
 
-        Button infobtn = (Button)findViewById(R.id.infobtn);
+        Button infobtn = (Button) findViewById(R.id.infobtn);
         infobtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-        Button petbtn = (Button)findViewById(R.id.petbtn);
+        Button petbtn = (Button) findViewById(R.id.petbtn);
         petbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-        Button statbtn = (Button)findViewById(R.id.statbtn);
+        Button statbtn = (Button) findViewById(R.id.statbtn);
         statbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,18 +108,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 startActivity(startstatintent);
             }
         });
-
-
-
-
-
-
-
-
     }
 
     public void onDefaultToggleClick(View view) {
-        Toast.makeText(this, "DefaultToggleClick",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "DefaultToggleClick", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -134,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         goalSteps = 10;
         // Average step is 0.74m and takes 0.5 sec (to verify)
 
-        int progress = (numSteps*100)/goalSteps;
+        int progress = (numSteps * 100) / goalSteps;
 
         pb.setProgress(progress);
         TvSteps.setText(TEXT_NUM_STEPS + numSteps);
