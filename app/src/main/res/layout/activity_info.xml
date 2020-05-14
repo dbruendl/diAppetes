@@ -7,43 +7,47 @@
     tools:context=".InfoActivity">
 
     <Button
-        android:id="@+id/statbtn2"
-        android:layout_width="103dp"
-        android:layout_height="80dp"
-        android:text="Stat"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/infobtn2"
+        android:id="@+id/infobtn"
         android:layout_width="103dp"
         android:layout_height="80dp"
         android:text="Info"
+        android:backgroundTint="#fc9df4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.334"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/homebtn2"
-        android:layout_width="103dp"
-        android:layout_height="80dp"
-        android:text="Home"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/petbtn2"
+        android:id="@+id/petbtn"
         android:layout_width="103dp"
         android:layout_height="80dp"
         android:text="Pet"
+        android:backgroundTint="#fc9df4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.668"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/statbtn"
+        android:layout_width="103dp"
+        android:layout_height="80dp"
+        android:text="Stat"
+        android:backgroundTint="#fc9df4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/homebtn"
+        android:layout_width="103dp"
+        android:layout_height="80dp"
+        android:text="Home"
+        android:backgroundTint="#fc9df4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

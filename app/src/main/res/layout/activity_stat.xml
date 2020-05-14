@@ -7,43 +7,47 @@
     tools:context=".StatActivity">
 
     <Button
-        android:id="@+id/homebtn4"
+        android:id="@+id/infobtn"
         android:layout_width="103dp"
         android:layout_height="80dp"
-        android:text="Home"
+        android:text="Info"
+        android:backgroundTint="#fc9df4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.334"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/petbtn4"
+        android:id="@+id/petbtn"
         android:layout_width="103dp"
         android:layout_height="80dp"
         android:text="Pet"
+        android:backgroundTint="#fc9df4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.668"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/statbtn4"
+        android:id="@+id/statbtn"
         android:layout_width="103dp"
         android:layout_height="80dp"
         android:text="Stat"
+        android:backgroundTint="#fc9df4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/infobtn4"
+        android:id="@+id/homebtn"
         android:layout_width="103dp"
         android:layout_height="80dp"
-        android:text="Info"
+        android:text="Home"
+        android:backgroundTint="#fc9df4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.334"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ListView

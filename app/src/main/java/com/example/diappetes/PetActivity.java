@@ -14,7 +14,7 @@ public class PetActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet);
 
-        Button homebtn3 = findViewById(R.id.homebtn3);
+        Button homebtn3 = findViewById(R.id.homebtn);
         homebtn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -23,7 +23,7 @@ public class PetActivity extends AppCompatActivity {
             }
         });
 
-        Button infobtn3 = (Button)findViewById(R.id.infobtn3);
+        Button infobtn3 = (Button)findViewById(R.id.infobtn);
         infobtn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -32,7 +32,7 @@ public class PetActivity extends AppCompatActivity {
             }
         });
 
-        Button statbtn3 = findViewById(R.id.statbtn3);
+        Button statbtn3 = findViewById(R.id.statbtn);
         statbtn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

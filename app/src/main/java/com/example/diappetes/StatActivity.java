@@ -20,9 +20,9 @@ public class StatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stat);
 
-        homebtn4 = findViewById(R.id.homebtn4);
-        petbtn4 = findViewById(R.id.petbtn4);
-        infobtn4 = findViewById(R.id.infobtn4);
+        homebtn4 = findViewById(R.id.homebtn);
+        petbtn4 = findViewById(R.id.petbtn);
+        infobtn4 = findViewById(R.id.infobtn);
         dbList = findViewById(R.id.dbList);
 
         dataBaseHelper = new DatabaseSLite(StatActivity.this);
