@@ -3,17 +3,20 @@ package com.example.diappetes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
 public class StatActivity extends AppCompatActivity {
     Button homebtn4, infobtn4, petbtn4;
-    ListView dbList;
-    ArrayAdapter UserArrayAdapter;
-    DatabaseSLite dataBaseHelper;
+    private LineGraphSeries<DataPoint> series1, series2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +26,36 @@ public class StatActivity extends AppCompatActivity {
         homebtn4 = findViewById(R.id.homebtn);
         petbtn4 = findViewById(R.id.petbtn);
         infobtn4 = findViewById(R.id.infobtn);
-        dbList = findViewById(R.id.dbList);
 
-        dataBaseHelper = new DatabaseSLite(StatActivity.this);
-        UpdateList(dataBaseHelper);
+        double x,y;
+
+        x = 0;   // SIN GRAPH
+        GraphView graphSteps = (GraphView) findViewById(R.id.graphSteps);
+        series1 = new LineGraphSeries<>();
+        int numDataPoints = 100;
+        for(int i = 0; i < numDataPoints; i++){
+
+            y = Math.sin(x);
+            series1.appendData(new DataPoint(x,y), true, 100);
+            x = x + 0.1;
+        }
+        series1.setColor(Color.BLUE);
+        graphSteps.addSeries(series1);
+
+        x = 0;   //COS GRAPH
+        graphSteps.addSeries(series1);
+        GraphView graphWeight = (GraphView) findViewById(R.id.graphWeight);
+        series2 = new LineGraphSeries<>();
+        int numDataPoints2 = 100;
+        for(int i = 0; i < numDataPoints2; i++){
 
 
+            y = Math.cos(x);
+            series2.appendData(new DataPoint(x,y), true, 100);
+            x = x + 0.1;
+        }
+        series2.setColor(Color.RED);
+        graphWeight.addSeries(series2);
 
 
         // Menu
@@ -39,8 +66,6 @@ public class StatActivity extends AppCompatActivity {
                 startActivity(starthomeintent4);
             }
         });
-
-
         infobtn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,8 +73,6 @@ public class StatActivity extends AppCompatActivity {
                 startActivity(startinfointent4);
             }
         });
-
-
         petbtn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,8 +84,5 @@ public class StatActivity extends AppCompatActivity {
 
 
     }
-    private void UpdateList(DatabaseSLite dataBaseHelper2) {
-        UserArrayAdapter = new ArrayAdapter<>(StatActivity.this, android.R.layout.simple_list_item_1, dataBaseHelper2.getEveryone());
-        dbList.setAdapter(UserArrayAdapter);
-    }
+
 }

@@ -6,6 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".StatActivity">
 
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graphSteps"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintBottom_toTopOf="@+id/graphtitleweight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.384" />
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graphWeight"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:layout_marginBottom="96dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/infobtn"
         android:layout_width="103dp"
@@ -50,19 +72,31 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ListView
-        android:id="@+id/dbList"
-        android:layout_width="409dp"
-        android:layout_height="620dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <TextView
+        android:id="@+id/graphtitlesteps"
+        android:layout_width="123dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="Steps taken"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/graphSteps"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/graphtitleweight"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="Weight change"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/graphWeight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/graphSteps" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
