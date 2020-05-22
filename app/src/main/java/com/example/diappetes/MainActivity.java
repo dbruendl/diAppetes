@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private static final String TEXT_NUM_STEPS = "Steps taken "; //Number of Steps:
     private int numSteps;
     private int goalSteps;
-    private int progress;
+    int progress;
     private TextView TvSteps;
     private ProgressBar pb;
     private ToggleButton tb;
@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         pb.setProgress(progress);
         TvSteps.setText(TEXT_NUM_STEPS + numSteps);
     }
+
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
