@@ -9,7 +9,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class PetActivity extends AppCompatActivity {
-    private int petstatus;
+    int petstatus;
+    int progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +41,34 @@ public class PetActivity extends AppCompatActivity {
                 startActivity(startstatintent3);
             }
         });
-
-        // PET CODE BELOW
-        /*   0 - neutral        nothing happens
+       
+        /* PET CODE BELOW
+             0 - neutral        nothing happens
              1 - happy          during exercise/ rest of the week after finishing exercise
              2 - super happy    exercise finished
             -1 - sad            deadline about to end
             -2 - super sad      didn't finish exercise during the week
-         */
+        */
 
-        MainActivity main = new MainActivity();
-        int progress = main.progress;
-        String mess = Integer.toString(progress);
-        Toast.makeText(getApplicationContext(),mess,Toast.LENGTH_SHORT).show();
-
-
+        String newString;
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null) {
+                newString= null;
+            } else {
+                newString= extras.getString("STRING_I_NEED");
+            }
+        } else {
+            newString= (String) savedInstanceState.getSerializable("STRING_I_NEED");
+        }
+        String Toasty = newString;
+        Toast.makeText(getApplicationContext(),Toasty,Toast.LENGTH_SHORT).show();
+        progress = Integer.parseInt(newString);
+        petstatus=0;
     }
+
+
+
+
+
 }

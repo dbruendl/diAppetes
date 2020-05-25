@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private static final String TEXT_NUM_STEPS = "Steps taken "; //Number of Steps:
     private int numSteps;
     private int goalSteps;
-    int progress;
+    public int progress;
     private TextView TvSteps;
     private ProgressBar pb;
     private ToggleButton tb;
@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         SentiloConnector sc = new SentiloConnector(this);
 
         // Create an explicit intent for an Activity in your app
-        Intent intent = new Intent(this, AlertDialog.class);
+        final Intent intent = new Intent(this, AlertDialog.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
@@ -97,8 +97,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         petbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent startpetintent = new Intent(getApplicationContext(), PetActivity.class);
-                startActivity(startpetintent);
+                Intent i = new Intent(getApplicationContext(), PetActivity.class);
+
+                String strName = progress + "";
+                i.putExtra("STRING_I_NEED", strName);
+                startActivity(i);
             }
         });
 
@@ -130,9 +133,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         goalSteps = 10;
         // Average step is 0.74m and takes 0.5 sec (to verify)
 
-        int progress = (numSteps * 100) / goalSteps;
+        progress = (numSteps * 100) / goalSteps;
 
         pb.setProgress(progress);
+
         TvSteps.setText(TEXT_NUM_STEPS + numSteps);
     }
 
