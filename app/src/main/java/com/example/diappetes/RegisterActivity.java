@@ -18,7 +18,7 @@ public class RegisterActivity extends AppCompatActivity {
     CheckInput ci;
     EditText emailId;
     Editable email;
-    EditText usernametxt;
+    EditText userNametxt;
     Editable username;
     EditText passwordId;
     Editable password;
@@ -34,8 +34,8 @@ public class RegisterActivity extends AppCompatActivity {
         ci = new CheckInput();
         emailId = findViewById(R.id.signupemailtxt);   // Obtaining data from user input
         email = emailId.getText();
-        usernametxt = findViewById(R.id.usernametxt);
-        username = usernametxt.getText();
+        userNametxt = findViewById(R.id.usernametxt);
+        username = userNametxt.getText();
         passwordId = findViewById(R.id.signuppasswordtxt);
         password = passwordId.getText();
         passwordId2 = findViewById(R.id.signuppasswordtxt2);

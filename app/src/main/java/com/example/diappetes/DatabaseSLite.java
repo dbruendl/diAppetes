@@ -56,11 +56,6 @@ public class DatabaseSLite extends SQLiteOpenHelper {
         }
     }
 
-    public boolean find(String select) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        return true;
-    }
 
     public List<RegisterModel> getEveryone() {
         List<RegisterModel> returnList = new ArrayList<>();
@@ -136,5 +131,17 @@ public class DatabaseSLite extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         return false;
+    }
+
+    public static String getColumnEmail() {
+        return COLUMN_EMAIL;
+    }
+
+    public static String getColumnPassword() {
+        return COLUMN_PASSWORD;
+    }
+
+    public static String getColumnId() {
+        return COLUMN_ID;
     }
 }

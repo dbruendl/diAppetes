@@ -9,29 +9,39 @@ import java.util.regex.Pattern;
 public class CheckInput {
     String email;
     String password;
+    Context c;
     Matcher matcher; //Checking if email input is correct
     DatabaseSLite db;
 
-
-    public CheckInput(String email, String password) {
+    //constructor for the login
+    public CheckInput(String email, String password, Context c) {
         this.email = email;
         this.password = password;
+        this.c = c;
+        db = new DatabaseSLite(c);
     }
 
+    //second constructor is for the registration
     public CheckInput() {
     }
 
-    public boolean loginCheckEmail(Context c){
-        db = new DatabaseSLite(c);
+    /*this will only work if the first constructor is filled
+     * sends the data to the database and checks if it is there
+     */
+    public boolean loginCheckEmail(){
         return db.checkEmail(this.email);
     }
 
-    public boolean loginCheckPassword(Context c){
-        db = new DatabaseSLite(c);
+    /*this will only work if the first constructor is filled
+     * sends the data to the database and checks if it is there, and aligned with the email
+     */
+    public boolean loginCheckPassword(){
         return db.checkPassword(this.email,this.password);
-
     }
 
+    /*
+     * gets both passwords from registration and checks if they are the same
+     */
     public boolean checkPassword(Editable password, Editable password2) {
         String pass1 = password.toString();
         String pass2 = password2.toString();
@@ -40,7 +50,9 @@ public class CheckInput {
         }
         return false;
     }
-
+    /*
+     * checks the email and if it is email standard
+     */
     public boolean checkEmail(Editable email) {
         if (email != null) {
             String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
