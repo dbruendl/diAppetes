@@ -50,21 +50,57 @@ public class PetActivity extends AppCompatActivity {
             -2 - super sad      didn't finish exercise during the week
         */
 
-        String newString;
+        String newString="0";
+
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if(extras == null) {
-                newString= null;
+                newString= "0";
             } else {
                 newString= extras.getString("STRING_I_NEED");
             }
         } else {
             newString= (String) savedInstanceState.getSerializable("STRING_I_NEED");
         }
-        String Toasty = newString;
-        Toast.makeText(getApplicationContext(),Toasty,Toast.LENGTH_SHORT).show();
+
+        String Toasty = "Progress= " + newString;
+        //Toast.makeText(getApplicationContext(),Toasty,Toast.LENGTH_SHORT).show();
+
         progress = Integer.parseInt(newString);
         petstatus=0;
+
+        if(progress>0){
+            if(progress<100){ //0 - 100  During exercise
+                petstatus = 1;
+            } else { //100 - Exercise is finished
+                petstatus = 2;
+            }
+        } else { //0 Exercise not started
+            petstatus = 0;
+        }
+        
+
+
+        String Toasty2="";
+        switch (petstatus){
+            case -2:
+                Toasty2 = "Super Sad";
+                break;
+            case -1:
+                Toasty2 = "Sad";
+                break;
+            case 0:
+                Toasty2 = "Neutral";
+                break;
+            case 1:
+                Toasty2 = "Happy";
+                break;
+            case 2:
+                Toasty2 = "Super Happy";
+                break;
+
+        }
+        Toast.makeText(getApplicationContext(),Toasty2,Toast.LENGTH_SHORT).show();
     }
 
 
