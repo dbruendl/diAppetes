@@ -6,7 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+
+import static com.example.diappetes.R.drawable.happy;
 
 public class PetActivity extends AppCompatActivity {
     int petstatus;
@@ -78,7 +82,7 @@ public class PetActivity extends AppCompatActivity {
         } else { //0 Exercise not started
             petstatus = 0;
         }
-        
+
 
 
         String Toasty2="";
@@ -101,10 +105,24 @@ public class PetActivity extends AppCompatActivity {
 
         }
         Toast.makeText(getApplicationContext(),Toasty2,Toast.LENGTH_SHORT).show();
+
+        ImageView petimage =(ImageView) findViewById(R.id.petimage);
+        switch (petstatus){
+            case 1:
+                petimage.setImageResource(happy);
+                break;
+            case 2:
+                petimage.setImageResource(R.drawable.superhappy);
+                break;
+            case 0:
+            default:
+                petimage.setImageResource(R.drawable.neutral);
+                break;
+        }
+        
+        
+        
+        
+        
     }
-
-
-
-
-
 }
