@@ -115,6 +115,7 @@
         android:layout_width="90dp"
         android:layout_height="50dp"
         android:text="ToggleButton"
+        android:backgroundTint="#fc9df4"
         app:layout_constraintBottom_toTopOf="@+id/pb_steps"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.37"
