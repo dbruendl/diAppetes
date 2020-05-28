@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,11 +38,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private TextView TvSteps;
     private ProgressBar pb;
     private ToggleButton tb;
+    ImageView petmini;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        petmini = findViewById(R.id.petmini);                //PET declaration
+        petmini.setImageResource(R.drawable.neutralstatus);
 
         SentiloConnector sc = new SentiloConnector(this);
 
@@ -113,6 +118,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 startActivity(startstatintent);
             }
         });
+
+
+
     }
 
     public void onDefaultToggleClick(View view) {
@@ -138,6 +146,32 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         pb.setProgress(progress);
 
         TvSteps.setText(TEXT_NUM_STEPS + numSteps);
+
+        int petstatus;  // PET code is here because it needs to be updated
+
+        if(progress>0){
+            if(progress<100){ //0 - 100  During exercise
+                petstatus = 1;
+            } else { //100 - Exercise is finished
+                petstatus = 2;
+            }
+        } else { //0 Exercise not started
+            petstatus = 0;
+        }
+
+
+        switch (petstatus){
+            case 1:
+                petmini.setImageResource(R.drawable.happystatus);
+                break;
+            case 2:
+                petmini.setImageResource(R.drawable.superhappystatus);
+                break;
+            case 0:
+            default:
+                petmini.setImageResource(R.drawable.neutralstatus);
+                break;
+        }
     }
 
 

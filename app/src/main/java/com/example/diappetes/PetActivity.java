@@ -9,9 +9,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-
-import static com.example.diappetes.R.drawable.happy;
-
 public class PetActivity extends AppCompatActivity {
     int petstatus;
     int progress;
@@ -83,8 +80,6 @@ public class PetActivity extends AppCompatActivity {
             petstatus = 0;
         }
 
-
-
         String Toasty2="";
         switch (petstatus){
             case -2:
@@ -106,17 +101,17 @@ public class PetActivity extends AppCompatActivity {
         }
         Toast.makeText(getApplicationContext(),Toasty2,Toast.LENGTH_SHORT).show();
 
-        ImageView petimage =(ImageView) findViewById(R.id.petimage);
+        ImageView petimage = findViewById(R.id.petimage);
         switch (petstatus){
             case 1:
-                petimage.setImageResource(happy);
+                petimage.setImageResource(R.drawable.happystatus);
                 break;
             case 2:
-                petimage.setImageResource(R.drawable.superhappy);
+                petimage.setImageResource(R.drawable.superhappystatus);
                 break;
             case 0:
             default:
-                petimage.setImageResource(R.drawable.neutral);
+                petimage.setImageResource(R.drawable.neutralstatus);
                 break;
         }
         
