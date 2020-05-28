@@ -69,19 +69,18 @@
 
     <ToggleButton
         android:id="@+id/toggleButton"
-        android:layout_width="88dp"
-        android:layout_height="45dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginBottom="408dp"
+        android:layout_width="76dp"
+        android:layout_height="54dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginRight="44dp"
         android:background="#00FFFFFF"
         android:button="@android:drawable/btn_star"
         android:onClick="onDefaultToggleClick"
         android:text="ToggleButton"
-        app:layout_constraintBottom_toTopOf="@+id/petbtn"
+        app:layout_constraintBottom_toTopOf="@+id/pb_steps"
         app:layout_constraintEnd_toEndOf="parent"
 
-        />
+        app:layout_constraintTop_toBottomOf="@+id/petmini" />
 
     <TextView
         android:id="@+id/tv_steps"
@@ -98,11 +97,11 @@
 
     <TextView
         android:id="@+id/infomaintxt"
-        android:layout_width="281dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="188dp"
+        android:layout_width="245dp"
+        android:layout_height="77dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="180dp"
         android:gravity="center"
         android:text="Do you wanna go for the walk?"
         android:textSize="18sp"
