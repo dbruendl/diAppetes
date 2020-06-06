@@ -31,6 +31,8 @@ import com.example.diappetes.sentilo.SentiloConnectorVolleyImpl;
 import com.example.diappetes.sentilo.request.dto.BatteryObservationDTO;
 import com.example.diappetes.sentilo.request.dto.SentiloRequestDTO;
 
+import java.util.Collections;
+
 public class MainActivity extends AppCompatActivity implements SensorEventListener, StepListener {
     private static final String CHANNEL_ID = "69"; //nice
     private StepDetector simpleStepDetector;
@@ -53,10 +55,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         RequestQueue queue = Volley.newRequestQueue(this);
         SentiloConnector sentiloConnector = new SentiloConnectorVolleyImpl(queue, "c7337d3fc4ec28d0dddc81478808a8b6b82beb83110fcb00157cc0a711956475");
 
-        BatteryObservationDTO batteryObservationDTO = new BatteryObservationDTO("56", "41.22157865201759 1.7300500669616392");
-        SentiloRequestDTO sentiloRequestDTO = new SentiloRequestDTO(batteryObservationDTO);
-
-        sentiloConnector.updateBatteryLocation(sentiloRequestDTO);
+        SentiloRequestDTO requestDTO = SentiloRequestDTO.builder()
+                .batteryObservationDTOList(Collections.singletonList(
+                        BatteryObservationDTO.builder()
+                                .batteryPercentage("56")
+                                .location("41.22157865201759 1.7300500669616392")
+                                .build()
+                ))
+                .build();
+        sentiloConnector.updateBatteryLocation(requestDTO);
 
         petmini = findViewById(R.id.petmini);                //PET declaration
         petmini.setImageResource(R.drawable.neutralstatus);
