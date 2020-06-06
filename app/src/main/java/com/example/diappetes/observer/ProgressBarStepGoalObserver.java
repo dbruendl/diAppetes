@@ -6,6 +6,9 @@ import androidx.lifecycle.Observer;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Observes a percentage float value and updates a progress bar accordingly
+ */
 @RequiredArgsConstructor
 public class ProgressBarStepGoalObserver implements Observer<Float> {
     private final ProgressBar progressBar;
