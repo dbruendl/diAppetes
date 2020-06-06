@@ -24,7 +24,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+import com.example.diappetes.sentilo.SentiloConnector;
+import com.example.diappetes.sentilo.SentiloConnectorVolleyImpl;
+import com.example.diappetes.sentilo.request.dto.BatteryObservationDTO;
+import com.example.diappetes.sentilo.request.dto.SentiloRequestDTO;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener, StepListener {
     private static final String CHANNEL_ID = "69"; //nice
@@ -45,10 +50,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        RequestQueue queue = Volley.newRequestQueue(this);
+        SentiloConnector sentiloConnector = new SentiloConnectorVolleyImpl(queue, "c7337d3fc4ec28d0dddc81478808a8b6b82beb83110fcb00157cc0a711956475");
+
+        BatteryObservationDTO batteryObservationDTO = new BatteryObservationDTO("56", "41.22157865201759 1.7300500669616392");
+        SentiloRequestDTO sentiloRequestDTO = new SentiloRequestDTO(batteryObservationDTO);
+
+        sentiloConnector.updateBatteryLocation(sentiloRequestDTO);
+
         petmini = findViewById(R.id.petmini);                //PET declaration
         petmini.setImageResource(R.drawable.neutralstatus);
-
-        SentiloConnector sc = new SentiloConnector(this);
 
         // Create an explicit intent for an Activity in your app
         final Intent intent = new Intent(this, AlertDialog.class);
@@ -86,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 }
             }
         });
-
 
         Button infobtn = (Button) findViewById(R.id.infobtn);
         infobtn.setOnClickListener(new View.OnClickListener() {
