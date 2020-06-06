@@ -24,29 +24,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.example.diappetes.observer.PetStepGoalObserver;
+import com.example.diappetes.observer.ProgressBarStepGoalObserver;
+import com.example.diappetes.observer.TextViewStepGoalObserver;
 import com.example.diappetes.sentilo.SentiloConnector;
 import com.example.diappetes.sentilo.SentiloConnectorVolleyImpl;
 import com.example.diappetes.sentilo.SentiloUpdateService;
-import com.example.diappetes.sentilo.request.dto.BatteryObservationDTO;
-import com.example.diappetes.sentilo.request.dto.SentiloRequestDTO;
+import com.example.diappetes.tracker.SimpleStepGoalTrackerImpl;
+import com.example.diappetes.tracker.StepGoalTracker;
 
-import java.util.Collections;
-
-public class MainActivity extends AppCompatActivity implements SensorEventListener, StepListener {
+public class MainActivity extends AppCompatActivity {
     private static final String CHANNEL_ID = "69"; //nice
     private StepDetector simpleStepDetector;
     private SensorManager sensorManager;
+
     private Sensor accel;
-    private static final String TEXT_NUM_STEPS = "Steps taken "; //Number of Steps:
-    private int numSteps;
-    private int goalSteps;
     public int progress;
-    private TextView TvSteps;
-    private ProgressBar pb;
-    private ToggleButton tb;
-    ImageView petmini;
+    private TextView textViewTotalSteps;
+    private ProgressBar stepGoalProgressBar;
+    private ToggleButton toggleStepTrackingButton;
+    ImageView imageViewPetMini;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +53,20 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         SentiloConnector sentiloConnector = new SentiloConnectorVolleyImpl(Volley.newRequestQueue(this), "c7337d3fc4ec28d0dddc81478808a8b6b82beb83110fcb00157cc0a711956475");
         SentiloUpdateService sentiloUpdateService = new SentiloUpdateService(sentiloConnector, 3);
+        StepGoalTracker stepGoalTracker = new SimpleStepGoalTrackerImpl(10);
 
-        petmini = findViewById(R.id.petmini);                //PET declaration
-        petmini.setImageResource(R.drawable.neutralstatus);
+        imageViewPetMini = findViewById(R.id.petmini);
+        imageViewPetMini.setImageResource(R.drawable.neutralstatus);
+        PetStepGoalObserver petStepGoalObserver = new PetStepGoalObserver(imageViewPetMini);
+        stepGoalTracker.progress().observe(this, petStepGoalObserver);
+
+        stepGoalProgressBar = findViewById(R.id.pb_steps);
+        ProgressBarStepGoalObserver progressBarStepGoalObserver = new ProgressBarStepGoalObserver(stepGoalProgressBar);
+        stepGoalTracker.progress().observe(this, progressBarStepGoalObserver);
+
+        textViewTotalSteps = findViewById(R.id.tv_steps);
+        TextViewStepGoalObserver textViewStepGoalObserver = new TextViewStepGoalObserver(textViewTotalSteps);
+        stepGoalTracker.totalSteps().observe(this, textViewStepGoalObserver);
 
         // Create an explicit intent for an Activity in your app
         final Intent intent = new Intent(this, AlertDialog.class);
@@ -79,20 +88,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         simpleStepDetector = new StepDetector();
-        simpleStepDetector.registerListener(this);
         simpleStepDetector.registerListener(sentiloUpdateService);
-        pb = findViewById(R.id.pb_steps);
+        simpleStepDetector.registerListener(stepGoalTracker);
 
-        TvSteps = findViewById(R.id.tv_steps);
-        tb = findViewById(R.id.toggleButton);
+        toggleStepTrackingButton = findViewById(R.id.toggleButton);
 
-        tb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        toggleStepTrackingButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    sensorManager.registerListener(MainActivity.this, accel, SensorManager.SENSOR_DELAY_FASTEST);
-
+                    sensorManager.registerListener(simpleStepDetector, accel, SensorManager.SENSOR_DELAY_FASTEST);
                 } else {
-                    sensorManager.unregisterListener(MainActivity.this);
+                    sensorManager.unregisterListener(simpleStepDetector);
                 }
             }
         });
@@ -131,58 +137,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     public void onDefaultToggleClick(View view) {
         Toast.makeText(this, "DefaultToggleClick", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            simpleStepDetector.updateAccel(
-                    event.timestamp, event.values[0], event.values[1], event.values[2]);
-        }
-    }
-
-    @Override
-    public void step() {
-        numSteps++;
-        goalSteps = 10;
-        // Average step is 0.74m and takes 0.5 sec (to verify)
-
-        progress = (numSteps * 100) / goalSteps;
-
-        pb.setProgress(progress);
-
-        TvSteps.setText(TEXT_NUM_STEPS + numSteps);
-
-        int petstatus;  // PET code is here because it needs to be updated
-
-        if (progress > 0) {
-            if (progress < 100) { //0 - 100  During exercise
-                petstatus = 1;
-            } else { //100 - Exercise is finished
-                petstatus = 2;
-            }
-        } else { //0 Exercise not started
-            petstatus = 0;
-        }
-
-
-        switch (petstatus) {
-            case 1:
-                petmini.setImageResource(R.drawable.happystatus);
-                break;
-            case 2:
-                petmini.setImageResource(R.drawable.superhappystatus);
-                break;
-            case 0:
-            default:
-                petmini.setImageResource(R.drawable.neutralstatus);
-                break;
-        }
-    }
-
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
 
     private void createNotificationChannel() {

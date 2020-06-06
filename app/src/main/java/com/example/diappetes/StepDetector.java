@@ -1,9 +1,13 @@
 package com.example.diappetes;
 
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class StepDetector {
+public class StepDetector implements SensorEventListener {
 
     private static final int ACCEL_RING_SIZE = 50;
     private static final int VEL_RING_SIZE = 10;
@@ -65,6 +69,18 @@ public class StepDetector {
             lastStepTimeNs = timeNs;
         }
         oldVelocityEstimate = velocityEstimate;
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            updateAccel(event.timestamp, event.values[0], event.values[1], event.values[2]);
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 
     private void notifyListeners() {
