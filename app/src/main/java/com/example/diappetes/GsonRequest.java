@@ -1,5 +1,7 @@
 package com.example.diappetes;
 
+import android.util.Log;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
@@ -13,6 +15,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 public class GsonRequest<R> extends Request<String> {
+
+    private final static String LOG_TAG = "GsonRequest";
+
     private final Gson gson;
     private final Map<String, String> headers;
     private final R requestBody;
@@ -44,7 +49,11 @@ public class GsonRequest<R> extends Request<String> {
 
     @Override
     protected void deliverResponse(String response) {
-        responseListener.onResponse(response);
+        if (responseListener != null) {
+            responseListener.onResponse(response);
+        } else {
+            Log.d(LOG_TAG, "Response received: " + response);
+        }
     }
 
     @Override
