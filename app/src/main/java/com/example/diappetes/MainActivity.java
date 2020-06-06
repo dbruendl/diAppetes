@@ -27,11 +27,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.room.Room;
 
 import com.android.volley.toolbox.Volley;
 import com.example.diappetes.observer.PetStepGoalObserver;
 import com.example.diappetes.observer.ProgressBarStepGoalObserver;
 import com.example.diappetes.observer.TextViewStepGoalObserver;
+import com.example.diappetes.persistence.AppDatabase;
 import com.example.diappetes.sentilo.SentiloConnector;
 import com.example.diappetes.sentilo.SentiloConnectorVolleyImpl;
 import com.example.diappetes.sentilo.SentiloUpdateService;
@@ -41,6 +43,8 @@ import com.example.diappetes.tracker.StepGoalTracker;
 import static com.example.diappetes.WalkReminderNotificationReceiver.KEY_CHANNEL_ID;
 
 public class MainActivity extends AppCompatActivity {
+
+    private AppDatabase appDatabase;
 
     private final static String SENTILO_IDENTITY_KEY = "c7337d3fc4ec28d0dddc81478808a8b6b82beb83110fcb00157cc0a711956475";
     private final static String CHANNEL_ID = "69"; //nice
@@ -60,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        appDatabase = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "database")
+                .build();
 
         SentiloConnector sentiloConnector = new SentiloConnectorVolleyImpl(Volley.newRequestQueue(this), SENTILO_IDENTITY_KEY);
         StepGoalTracker stepGoalTracker = new SimpleStepGoalTrackerImpl(10);
