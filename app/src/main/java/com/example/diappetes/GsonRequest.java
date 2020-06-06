@@ -51,7 +51,7 @@ public class GsonRequest<R> extends Request<String> {
     protected void deliverResponse(String response) {
         if (responseListener != null) {
             responseListener.onResponse(response);
-        } else {
+        } else if (!response.isEmpty()){
             Log.d(LOG_TAG, "Response received: " + response);
         }
     }

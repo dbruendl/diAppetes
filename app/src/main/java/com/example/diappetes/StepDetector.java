@@ -25,7 +25,7 @@ public class StepDetector {
     private List<StepListener> stepListeners = new ArrayList<>();
 
     public void registerListener(StepListener stepListener) {
-        if (stepListeners.contains(stepListener)) {
+        if (!stepListeners.contains(stepListener)) {
             stepListeners.add(stepListener);
         }
     }

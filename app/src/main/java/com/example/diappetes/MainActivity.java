@@ -28,6 +28,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.diappetes.sentilo.SentiloConnector;
 import com.example.diappetes.sentilo.SentiloConnectorVolleyImpl;
+import com.example.diappetes.sentilo.SentiloUpdateService;
 import com.example.diappetes.sentilo.request.dto.BatteryObservationDTO;
 import com.example.diappetes.sentilo.request.dto.SentiloRequestDTO;
 
@@ -52,18 +53,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RequestQueue queue = Volley.newRequestQueue(this);
-        SentiloConnector sentiloConnector = new SentiloConnectorVolleyImpl(queue, "c7337d3fc4ec28d0dddc81478808a8b6b82beb83110fcb00157cc0a711956475");
-
-        SentiloRequestDTO requestDTO = SentiloRequestDTO.builder()
-                .batteryObservationDTOList(Collections.singletonList(
-                        BatteryObservationDTO.builder()
-                                .batteryPercentage("56")
-                                .location("41.22157865201759 1.7300500669616392")
-                                .build()
-                ))
-                .build();
-        sentiloConnector.updateBatteryLocation(requestDTO);
+        SentiloConnector sentiloConnector = new SentiloConnectorVolleyImpl(Volley.newRequestQueue(this), "c7337d3fc4ec28d0dddc81478808a8b6b82beb83110fcb00157cc0a711956475");
+        SentiloUpdateService sentiloUpdateService = new SentiloUpdateService(sentiloConnector, 3);
 
         petmini = findViewById(R.id.petmini);                //PET declaration
         petmini.setImageResource(R.drawable.neutralstatus);
@@ -89,10 +80,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         simpleStepDetector = new StepDetector();
         simpleStepDetector.registerListener(this);
+        simpleStepDetector.registerListener(sentiloUpdateService);
         pb = findViewById(R.id.pb_steps);
 
-        TvSteps = (TextView) findViewById(R.id.tv_steps);
-        tb = (ToggleButton) findViewById(R.id.toggleButton);
+        TvSteps = findViewById(R.id.tv_steps);
+        tb = findViewById(R.id.toggleButton);
 
         tb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -105,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-        Button infobtn = (Button) findViewById(R.id.infobtn);
+        Button infobtn = findViewById(R.id.infobtn);
         infobtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-        Button petbtn = (Button) findViewById(R.id.petbtn);
+        Button petbtn = findViewById(R.id.petbtn);
         petbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-        Button statbtn = (Button) findViewById(R.id.statbtn);
+        Button statbtn = findViewById(R.id.statbtn);
         statbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,9 +127,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 startActivity(startstatintent);
             }
         });
-
-
-
     }
 
     public void onDefaultToggleClick(View view) {
