@@ -1,8 +1,10 @@
 package com.example.diappetes;
 
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -10,6 +12,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -19,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
@@ -34,10 +38,13 @@ import com.example.diappetes.sentilo.SentiloUpdateService;
 import com.example.diappetes.tracker.SimpleStepGoalTrackerImpl;
 import com.example.diappetes.tracker.StepGoalTracker;
 
+import static com.example.diappetes.WalkReminderNotificationReceiver.KEY_CHANNEL_ID;
+
 public class MainActivity extends AppCompatActivity {
 
     private final static String SENTILO_IDENTITY_KEY = "c7337d3fc4ec28d0dddc81478808a8b6b82beb83110fcb00157cc0a711956475";
-    private static final String CHANNEL_ID = "69"; //nice
+    private final static String CHANNEL_ID = "69"; //nice
+    private final static long GO_FOR_WALK_NOTIFICATION_INTERVAL_IN_MS = 24 /* h */ * 60 /* m */ * 60 /* s */ * 1000 /* ms */;
     private StepDetector simpleStepDetector;
     private SensorManager sensorManager;
 
@@ -49,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageViewPetMini;
 
     @Override
+    @RequiresApi(api = Build.VERSION_CODES.M)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -72,22 +80,19 @@ public class MainActivity extends AppCompatActivity {
         TextViewStepGoalObserver textViewStepGoalObserver = new TextViewStepGoalObserver(textViewTotalSteps);
         stepGoalTracker.totalSteps().observe(this, textViewStepGoalObserver);
 
-        // Create an explicit intent for an Activity in your app
-        final Intent intent = new Intent(this, AlertDialog.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.circle)
-                .setContentTitle("Hey take care of your pet")
-                .setContentText("The day is nearly over and your pet is not Happy yet")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
+        createNotificationChannel();
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        // notificationId is a unique int for each notification that you must define
-        int notificationId = 1;
-        notificationManager.notify(notificationId, builder.build());
+        // Create an explicit intent for an Activity in your app
+        final Intent intent = new Intent(this, WalkReminderNotificationReceiver.class)
+                .putExtra(KEY_CHANNEL_ID, CHANNEL_ID);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 2135323, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        assert alarmManager != null;
+        alarmManager.set(
+                AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime() + GO_FOR_WALK_NOTIFICATION_INTERVAL_IN_MS,
+                pendingIntent);
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -150,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_notify);
+            CharSequence name = getString(R.string.channel_name);
             String description = getString(R.string.channel_description);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
