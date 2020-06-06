@@ -13,6 +13,8 @@ import android.widget.TextView;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.inject.Inject;
+
 public class RegisterActivity extends AppCompatActivity {
 
     CheckInput ci;
@@ -30,6 +32,12 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        DaggerApplicationComponent.builder()
+                .appModule(new AppModule(getApplication()))
+                .roomModule(new RoomModule(getApplication()))
+                .build()
+                .inject(this);
 
         ci = new CheckInput();
         emailId = findViewById(R.id.signupemailtxt);   // Obtaining data from user input
