@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     @Override
-    public void step(long timeNs) {
+    public void step() {
         numSteps++;
         goalSteps = 10;
         // Average step is 0.74m and takes 0.5 sec (to verify)
@@ -166,8 +166,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         int petstatus;  // PET code is here because it needs to be updated
 
-        if(progress>0){
-            if(progress<100){ //0 - 100  During exercise
+        if (progress > 0) {
+            if (progress < 100) { //0 - 100  During exercise
                 petstatus = 1;
             } else { //100 - Exercise is finished
                 petstatus = 2;
@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
 
 
-        switch (petstatus){
+        switch (petstatus) {
             case 1:
                 petmini.setImageResource(R.drawable.happystatus);
                 break;
