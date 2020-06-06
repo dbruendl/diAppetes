@@ -35,6 +35,8 @@ import com.example.diappetes.tracker.SimpleStepGoalTrackerImpl;
 import com.example.diappetes.tracker.StepGoalTracker;
 
 public class MainActivity extends AppCompatActivity {
+
+    private final static String SENTILO_IDENTITY_KEY = "c7337d3fc4ec28d0dddc81478808a8b6b82beb83110fcb00157cc0a711956475";
     private static final String CHANNEL_ID = "69"; //nice
     private StepDetector simpleStepDetector;
     private SensorManager sensorManager;
@@ -51,9 +53,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SentiloConnector sentiloConnector = new SentiloConnectorVolleyImpl(Volley.newRequestQueue(this), "c7337d3fc4ec28d0dddc81478808a8b6b82beb83110fcb00157cc0a711956475");
-        SentiloUpdateService sentiloUpdateService = new SentiloUpdateService(sentiloConnector, 3);
+        SentiloConnector sentiloConnector = new SentiloConnectorVolleyImpl(Volley.newRequestQueue(this), SENTILO_IDENTITY_KEY);
         StepGoalTracker stepGoalTracker = new SimpleStepGoalTrackerImpl(10);
+
+        SentiloUpdateService sentiloUpdateService = new SentiloUpdateService(sentiloConnector, 3);
+        stepGoalTracker.totalSteps().observe(this, sentiloUpdateService);
 
         imageViewPetMini = findViewById(R.id.petmini);
         imageViewPetMini.setImageResource(R.drawable.neutralstatus);
@@ -88,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         simpleStepDetector = new StepDetector();
-        simpleStepDetector.registerListener(sentiloUpdateService);
         simpleStepDetector.registerListener(stepGoalTracker);
 
         toggleStepTrackingButton = findViewById(R.id.toggleButton);

@@ -1,5 +1,7 @@
 package com.example.diappetes.sentilo;
 
+import androidx.lifecycle.Observer;
+
 import com.example.diappetes.StepListener;
 import com.example.diappetes.sentilo.request.dto.BatteryObservationDTO;
 import com.example.diappetes.sentilo.request.dto.SentiloRequestDTO;
@@ -10,32 +12,29 @@ import java.util.Collections;
  * Counts the total amount of steps a user has taken and sends an update request to a Sentilo api
  * at a configurable interval.
  */
-public class SentiloUpdateService implements StepListener {
+public class SentiloUpdateService implements Observer<Integer> {
 
     private final SentiloConnector sentiloConnector;
     private final int stepUpdateInterval;
-    private int totalSteps;
 
     public SentiloUpdateService(SentiloConnector sentiloConnector, int stepUpdateInterval) {
         this.sentiloConnector = sentiloConnector;
         this.stepUpdateInterval = stepUpdateInterval;
-        this.totalSteps = 0;
     }
 
     @Override
-    public void step() {
-        this.totalSteps++;
-
-        if(thresholdReached()) {
-            sendUpdateRequest();
+    public void onChanged(Integer totalSteps) {
+        if(updateIntervalReached(totalSteps)) {
+            sendUpdateRequest(totalSteps);
         }
     }
 
-    private boolean thresholdReached() {
+    private boolean updateIntervalReached(int totalSteps) {
         return totalSteps % stepUpdateInterval == 0;
     }
 
-    private void sendUpdateRequest() {
+    private void sendUpdateRequest(int totalSteps) {
+        // TODO add total steps to request body
         SentiloRequestDTO requestDTO = SentiloRequestDTO.builder()
                 .batteryObservationDTOList(Collections.singletonList(
                         BatteryObservationDTO.builder()
