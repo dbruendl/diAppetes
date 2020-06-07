@@ -1,4 +1,4 @@
-package com.example.diappetes;
+package com.example.diappetes.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.diappetes.CheckInput;
+import com.example.diappetes.MainActivity;
+import com.example.diappetes.R;
+import com.example.diappetes.StatActivity;
 import com.example.diappetes.register.RegisterActivity;
 
 public class LoginActivity extends AppCompatActivity {
