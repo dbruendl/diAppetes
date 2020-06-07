@@ -24,16 +24,6 @@ public class RegisterFormActivity extends AppCompatActivity {
         surnametxt = findViewById(R.id.surnametxt);
         proffesiontxt = findViewById(R.id.professiontxt);
         heihttxt = findViewById(R.id.heighttxt);
-        weighttxt = findViewById(R.id.weighttxt);
-
-        nametxt.getText();
-        surnametxt.getText();
-        proffesiontxt.getText();
-        heihttxt.getText();
-        weighttxt.getText();
-
-        height = Double.parseDouble(heihttxt.getText().toString());  //Converting to double from text
-        weight = Double.parseDouble(weighttxt.getText().toString());
 
         nextbtn.setOnClickListener(v -> {
             Intent startLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
