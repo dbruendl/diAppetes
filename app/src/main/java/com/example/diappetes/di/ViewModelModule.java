@@ -2,7 +2,7 @@ package com.example.diappetes.di;
 
 import androidx.lifecycle.ViewModel;
 
-import com.example.diappetes.RegisterViewModel;
+import com.example.diappetes.register.RegisterViewModel;
 
 import dagger.Binds;
 import dagger.Module;

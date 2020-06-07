@@ -1,4 +1,4 @@
-package com.example.diappetes;
+package com.example.diappetes.register;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.diappetes.LoginActivity;
+import com.example.diappetes.R;
 
 public class RegisterFormActivity extends AppCompatActivity {
 

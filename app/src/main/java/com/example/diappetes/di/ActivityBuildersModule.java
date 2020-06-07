@@ -1,6 +1,6 @@
 package com.example.diappetes.di;
 
-import com.example.diappetes.RegisterActivity;
+import com.example.diappetes.register.RegisterActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -11,4 +11,6 @@ public abstract class ActivityBuildersModule {
             modules = {ViewModelModule.class}
     )
     abstract RegisterActivity contributeRegisterActivity();
+
+
 }

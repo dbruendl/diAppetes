@@ -1,4 +1,4 @@
-package com.example.diappetes;
+package com.example.diappetes.register;
 
 public class RegisterModel {
     private int userID;
