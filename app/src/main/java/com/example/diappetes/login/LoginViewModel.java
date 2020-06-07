@@ -32,6 +32,14 @@ public class LoginViewModel extends ViewModel {
     Completable login(String email, String password) {
         CompletableSubject completableSubject = CompletableSubject.create();
 
+        if(email.isEmpty()) {
+            completableSubject.onError(new InvalidEmailException());
+            return completableSubject;
+        } else if(password.isEmpty()) {
+            completableSubject.onError(new InvalidPasswordException());
+            return completableSubject;
+        }
+
         loginUserDisposable = userRepository.findByEmail(email)
                 .subscribeOn(Schedulers.io())
                 .subscribe(user -> {

@@ -42,30 +42,26 @@ public class LoginActivity extends DaggerAppCompatActivity {
         Button loginBtn = findViewById(R.id.signinbtn);
 
         loginViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(LoginViewModel.class);
-        
+
         /*
          *loginBtn send the data to CheckInput, and checks if email or password is already registered
          * if one of the two inputs is empty or there is no register in the local database an Errortextmessage will appear
          * if everything is correct the screen changes to the homescreen
          */
         loginBtn.setOnClickListener(v -> {
-            EditText emailId = findViewById(R.id.logintxt);
-            EditText passwordId = findViewById(R.id.passwordtxt);
-            TextView errorTxt = findViewById(R.id.loginerrortxt);
+            String email = findViewById(R.id.logintxt).toString();
+            String password = findViewById(R.id.passwordtxt).toString();
+            TextView errorTextView = findViewById(R.id.loginerrortxt);
 
-            if (emailId.getText().toString().isEmpty() || passwordId.getText().toString().isEmpty()) {
-                errorTxt.setText("error: Please type in an Email and password");
-            } else {
-                Disposable disposable = loginViewModel.login(emailId.getText().toString(), passwordId.getText().toString())
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(() -> {
-                            Intent startHomeIntent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(startHomeIntent);
-                        }, error -> {
-                            errorTxt.setText(error.getMessage());
-                        });
-            }
+            Disposable disposable = loginViewModel.login(email, password)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(() -> {
+                        Intent startHomeIntent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(startHomeIntent);
+                    }, error -> {
+                        errorTextView.setText(error.getMessage());
+                    });
         });
 
         Button registerbtn = findViewById(R.id.registerbtn);
