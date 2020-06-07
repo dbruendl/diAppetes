@@ -1,27 +1,47 @@
 package com.example.diappetes.login;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.diappetes.CheckInput;
 import com.example.diappetes.MainActivity;
 import com.example.diappetes.R;
 import com.example.diappetes.StatActivity;
+import com.example.diappetes.ViewModelProviderFactory;
 import com.example.diappetes.register.RegisterActivity;
 
-public class LoginActivity extends AppCompatActivity {
+import javax.inject.Inject;
+
+import dagger.android.support.DaggerAppCompatActivity;
+import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
+public class LoginActivity extends DaggerAppCompatActivity {
     CheckInput c;
 
+    @Inject
+    ViewModelProviderFactory viewModelProviderFactory;
+
+    private LoginViewModel loginViewModel;
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Button loginBtn = findViewById(R.id.signinbtn);
+
+        loginViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(LoginViewModel.class);
 
         /*
          *loginBtn send the data to CheckInput, and checks if email or password is already registered
@@ -37,6 +57,16 @@ public class LoginActivity extends AppCompatActivity {
                 errorTxt.setText("error: Please type in an Email and password");
             } else {
                 c = new CheckInput(emailId.getText().toString(), passwordId.getText().toString(), LoginActivity.this);
+
+                Disposable disposable = loginViewModel.login(emailId.getText().toString(), passwordId.getText().toString())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(() -> {
+                            Intent startHomeIntent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(startHomeIntent);
+                        }, error -> {
+                            errorTxt.setText(error.getMessage());
+                        });
 
                 if (c.loginCheckEmail()) {
                     if (c.loginCheckPassword()) {
@@ -70,5 +100,5 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(takeMeToStatIntent);
         });
 
-        }
+    }
 }

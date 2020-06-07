@@ -16,6 +16,6 @@ public interface UserDao {
     @Insert
     long insert(User user);
 
-    @Query("SELECT * FROM user where uid = :uid")
-    Maybe<User> findByUid(String uid);
+    @Query("SELECT * FROM user WHERE email = :email")
+    Maybe<User> findByEmail(String email);
 }

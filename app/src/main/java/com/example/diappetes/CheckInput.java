@@ -7,10 +7,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CheckInput {
-    String email;
-    String password;
-    Context c;
-    Matcher matcher; //Checking if email input is correct
+    private String email;
+    private String password;
+    private Context c;
+    private Matcher matcher; //Checking if email input is correct
     DatabaseSLite db;
 
     //constructor for the login
@@ -61,21 +61,5 @@ public class CheckInput {
             return matcher.matches();
         }
         return false;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }

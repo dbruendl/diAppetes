@@ -7,7 +7,7 @@ import androidx.room.Room;
 import com.example.diappetes.persistence.AppDatabase;
 import com.example.diappetes.persistence.model.UserDao;
 import com.example.diappetes.persistence.model.UserRepository;
-import com.example.diappetes.persistence.model.UserRepositoryAsyncTaskImpl;
+import com.example.diappetes.persistence.model.UserRepositoryRunnableImpl;
 
 import javax.inject.Singleton;
 
@@ -31,7 +31,7 @@ public class DatabaseModule {
 
     @Singleton
     @Provides
-    UserRepository userRepository(AppDatabase appDatabase) {
-        return new UserRepositoryAsyncTaskImpl(appDatabase);
+    UserRepository userRepository(UserDao userDao) {
+        return new UserRepositoryRunnableImpl(userDao);
     }
 }

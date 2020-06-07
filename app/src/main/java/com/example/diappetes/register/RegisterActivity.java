@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.diappetes.CheckInput;
 import com.example.diappetes.R;
 import com.example.diappetes.ViewModelProviderFactory;
-import com.example.diappetes.persistence.AppDatabase;
 
 import javax.inject.Inject;
 
@@ -23,9 +22,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
 public class RegisterActivity extends DaggerAppCompatActivity {
-
-    @Inject
-    AppDatabase appDatabase;
 
     @Inject
     ViewModelProviderFactory viewModelProviderFactory;

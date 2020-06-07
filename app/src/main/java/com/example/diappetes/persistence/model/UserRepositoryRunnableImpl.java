@@ -1,7 +1,5 @@
 package com.example.diappetes.persistence.model;
 
-import com.example.diappetes.persistence.AppDatabase;
-
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
@@ -10,28 +8,13 @@ import io.reactivex.subjects.CompletableSubject;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-public class UserRepositoryAsyncTaskImpl implements UserRepository {
+public class UserRepositoryRunnableImpl implements UserRepository {
 
     private final UserDao userDao;
-    private final AppDatabase appDatabase;
 
     @Inject
-    public UserRepositoryAsyncTaskImpl(AppDatabase appDatabase) {
-        this.appDatabase = appDatabase;
-        this.userDao = appDatabase.userDao();
-    }
-
-    @Override
-    public Maybe<Boolean> exists(String uid) {
-        return userDao.findByUid(uid)
-                .map(user -> Maybe.just(true))
-                .cast(Boolean.class)
-                .defaultIfEmpty(false);
-    }
-
-    @Override
-    public Maybe<User> findById(String uid) {
-        return userDao.findByUid(uid);
+    public UserRepositoryRunnableImpl(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     @Override
@@ -41,6 +24,11 @@ public class UserRepositoryAsyncTaskImpl implements UserRepository {
         new Thread(insertUserRunnable).start();
 
         return insertUserRunnable.completableSubject;
+    }
+
+    @Override
+    public Maybe<User> findByEmail(String email) {
+        return userDao.findByEmail(email);
     }
 
     @RequiredArgsConstructor
