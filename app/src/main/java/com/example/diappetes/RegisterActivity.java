@@ -1,8 +1,7 @@
 package com.example.diappetes;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
@@ -10,12 +9,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.example.diappetes.persistence.AppDatabase;
+import com.example.diappetes.persistence.model.User;
 
 import javax.inject.Inject;
 
-public class RegisterActivity extends AppCompatActivity {
+import dagger.android.support.DaggerAppCompatActivity;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+
+public class RegisterActivity extends DaggerAppCompatActivity {
+
+    @Inject
+    AppDatabase appDatabase;
+
+    @Inject
+    ViewModelProviderFactory viewModelProviderFactory;
+
+    private RegisterViewModel registerViewModel;
 
     CheckInput ci;
     EditText emailId;
@@ -33,11 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        DaggerApplicationComponent.builder()
-                .appModule(new AppModule(getApplication()))
-                .roomModule(new RoomModule(getApplication()))
-                .build()
-                .inject(this);
+        registerViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(RegisterViewModel.class);
 
         ci = new CheckInput();
         emailId = findViewById(R.id.signupemailtxt);   // Obtaining data from user input
@@ -55,22 +65,21 @@ public class RegisterActivity extends AppCompatActivity {
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 RegisterModel rm;
 
-                if (ci.checkEmail(email)){
-                    if (ci.checkPassword(password,password2)){
-                        rm = new RegisterModel(-1,email.toString(),password.toString());
-                        //Register placeholder
-                        DatabaseSLite dbsl = new DatabaseSLite(RegisterActivity.this);
-                        boolean success = dbsl.addOne(rm);
-                        if(success) {
-                            Intent startRegisterFormIntent = new Intent(getApplicationContext(), RegisterFormActivity.class);
-                            startActivity(startRegisterFormIntent);
-                        }else{
-                            signUpErrorTxt.setText("The Database input wasn´t succesful");
-                        }
-                    } else{
+                if (ci.checkEmail(email)) {
+                    if (ci.checkPassword(password, password2)) {
+                        Disposable registerUserDisposable = registerViewModel.registerUser(email.toString(), username.toString(), password.toString())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(() -> {
+                                    Intent startRegisterFormIntent = new Intent(getApplicationContext(), RegisterFormActivity.class);
+                                    startActivity(startRegisterFormIntent);
+                                }, error -> {
+                                    if(error instanceof SQLiteConstraintException) {
+                                        signUpErrorTxt.setText("Username already exists");
+                                    }
+                                });
+                    } else {
                         signUpErrorTxt.setText("The Passwords does not match, please make sure that they do");
                     }
                 } else {

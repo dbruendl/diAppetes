@@ -32,20 +32,12 @@ public class RegisterFormActivity extends AppCompatActivity {
         heihttxt.getText();
         weighttxt.getText();
 
-        height = Double.parseDouble(heihttxt.toString());  //Converting to double from text
-        weight = Double.parseDouble(weighttxt.toString());
+        height = Double.parseDouble(heihttxt.getText().toString());  //Converting to double from text
+        weight = Double.parseDouble(weighttxt.getText().toString());
 
-
-        nextbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent startLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(startLoginIntent);
-            }
+        nextbtn.setOnClickListener(v -> {
+            Intent startLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(startLoginIntent);
         });
-
-
-
-
     }
 }

@@ -1,7 +1,5 @@
 package com.example.diappetes;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,14 +7,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.diappetes.persistence.AppDatabase;
-
-import javax.inject.Inject;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
-    @Inject
-    AppDatabase appDatabase;
-
     CheckInput c;
     DatabaseSLite dbl;
     @Override
@@ -25,11 +18,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         Button loginBtn = findViewById(R.id.signinbtn);
 
-        DaggerApplicationComponent.builder()
-                .appModule(new AppModule(getApplication()))
-                .roomModule(new RoomModule(getApplication()))
-                .build()
-                .inject(this);
+//        DaggerApplicationComponent.builder()
+//                .appModule(new AppModule(getApplication()))
+//                .roomModule(new RoomModule(getApplication()))
+//                .build()
+//                .inject(this);
 
         /*
          *loginBtn send the data to CheckInput, and checks if email or password is already registered

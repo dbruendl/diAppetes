@@ -6,11 +6,16 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import io.reactivex.Maybe;
+
 @Dao
 public interface UserDao {
     @Query("SELECT * FROM user")
     List<User> getAll();
 
     @Insert
-    void insertAll(User... users);
+    long insert(User user);
+
+    @Query("SELECT * FROM user where uid = :uid")
+    Maybe<User> findByUid(String uid);
 }

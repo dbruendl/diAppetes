@@ -1,4 +1,4 @@
-package com.example.diappetes;
+package com.example.diappetes.di;
 
 import android.app.Application;
 
