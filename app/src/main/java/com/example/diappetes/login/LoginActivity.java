@@ -42,7 +42,7 @@ public class LoginActivity extends DaggerAppCompatActivity {
         Button loginBtn = findViewById(R.id.signinbtn);
 
         loginViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(LoginViewModel.class);
-
+        
         /*
          *loginBtn send the data to CheckInput, and checks if email or password is already registered
          * if one of the two inputs is empty or there is no register in the local database an Errortextmessage will appear
@@ -56,8 +56,6 @@ public class LoginActivity extends DaggerAppCompatActivity {
             if (emailId.getText().toString().isEmpty() || passwordId.getText().toString().isEmpty()) {
                 errorTxt.setText("error: Please type in an Email and password");
             } else {
-                c = new CheckInput(emailId.getText().toString(), passwordId.getText().toString(), LoginActivity.this);
-
                 Disposable disposable = loginViewModel.login(emailId.getText().toString(), passwordId.getText().toString())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -67,17 +65,6 @@ public class LoginActivity extends DaggerAppCompatActivity {
                         }, error -> {
                             errorTxt.setText(error.getMessage());
                         });
-
-                if (c.loginCheckEmail()) {
-                    if (c.loginCheckPassword()) {
-                        Intent startHomeIntent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(startHomeIntent);
-                    } else {
-                        errorTxt.setText("error: Your password is wrong");
-                    }
-                } else {
-                    errorTxt.setText("error: Your Email is not registered yet, please do so");
-                }
             }
         });
 

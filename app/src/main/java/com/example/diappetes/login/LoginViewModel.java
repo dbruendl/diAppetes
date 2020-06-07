@@ -41,9 +41,7 @@ public class LoginViewModel extends ViewModel {
                     } else {
                         completableSubject.onError(new InvalidPasswordException());
                     }
-                }, error -> {
-                    completableSubject.onError(error);
-                }, () -> {
+                }, completableSubject::onError, () -> {
                     completableSubject.onError(new UserNotFoundException());
                 });
 
