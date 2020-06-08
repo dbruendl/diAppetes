@@ -80,18 +80,16 @@ public class AdditionalDataActivity extends DaggerAppCompatActivity {
                             Intent startLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(startLoginIntent);
                         }, error -> binding.error.setText(error.getMessage()));
-            } catch (ValidationException e) {
-                if (e instanceof InvalidFirstNameException) {
-                    binding.error.setText(R.string.additional_data_invalid_first_name);
-                } else if (e instanceof InvalidLastNameException) {
-                    binding.error.setText(R.string.additional_data_invalid_last_name);
-                } else if (e instanceof InvalidProfessionException) {
-                    binding.error.setText(R.string.additional_data_invalid_profession);
-                } else if (e instanceof InvalidWeightException) {
-                    binding.error.setText(R.string.additional_data_invalid_weight);
-                } else if (e instanceof InvalidHeightException) {
-                    binding.error.setText(R.string.additional_data_invalid_height);
-                }
+            } catch (InvalidFirstNameException e) {
+                binding.error.setText(R.string.additional_data_invalid_first_name);
+            } catch (InvalidLastNameException e) {
+                binding.error.setText(R.string.additional_data_invalid_last_name);
+            } catch (InvalidProfessionException e) {
+                binding.error.setText(R.string.additional_data_invalid_profession);
+            } catch (InvalidWeightException e) {
+                binding.error.setText(R.string.additional_data_invalid_weight);
+            } catch (InvalidHeightException e) {
+                binding.error.setText(R.string.additional_data_invalid_height);
             }
         });
     }
