@@ -1,6 +1,6 @@
 package com.example.diappetes.di;
 
-import com.example.diappetes.InfoActivity;
+import com.example.diappetes.info.InfoActivity;
 import com.example.diappetes.login.LoginActivity;
 import com.example.diappetes.register.RegisterActivity;
 

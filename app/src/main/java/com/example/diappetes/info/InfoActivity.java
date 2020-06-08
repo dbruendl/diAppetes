@@ -1,4 +1,4 @@
-package com.example.diappetes;
+package com.example.diappetes.info;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.diappetes.MainActivity;
+import com.example.diappetes.PetActivity;
+import com.example.diappetes.R;
+import com.example.diappetes.StatActivity;
+import com.example.diappetes.ViewModelProviderFactory;
 import com.example.diappetes.databinding.ActivityInfoBinding;
 import com.example.diappetes.info.InfoViewModel;
 import com.example.diappetes.info.UserListAdapter;

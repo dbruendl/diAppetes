@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.diappetes.info.InfoActivity;
+
 public class PetActivity extends AppCompatActivity {
     int petstatus;
     int progress;

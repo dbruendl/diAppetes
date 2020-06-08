@@ -7,8 +7,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,13 +21,10 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.room.Room;
 
 import com.android.volley.toolbox.Volley;
+import com.example.diappetes.info.InfoActivity;
 import com.example.diappetes.observer.PetStepGoalObserver;
 import com.example.diappetes.observer.ProgressBarStepGoalObserver;
 import com.example.diappetes.observer.TextViewStepGoalObserver;
