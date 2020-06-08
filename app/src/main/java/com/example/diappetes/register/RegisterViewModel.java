@@ -4,37 +4,52 @@ import android.util.Patterns;
 
 import androidx.lifecycle.ViewModel;
 
-import com.example.diappetes.login.InvalidEmailException;
-import com.example.diappetes.login.InvalidPasswordException;
-import com.example.diappetes.login.InvalidUidException;
-import com.example.diappetes.login.PasswordDoNotMatchException;
-import com.example.diappetes.login.ValidationException;
 import com.example.diappetes.persistence.model.User;
 import com.example.diappetes.persistence.model.UserRepository;
 
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.CompletableSubject;
+
+import static io.reactivex.Completable.concat;
 
 public class RegisterViewModel extends ViewModel {
 
     private final UserRepository userRepository;
+
+    private Disposable usernameAlreadyTakenDisposable;
 
     @Inject
     public RegisterViewModel(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    Completable registerUser(String email, String uid, String password, String passwordConfirmation) {
-        try {
-            validateEmailOrThrow(email);
-            validateUidOrThrow(uid);
-            validatePasswordOrThrow(password, passwordConfirmation);
-        } catch (ValidationException e) {
-            return Completable.error(e);
-        }
+    Completable registerUser(String uid,
+                             String email,
+                             String password,
+                             String passwordConfirmation,
+                             String firstName,
+                             String lastName,
+                             String profession,
+                             Double weight,
+                             Double height,
+                             int dailyStepGoal) {
+        return userRepository.store(new User(uid, email, password, firstName, lastName, profession, weight, height, dailyStepGoal));
+    }
 
-        return userRepository.store(new User(uid, email, password));
+    Completable usernameAlreadyTaken(String uid) {
+        CompletableSubject completableSubject = CompletableSubject.create();
+
+        usernameAlreadyTakenDisposable = userRepository.findByUid(uid)
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                        user -> completableSubject.onError(new UsernameAlreadyTakenException()),
+                        error -> completableSubject.onComplete());
+
+        return completableSubject;
     }
 
     private void validateEmailOrThrow(String email) {

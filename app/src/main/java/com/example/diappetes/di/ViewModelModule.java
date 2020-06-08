@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.diappetes.info.InfoViewModel;
 import com.example.diappetes.login.LoginViewModel;
+import com.example.diappetes.register.AdditionalDataViewModel;
 import com.example.diappetes.register.RegisterViewModel;
 
 import dagger.Binds;
@@ -26,4 +27,11 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(InfoViewModel.class)
     public abstract ViewModel bindInfoViewModel(InfoViewModel infoViewModel);
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AdditionalDataViewModel.class)
+    public abstract ViewModel bindAdditionalDataViewModel(AdditionalDataViewModel infoViewModel);
+
+
 }

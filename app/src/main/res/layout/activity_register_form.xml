@@ -4,43 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".register.RegisterFormActivity">
+    tools:context=".register.AdditionalDataActivity">
 
     <EditText
-        android:id="@+id/activenesstxt"
+        android:id="@+id/daily_step_goal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:autofillHints=""
         android:ems="10"
-        android:hint="Exercises per week"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/animaltxt" />
-
-    <EditText
-        android:id="@+id/animaltxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:ems="10"
-        android:hint="Favourite animal"
+        android:hint="@string/additional_data_daily_step_goal_hint"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/heighttxt" />
+        app:layout_constraintTop_toBottomOf="@+id/height" />
 
     <EditText
-        android:id="@+id/surnametxt"
+        android:id="@+id/last_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:ems="10"
-        android:hint="Surname"
+        android:hint="@string/additional_data_form_last_name_hint"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nametxt" />
+        app:layout_constraintTop_toBottomOf="@+id/first_name"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/professiontxt"
@@ -48,36 +38,36 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:ems="10"
-        android:hint="Profesion"
+        android:hint="@string/additional_data_form_last_profession_hint"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/surnametxt" />
+        app:layout_constraintTop_toBottomOf="@+id/last_name"
+        android:autofillHints="" />
 
     <EditText
-        android:id="@+id/nametxt"
+        android:id="@+id/first_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:ems="10"
-        android:hint="Name"
+        android:hint="@string/additional_data_form_first_name_hint"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints="" />
 
     <Button
-        android:id="@+id/nextbtn"
+        android:id="@+id/next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Next"
+        android:layout_marginTop="100dp"
         android:backgroundTint="#fc9df4"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/additional_data_next"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.86" />
+        app:layout_constraintTop_toBottomOf="@+id/daily_step_goal" />
 
     <EditText
         android:id="@+id/weighttxt"
@@ -85,23 +75,36 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:ems="10"
-        android:hint="Weight"
-        android:inputType="number"
+        android:hint="@string/additional_data_form_weight_hint"
+        android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/professiontxt" />
+        app:layout_constraintTop_toBottomOf="@+id/professiontxt"
+        android:autofillHints="" />
 
     <EditText
-        android:id="@+id/heighttxt"
+        android:id="@+id/height"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:ems="10"
-        android:hint="Height"
-        android:inputType="number"
+        android:hint="@string/additional_data_form_height_hint"
+        android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weighttxt" />
+        app:layout_constraintTop_toBottomOf="@+id/weighttxt"
+        android:autofillHints="" />
+
+    <TextView
+        android:id="@+id/error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:textColor="@android:color/holo_red_dark"
+        app:layout_constraintBottom_toTopOf="@+id/next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/daily_step_goal" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.diappetes.persistence.model.User;
 import com.example.diappetes.persistence.model.UserRepository;
+import com.example.diappetes.register.InvalidPasswordException;
 
 import javax.inject.Inject;
 

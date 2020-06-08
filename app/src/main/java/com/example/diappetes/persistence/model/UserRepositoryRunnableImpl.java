@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Observable;
+import io.reactivex.Observer;
 import io.reactivex.Single;
 
 public class UserRepositoryRunnableImpl implements UserRepository {

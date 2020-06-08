@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private final static String SENTILO_IDENTITY_KEY = "c7337d3fc4ec28d0dddc81478808a8b6b82beb83110fcb00157cc0a711956475";
     private final static String CHANNEL_ID = "69"; //nice
     private final static long GO_FOR_WALK_NOTIFICATION_INTERVAL_IN_MS = 24 /* h */ * 60 /* m */ * 60 /* s */ * 1000 /* ms */;
-    private StepDetector simpleStepDetector;
+    private StepDetectorSensorEventListenerImpl simpleStepDetector;
     private SensorManager sensorManager;
 
     private Sensor accel;
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        simpleStepDetector = new StepDetector();
+        simpleStepDetector = new StepDetectorSensorEventListenerImpl();
         simpleStepDetector.registerListener(stepGoalTracker);
 
         toggleStepTrackingButton = findViewById(R.id.toggleButton);
@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 if (isChecked) {
                     stepGoalProgressBar.setVisibility(View.VISIBLE);
                     textViewTotalSteps.setVisibility(View.VISIBLE);
+
                     sensorManager.registerListener(simpleStepDetector, accel, SensorManager.SENSOR_DELAY_FASTEST);
                 } else {
                     stepGoalProgressBar.setVisibility(View.GONE);

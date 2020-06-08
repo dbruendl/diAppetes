@@ -9,7 +9,7 @@ import com.example.diappetes.SensorFilter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StepDetector implements SensorEventListener {
+public class StepDetectorSensorEventListenerImpl implements SensorEventListener {
 
     private static final int ACCEL_RING_SIZE = 50;
     private static final int VEL_RING_SIZE = 10;

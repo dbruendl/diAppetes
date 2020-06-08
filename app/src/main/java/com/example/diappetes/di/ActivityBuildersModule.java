@@ -2,6 +2,7 @@ package com.example.diappetes.di;
 
 import com.example.diappetes.info.InfoActivity;
 import com.example.diappetes.login.LoginActivity;
+import com.example.diappetes.register.AdditionalDataActivity;
 import com.example.diappetes.register.RegisterActivity;
 
 import dagger.Module;
@@ -23,4 +24,11 @@ public abstract class ActivityBuildersModule {
             modules = {ViewModelModule.class}
     )
     abstract InfoActivity contributeInfoActivity();
+
+    @ContributesAndroidInjector(
+            modules = {ViewModelModule.class}
+    )
+    abstract AdditionalDataActivity contributeAdditionalDataActivity();
+
+
 }
