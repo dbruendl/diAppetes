@@ -10,6 +10,8 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.diappetes.main.MainActivity;
+
 public class WalkReminderNotificationReceiver extends BroadcastReceiver {
 
     private final String LOG_TAG = getClass().getSimpleName();

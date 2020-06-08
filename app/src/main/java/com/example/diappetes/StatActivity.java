@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.diappetes.info.InfoActivity;
+import com.example.diappetes.main.MainActivity;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;

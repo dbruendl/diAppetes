@@ -1,4 +1,4 @@
-package com.example.diappetes;
+package com.example.diappetes.main;
 
 public interface StepListener {
 

@@ -9,14 +9,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.diappetes.MainActivity;
+import com.example.diappetes.main.MainActivity;
 import com.example.diappetes.PetActivity;
 import com.example.diappetes.R;
 import com.example.diappetes.StatActivity;
 import com.example.diappetes.ViewModelProviderFactory;
 import com.example.diappetes.databinding.ActivityInfoBinding;
-import com.example.diappetes.info.InfoViewModel;
-import com.example.diappetes.info.UserListAdapter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

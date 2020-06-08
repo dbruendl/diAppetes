@@ -2,7 +2,7 @@ package com.example.diappetes.tracker;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.diappetes.StepListener;
+import com.example.diappetes.main.StepListener;
 
 public interface StepGoalTracker extends StepListener {
     /**

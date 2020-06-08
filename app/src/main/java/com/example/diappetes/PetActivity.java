@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.diappetes.info.InfoActivity;
+import com.example.diappetes.main.MainActivity;
 
 public class PetActivity extends AppCompatActivity {
     int petstatus;

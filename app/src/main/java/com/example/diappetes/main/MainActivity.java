@@ -1,4 +1,4 @@
-package com.example.diappetes;
+package com.example.diappetes.main;
 
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
@@ -24,6 +24,10 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.toolbox.Volley;
+import com.example.diappetes.PetActivity;
+import com.example.diappetes.R;
+import com.example.diappetes.StatActivity;
+import com.example.diappetes.WalkReminderNotificationReceiver;
 import com.example.diappetes.info.InfoActivity;
 import com.example.diappetes.observer.PetStepGoalObserver;
 import com.example.diappetes.observer.ProgressBarStepGoalObserver;

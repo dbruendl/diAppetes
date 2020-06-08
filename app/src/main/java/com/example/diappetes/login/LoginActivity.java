@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.room.EmptyResultSetException;
 
-import com.example.diappetes.MainActivity;
+import com.example.diappetes.main.MainActivity;
 import com.example.diappetes.R;
 import com.example.diappetes.StatActivity;
 import com.example.diappetes.ViewModelProviderFactory;

@@ -2,7 +2,6 @@ package com.example.diappetes.sentilo;
 
 import androidx.lifecycle.Observer;
 
-import com.example.diappetes.StepListener;
 import com.example.diappetes.sentilo.request.dto.BatteryObservationDTO;
 import com.example.diappetes.sentilo.request.dto.SentiloRequestDTO;
 

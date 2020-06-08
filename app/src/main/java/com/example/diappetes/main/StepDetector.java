@@ -1,8 +1,10 @@
-package com.example.diappetes;
+package com.example.diappetes.main;
 
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+
+import com.example.diappetes.SensorFilter;
 
 import java.util.ArrayList;
 import java.util.List;
