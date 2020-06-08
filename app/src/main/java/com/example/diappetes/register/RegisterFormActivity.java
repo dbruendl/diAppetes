@@ -7,27 +7,21 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.diappetes.databinding.ActivityRegisterFormBinding;
 import com.example.diappetes.login.LoginActivity;
 import com.example.diappetes.R;
 
 public class RegisterFormActivity extends AppCompatActivity {
 
-    Button nextbtn;
-    EditText nametxt, surnametxt, proffesiontxt, heihttxt, weighttxt;
-    double height, weight;
+    private ActivityRegisterFormBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_form);
+        binding = ActivityRegisterFormBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        nextbtn = findViewById(R.id.nextbtn);
-        nametxt = findViewById(R.id.nametxt);
-        surnametxt = findViewById(R.id.surnametxt);
-        proffesiontxt = findViewById(R.id.professiontxt);
-        heihttxt = findViewById(R.id.heighttxt);
-
-        nextbtn.setOnClickListener(v -> {
+        binding.nextbtn.setOnClickListener(v -> {
             Intent startLoginIntent = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(startLoginIntent);
         });
