@@ -20,6 +20,7 @@ public class RegisterValidator {
 
     public void validate() throws ValidationException {
         validateEmailOrThrow(email);
+        validateNotEmptyOrThrow(uid, new InvalidUidException());
         validateNotEmptyOrThrow(password, new InvalidPasswordException());
         validateNotEmptyOrThrow(passwordConfirmation, new InvalidPasswordException());
         validatePasswordsMatchOrThrow(password, passwordConfirmation);
