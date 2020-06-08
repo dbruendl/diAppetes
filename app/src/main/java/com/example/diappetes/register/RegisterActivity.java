@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import dagger.android.support.DaggerAppCompatActivity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class RegisterActivity extends DaggerAppCompatActivity {
 
@@ -67,6 +68,7 @@ public class RegisterActivity extends DaggerAppCompatActivity {
                 if (ci.checkEmail(email)) {
                     if (ci.checkPassword(password, password2)) {
                         Disposable registerUserDisposable = registerViewModel.registerUser(email.toString(), username.toString(), password.toString())
+                                .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(() -> {
                                     Intent startRegisterFormIntent = new Intent(getApplicationContext(), RegisterFormActivity.class);

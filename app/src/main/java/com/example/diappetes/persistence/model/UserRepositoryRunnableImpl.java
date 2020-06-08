@@ -1,13 +1,11 @@
 package com.example.diappetes.persistence.model;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
-import io.reactivex.Maybe;
 import io.reactivex.Single;
-import io.reactivex.subjects.CompletableSubject;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 public class UserRepositoryRunnableImpl implements UserRepository {
 
@@ -20,11 +18,7 @@ public class UserRepositoryRunnableImpl implements UserRepository {
 
     @Override
     public Completable store(User user) {
-        InsertUserRunnable insertUserRunnable = new InsertUserRunnable(userDao, user);
-
-        new Thread(insertUserRunnable).start();
-
-        return insertUserRunnable.completableSubject;
+        return userDao.insert(user);
     }
 
     @Override
@@ -32,24 +26,10 @@ public class UserRepositoryRunnableImpl implements UserRepository {
         return userDao.findByUid(uid);
     }
 
-    @RequiredArgsConstructor
-    private static class InsertUserRunnable implements Runnable {
-
-        private final UserDao userDao;
-        private final User user;
-
-        @Getter
-        private final CompletableSubject completableSubject = CompletableSubject.create();
-
-        @Override
-        public void run() {
-            try {
-                userDao.insert(user);
-            } catch (Exception e) {
-                completableSubject.onError(e);
-
-            }
-            completableSubject.onComplete();
-        }
+    @Override
+    public Single<List<User>> findAll() {
+        return Single.create((emitter) -> {
+            emitter.onSuccess(userDao.getAll());
+        });
     }
 }

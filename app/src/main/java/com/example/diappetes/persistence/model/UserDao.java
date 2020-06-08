@@ -6,6 +6,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import io.reactivex.Completable;
 import io.reactivex.Single;
 
 @Dao
@@ -14,7 +15,7 @@ public interface UserDao {
     List<User> getAll();
 
     @Insert
-    long insert(User user);
+    Completable insert(User user);
 
     @Query("SELECT * FROM user WHERE uid = :uid")
     Single<User> findByUid(String uid);

@@ -8,11 +8,13 @@ import androidx.lifecycle.ViewModel;
 import com.example.diappetes.persistence.model.User;
 import com.example.diappetes.persistence.model.UserRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 
 public class LoginViewModel extends ViewModel {
@@ -37,6 +39,10 @@ public class LoginViewModel extends ViewModel {
                     }
                     return Completable.error(new InvalidPasswordException());
                 });
+    }
+
+    Single<List<User>> findAll() {
+        return userRepository.findAll();
     }
 
     @Override

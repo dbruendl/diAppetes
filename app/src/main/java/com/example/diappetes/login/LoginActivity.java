@@ -50,8 +50,8 @@ public class LoginActivity extends DaggerAppCompatActivity {
          * if everything is correct the screen changes to the homescreen
          */
         loginBtn.setOnClickListener(v -> {
-            String uid = findViewById(R.id.logintxt).toString();
-            String password = findViewById(R.id.passwordtxt).toString();
+            String uid = ((TextView) findViewById(R.id.logintxt)).getText().toString();
+            String password = ((TextView) findViewById(R.id.passwordtxt)).getText().toString();
             TextView errorTextView = findViewById(R.id.loginerrortxt);
 
             Disposable disposable = loginViewModel.login(uid, password)
@@ -84,6 +84,12 @@ public class LoginActivity extends DaggerAppCompatActivity {
          * the final project
          */
         takemetostat.setOnClickListener(v -> {
+            Disposable disposable = loginViewModel.findAll()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(users -> {
+                        return;
+                    });
             Intent takeMeToStatIntent = new Intent(getApplicationContext(), StatActivity.class);
             startActivity(takeMeToStatIntent);
         });
