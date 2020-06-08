@@ -1,11 +1,11 @@
 package com.example.diappetes.login;
 
-public class InvalidEmailException extends ValidationException {
-    public InvalidEmailException() {
+public class InvalidUidException extends ValidationException {
+    public InvalidUidException() {
         super(getFormattedMessage());
     }
 
     private static String getFormattedMessage() {
-        return "Invalid email";
+        return "Invalid username";
     }
 }

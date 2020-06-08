@@ -84,12 +84,6 @@ public class LoginActivity extends DaggerAppCompatActivity {
          * the final project
          */
         takemetostat.setOnClickListener(v -> {
-            Disposable disposable = loginViewModel.findAll()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(users -> {
-                        return;
-                    });
             Intent takeMeToStatIntent = new Intent(getApplicationContext(), StatActivity.class);
             startActivity(takeMeToStatIntent);
         });

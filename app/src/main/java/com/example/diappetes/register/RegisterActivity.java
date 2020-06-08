@@ -14,6 +14,10 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.diappetes.CheckInput;
 import com.example.diappetes.R;
 import com.example.diappetes.ViewModelProviderFactory;
+import com.example.diappetes.login.InvalidEmailException;
+import com.example.diappetes.login.InvalidPasswordException;
+import com.example.diappetes.login.InvalidUidException;
+import com.example.diappetes.login.PasswordDoNotMatchException;
 
 import javax.inject.Inject;
 
@@ -60,32 +64,26 @@ public class RegisterActivity extends DaggerAppCompatActivity {
 
         signUpBtn = findViewById(R.id.finishregisterbtn);
         // In android error record there is info about null error inside setOnClickListener below
-        signUpBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RegisterModel rm;
-
-                if (ci.checkEmail(email)) {
-                    if (ci.checkPassword(password, password2)) {
-                        Disposable registerUserDisposable = registerViewModel.registerUser(email.toString(), username.toString(), password.toString())
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(() -> {
-                                    Intent startRegisterFormIntent = new Intent(getApplicationContext(), RegisterFormActivity.class);
-                                    startActivity(startRegisterFormIntent);
-                                }, error -> {
-                                    if(error instanceof SQLiteConstraintException) {
-                                        signUpErrorTxt.setText("Username already exists");
-                                    }
-                                });
-                    } else {
-                        signUpErrorTxt.setText("The Passwords does not match, please make sure that they do");
-                    }
-                } else {
-                    signUpErrorTxt.setText("The Email is not valid");
-                }
-
-            }
+        signUpBtn.setOnClickListener(v -> {
+            Disposable registerUserDisposable = registerViewModel.registerUser(email.toString(), username.toString(), password.toString(), password2.toString())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(() -> {
+                        Intent startRegisterFormIntent = new Intent(getApplicationContext(), RegisterFormActivity.class);
+                        startActivity(startRegisterFormIntent);
+                    }, error -> {
+                        if (error instanceof SQLiteConstraintException) {
+                            signUpErrorTxt.setText(R.string.register_username_already_exists);
+                        } else if(error instanceof InvalidEmailException) {
+                            signUpErrorTxt.setText(R.string.register_invalid_email);
+                        } else if(error instanceof InvalidUidException) {
+                            signUpErrorTxt.setText(R.string.login_invalid_username);
+                        } else if(error instanceof InvalidPasswordException) {
+                            signUpErrorTxt.setText(R.string.register_invalid_password);
+                        } else if(error instanceof PasswordDoNotMatchException) {
+                            signUpErrorTxt.setText(R.string.register_passwords_do_not_match);
+                        }
+                    });
         });
 
     }

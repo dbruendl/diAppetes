@@ -7,4 +7,10 @@
     <string name="login_username_hint">username</string>
     <string name="login_password_hint">password</string>
     <string name="login_invalid_username">Invalid username</string>
+
+    <string name="register_username_already_exists">Username already exists</string>
+    <string name="register_invalid_email">Invalid email</string>
+    <string name="register_invalid_username">Invalid username</string>
+    <string name="register_invalid_password">Invalid password</string>
+    <string name="register_passwords_do_not_match">Passwords do not match</string>
 </resources>
