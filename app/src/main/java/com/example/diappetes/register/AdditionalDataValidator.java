@@ -21,20 +21,12 @@ public class AdditionalDataValidator {
     private final String dailyStepGoal;
 
     public void validate() throws ValidationException {
-        validateEmailOrThrow(email);
-        validateNotEmptyOrThrow(password, new InvalidPasswordException());
         validateNotEmptyOrThrow(uid, new InvalidUidException());
         validateNotEmptyOrThrow(firstName, new InvalidFirstNameException());
         validateNotEmptyOrThrow(lastName, new InvalidLastNameException());
         validateNotEmptyOrThrow(profession, new InvalidProfessionException());
         validateNotEmptyOrThrow(weight, new InvalidWeightException());
         validateNotEmptyOrThrow(height, new InvalidHeightException());
-    }
-
-    private void validateEmailOrThrow(String email) {
-        if (email.isEmpty() && !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            throw new InvalidEmailException();
-        }
     }
 
     private void validateNotEmptyOrThrow(String string, ValidationException e) {

@@ -39,39 +39,43 @@ public class RegisterActivity extends DaggerAppCompatActivity {
 
         // In android error record there is info about null error inside setOnClickListener below
         activityRegisterBinding.finishregisterbtn.setOnClickListener(v -> {
-            validateUniqueUsernameDisposable = registerViewModel.usernameAlreadyTaken(activityRegisterBinding.usernametxt.getText().toString())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(() -> {
-                        Intent startRegisterFormIntent = new Intent(getApplicationContext(), AdditionalDataActivity.class)
-                                .putExtra(INTENT_KEY_EMAIL, activityRegisterBinding.signupemailtxt.getText().toString())
-                                .putExtra(INTENT_KEY_UID, activityRegisterBinding.usernametxt.getText().toString())
-                                .putExtra(INTENT_KEY_PASSWORD, activityRegisterBinding.signuppasswordtxt.getText().toString());
-                        startActivity(startRegisterFormIntent);
-                    }, error -> {
-                        if (error instanceof UsernameAlreadyTakenException) {
-                            activityRegisterBinding.signuperrortxt.setText(R.string.register_username_already_exists);
-                        } else {
-                            activityRegisterBinding.signuperrortxt.setText(error.getMessage());
-                        }
-                    });
-//            Disposable registerUserDisposable = registerViewModel.registerUser(email.toString(), username.toString(), password.toString(), password2.toString())
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .subscribe(() -> {
-//
-//                    }, error -> {
-//                        if (error instanceof SQLiteConstraintException) {
-//                            signUpErrorTxt.setText(R.string.register_username_already_exists);
-//                        } else if(error instanceof InvalidEmailException) {
-//                            signUpErrorTxt.setText(R.string.register_invalid_email);
-//                        } else if(error instanceof InvalidUidException) {
-//                            signUpErrorTxt.setText(R.string.login_invalid_username);
-//                        } else if(error instanceof InvalidPasswordException) {
-//                            signUpErrorTxt.setText(R.string.register_invalid_password);
-//                        } else if(error instanceof PasswordDoNotMatchException) {
-//                            signUpErrorTxt.setText(R.string.register_passwords_do_not_match);
-//                        }
-//                    });
+            String email = activityRegisterBinding.signupemailtxt.getText().toString();
+            String username = activityRegisterBinding.usernametxt.getText().toString();
+            String password = activityRegisterBinding.signuppasswordtxt.getText().toString();
+            String passwordConfirmation = activityRegisterBinding.signuppasswordtxt2.getText().toString();
+            try {
+                RegisterValidator.builder()
+                        .email(email)
+                        .uid(username)
+                        .password(password)
+                        .passwordConfirmation(passwordConfirmation)
+                        .build()
+                        .validate();
+
+                validateUniqueUsernameDisposable = registerViewModel.usernameAlreadyTaken(activityRegisterBinding.usernametxt.getText().toString())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(() -> {
+                            Intent startRegisterFormIntent = new Intent(getApplicationContext(), AdditionalDataActivity.class)
+                                    .putExtra(INTENT_KEY_EMAIL, activityRegisterBinding.signupemailtxt.getText().toString())
+                                    .putExtra(INTENT_KEY_UID, activityRegisterBinding.usernametxt.getText().toString())
+                                    .putExtra(INTENT_KEY_PASSWORD, activityRegisterBinding.signuppasswordtxt.getText().toString());
+                            startActivity(startRegisterFormIntent);
+                        }, error -> {
+                            if (error instanceof UsernameAlreadyTakenException) {
+                                activityRegisterBinding.signuperrortxt.setText(R.string.register_username_already_exists);
+                            } else {
+                                activityRegisterBinding.signuperrortxt.setText(error.getMessage());
+                            }
+                        });
+            } catch (InvalidEmailException e) {
+                activityRegisterBinding.signuperrortxt.setText(R.string.register_invalid_email);
+            } catch (InvalidUidException e) {
+                activityRegisterBinding.signuperrortxt.setText(R.string.register_invalid_username);
+            } catch (InvalidPasswordException e) {
+                activityRegisterBinding.signuperrortxt.setText(R.string.register_invalid_password);
+            } catch (PasswordDoNotMatchException e) {
+                activityRegisterBinding.signuperrortxt.setText(R.string.register_passwords_do_not_match);
+            }
         });
     }
 
