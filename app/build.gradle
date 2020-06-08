@@ -4,6 +4,10 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
+    viewBinding {
+        enabled = true
+    }
+
     defaultConfig {
         applicationId "com.example.diappetes"
         minSdkVersion 16
@@ -61,7 +65,9 @@ dependencies {
 
             // RX
             'io.reactivex.rxjava2:rxandroid:2.1.1',
-            'io.reactivex.rxjava2:rxjava:2.2.9'
+            'io.reactivex.rxjava2:rxjava:2.2.9',
+
+            'com.android.support:recyclerview-v7:28.0.0'
     )
     compileOnly(
             "org.projectlombok:lombok:$lombok_version"
