@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.room.EmptyResultSetException;
 
 import com.example.diappetes.CheckInput;
 import com.example.diappetes.MainActivity;
@@ -49,18 +50,22 @@ public class LoginActivity extends DaggerAppCompatActivity {
          * if everything is correct the screen changes to the homescreen
          */
         loginBtn.setOnClickListener(v -> {
-            String email = findViewById(R.id.logintxt).toString();
+            String uid = findViewById(R.id.logintxt).toString();
             String password = findViewById(R.id.passwordtxt).toString();
             TextView errorTextView = findViewById(R.id.loginerrortxt);
 
-            Disposable disposable = loginViewModel.login(email, password)
+            Disposable disposable = loginViewModel.login(uid, password)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(() -> {
                         Intent startHomeIntent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(startHomeIntent);
                     }, error -> {
-                        errorTextView.setText(error.getMessage());
+                        if(error instanceof EmptyResultSetException) {
+                             errorTextView.setText(R.string.login_invalid_username);
+                        } else {
+                            errorTextView.setText(error.getMessage());
+                        }
                     });
         });
 

@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
+import io.reactivex.Single;
 import io.reactivex.subjects.CompletableSubject;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,8 @@ public class UserRepositoryRunnableImpl implements UserRepository {
     }
 
     @Override
-    public Maybe<User> findByEmail(String email) {
-        return userDao.findByEmail(email);
+    public Single<User> findByUid(String uid) {
+        return userDao.findByUid(uid);
     }
 
     @RequiredArgsConstructor
@@ -46,6 +47,7 @@ public class UserRepositoryRunnableImpl implements UserRepository {
                 userDao.insert(user);
             } catch (Exception e) {
                 completableSubject.onError(e);
+
             }
             completableSubject.onComplete();
         }
