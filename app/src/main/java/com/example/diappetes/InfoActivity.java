@@ -16,6 +16,7 @@ import com.example.diappetes.info.UserListAdapter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 
 import javax.inject.Inject;
@@ -56,8 +57,6 @@ public class InfoActivity extends DaggerAppCompatActivity {
                     userAdapter = new UserListAdapter(users);
                     activityInfoBinding.userRecyclerView.setAdapter(userAdapter);
                 });
-//        dataBaseHelper = new DatabaseSLite(InfoActivity.this);
-//        UpdateList(dataBaseHelper);
 
         //TIME
         DateFormat datetime = new SimpleDateFormat("yyyy MM HH:mm:ss");

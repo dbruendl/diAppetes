@@ -35,7 +35,6 @@ public class LoginActivity extends DaggerAppCompatActivity {
 
     private LoginViewModel loginViewModel;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
