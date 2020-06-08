@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public class UserRepositoryRunnableImpl implements UserRepository {
@@ -27,9 +28,7 @@ public class UserRepositoryRunnableImpl implements UserRepository {
     }
 
     @Override
-    public Single<List<User>> findAll() {
-        return Single.create((emitter) -> {
-            emitter.onSuccess(userDao.getAll());
-        });
+    public Observable<List<User>> findAll() {
+        return userDao.getAll();
     }
 }

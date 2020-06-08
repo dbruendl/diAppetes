@@ -41,10 +41,6 @@ public class LoginViewModel extends ViewModel {
                 });
     }
 
-    Single<List<User>> findAll() {
-        return userRepository.findAll();
-    }
-
     @Override
     protected void onCleared() {
         super.onCleared();

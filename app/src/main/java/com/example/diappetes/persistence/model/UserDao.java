@@ -7,12 +7,13 @@ import androidx.room.Query;
 import java.util.List;
 
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 
 @Dao
 public interface UserDao {
     @Query("SELECT * FROM user")
-    List<User> getAll();
+    Observable<List<User>> getAll();
 
     @Insert
     Completable insert(User user);

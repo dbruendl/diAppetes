@@ -1,33 +1,63 @@
 package com.example.diappetes;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.diappetes.databinding.ActivityInfoBinding;
+import com.example.diappetes.info.InfoViewModel;
+import com.example.diappetes.info.UserListAdapter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class InfoActivity extends AppCompatActivity {
-    ListView dbList;
-    ArrayAdapter UserArrayAdapter;
-    DatabaseSLite dataBaseHelper;
+import javax.inject.Inject;
+
+import dagger.android.support.DaggerAppCompatActivity;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
+public class InfoActivity extends DaggerAppCompatActivity {
+    RecyclerView.Adapter userAdapter;
+    RecyclerView.LayoutManager userLayoutManager;
+
+    ActivityInfoBinding activityInfoBinding;
+
+    @Inject
+    ViewModelProviderFactory viewModelProviderFactory;
+
+    private InfoViewModel infoViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info);
+        activityInfoBinding = ActivityInfoBinding.inflate(getLayoutInflater());
+        setContentView(activityInfoBinding.getRoot());
 
-        dbList = findViewById(R.id.dbList);
+        infoViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(InfoViewModel.class);
 
-        dataBaseHelper = new DatabaseSLite(InfoActivity.this);
-        UpdateList(dataBaseHelper);
+        activityInfoBinding.userRecyclerView.setHasFixedSize(true);
+
+        userLayoutManager = new LinearLayoutManager(this);
+        activityInfoBinding.userRecyclerView.setLayoutManager(userLayoutManager);
+
+        Disposable disposable = infoViewModel.findAll()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(users -> {
+                    userAdapter = new UserListAdapter(users);
+                    activityInfoBinding.userRecyclerView.setAdapter(userAdapter);
+                });
+//        dataBaseHelper = new DatabaseSLite(InfoActivity.this);
+//        UpdateList(dataBaseHelper);
 
         //TIME
         DateFormat datetime = new SimpleDateFormat("yyyy MM HH:mm:ss");
@@ -63,12 +93,5 @@ public class InfoActivity extends AppCompatActivity {
                 startActivity(startstatintent2);
             }
         });
-
-
-
-    }
-    private void UpdateList(DatabaseSLite dataBaseHelper2) {
-        UserArrayAdapter = new ArrayAdapter<>(InfoActivity.this, android.R.layout.simple_list_item_1, dataBaseHelper2.getEveryone());
-        dbList.setAdapter(UserArrayAdapter);
     }
 }
