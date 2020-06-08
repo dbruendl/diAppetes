@@ -62,8 +62,8 @@ public class LoginActivity extends DaggerAppCompatActivity {
                         Intent startHomeIntent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(startHomeIntent);
                     }, error -> {
-                        if(error instanceof EmptyResultSetException) {
-                             errorTextView.setText(R.string.login_invalid_username);
+                        if (error instanceof EmptyResultSetException) {
+                            errorTextView.setText(R.string.login_invalid_username);
                         } else {
                             errorTextView.setText(error.getMessage());
                         }
@@ -93,7 +93,9 @@ public class LoginActivity extends DaggerAppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        loginDisposable.dispose();
+        
+        if (loginDisposable != null) {
+            loginDisposable.dispose();
+        }
     }
 }

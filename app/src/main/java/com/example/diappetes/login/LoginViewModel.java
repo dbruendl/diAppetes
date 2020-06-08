@@ -8,12 +8,10 @@ import com.example.diappetes.persistence.model.UserRepository;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
-import io.reactivex.disposables.Disposable;
 
 public class LoginViewModel extends ViewModel {
     private final UserRepository userRepository;
 
-    private Disposable loginUserDisposable;
     private User loggedInUser;
 
     @Inject
@@ -36,7 +34,5 @@ public class LoginViewModel extends ViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-
-        loginUserDisposable.dispose();
     }
 }
