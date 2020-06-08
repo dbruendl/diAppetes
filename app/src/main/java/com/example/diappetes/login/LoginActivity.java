@@ -1,18 +1,13 @@
 package com.example.diappetes.login;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.room.EmptyResultSetException;
 
-import com.example.diappetes.CheckInput;
 import com.example.diappetes.MainActivity;
 import com.example.diappetes.R;
 import com.example.diappetes.StatActivity;
@@ -22,14 +17,11 @@ import com.example.diappetes.register.RegisterActivity;
 import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
-import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class LoginActivity extends DaggerAppCompatActivity {
-    CheckInput c;
-
     @Inject
     ViewModelProviderFactory viewModelProviderFactory;
 
@@ -93,7 +85,7 @@ public class LoginActivity extends DaggerAppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        
+
         if (loginDisposable != null) {
             loginDisposable.dispose();
         }

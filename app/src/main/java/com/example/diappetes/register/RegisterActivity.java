@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Bundle;
 import android.text.Editable;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.diappetes.CheckInput;
 import com.example.diappetes.R;
 import com.example.diappetes.ViewModelProviderFactory;
 import com.example.diappetes.login.InvalidEmailException;
@@ -33,7 +31,6 @@ public class RegisterActivity extends DaggerAppCompatActivity {
 
     private RegisterViewModel registerViewModel;
 
-    CheckInput ci;
     EditText emailId;
     Editable email;
     EditText userNametxt;
@@ -51,7 +48,6 @@ public class RegisterActivity extends DaggerAppCompatActivity {
 
         registerViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(RegisterViewModel.class);
 
-        ci = new CheckInput();
         emailId = findViewById(R.id.signupemailtxt);   // Obtaining data from user input
         email = emailId.getText();
         userNametxt = findViewById(R.id.usernametxt);
