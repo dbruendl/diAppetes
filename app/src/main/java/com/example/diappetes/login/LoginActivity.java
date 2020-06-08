@@ -35,6 +35,8 @@ public class LoginActivity extends DaggerAppCompatActivity {
 
     private LoginViewModel loginViewModel;
 
+    private Disposable loginDisposable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +55,7 @@ public class LoginActivity extends DaggerAppCompatActivity {
             String password = ((TextView) findViewById(R.id.passwordtxt)).getText().toString();
             TextView errorTextView = findViewById(R.id.loginerrortxt);
 
-            Disposable disposable = loginViewModel.login(uid, password)
+            loginDisposable = loginViewModel.login(uid, password)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(() -> {
@@ -86,6 +88,12 @@ public class LoginActivity extends DaggerAppCompatActivity {
             Intent takeMeToStatIntent = new Intent(getApplicationContext(), StatActivity.class);
             startActivity(takeMeToStatIntent);
         });
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        loginDisposable.dispose();
     }
 }
