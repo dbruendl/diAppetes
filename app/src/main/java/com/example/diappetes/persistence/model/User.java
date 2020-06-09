@@ -4,6 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.Relation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {
@@ -47,7 +51,7 @@ public class User {
                 @NonNull String profession,
                 @NonNull Double weight,
                 @NonNull Double height,
-                int dailyStepGoal) {
+                @NonNull Integer dailyStepGoal) {
         this.uid = uid;
         this.email = email;
         this.password = password;

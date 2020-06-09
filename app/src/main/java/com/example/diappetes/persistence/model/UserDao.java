@@ -3,6 +3,7 @@ package com.example.diappetes.persistence.model;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 
 import java.util.List;
 
@@ -20,4 +21,8 @@ public interface UserDao {
 
     @Query("SELECT * FROM user WHERE uid = :uid")
     Single<User> findByUid(String uid);
+
+    @Transaction
+    @Query("SELECT * FROM user WHERE uid = :uid")
+    Observable<List<UserReports>> getAll(String uid);
 }

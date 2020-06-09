@@ -39,6 +39,10 @@ import com.example.diappetes.sentilo.SentiloUpdateService;
 import com.example.diappetes.tracker.SimpleStepGoalTrackerImpl;
 import com.example.diappetes.tracker.StepGoalTracker;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import javax.inject.Inject;
 
 import static com.example.diappetes.WalkReminderNotificationReceiver.KEY_CHANNEL_ID;
@@ -50,10 +54,14 @@ public class MainActivity extends AppCompatActivity {
 
     private final static String SENTILO_IDENTITY_KEY = "c7337d3fc4ec28d0dddc81478808a8b6b82beb83110fcb00157cc0a711956475";
     private final static String CHANNEL_ID = "69"; //nice
-    private final static long GO_FOR_WALK_NOTIFICATION_INTERVAL_IN_MS = 24 /* h */ * 60 /* m */ * 60 /* s */ * 1000 /* ms */;
+    private final static long GO_FOR_WALK_NOTIFICATION_INTERVAL_IN_MS = 18 /* h */ * 60 /* m */ * 60 /* s */ * 1000 /* ms */;
+    //private LocalDateTime date = LocalDateTime.now();
+
+    //private final static long GO_FOR_WALK_NOTIFICATION_INTERVAL_IN_MS = 24 /* h */ * 60 /* m */ * 60 /* s */ * 1000 /* ms */;
     private StepDetectorSensorEventListenerImpl simpleStepDetector;
     private SensorManager sensorManager;
-
+    private int goal = 10;
+    private int send = 3;
     private Sensor accel;
     public int progress;
     private TextView textViewTotalSteps;
@@ -68,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SentiloConnector sentiloConnector = new SentiloConnectorVolleyImpl(Volley.newRequestQueue(this), SENTILO_IDENTITY_KEY);
-        StepGoalTracker stepGoalTracker = new SimpleStepGoalTrackerImpl(10);
+        StepGoalTracker stepGoalTracker = new SimpleStepGoalTrackerImpl(goal);
 
-        SentiloUpdateService sentiloUpdateService = new SentiloUpdateService(sentiloConnector, 3);
+        SentiloUpdateService sentiloUpdateService = new SentiloUpdateService(sentiloConnector, send);
         stepGoalTracker.totalSteps().observe(this, sentiloUpdateService);
 
         imageViewPetMini = findViewById(R.id.petmini);
@@ -95,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
         AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         assert alarmManager != null;
+
         alarmManager.set(
                 AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 SystemClock.elapsedRealtime() + GO_FOR_WALK_NOTIFICATION_INTERVAL_IN_MS,
