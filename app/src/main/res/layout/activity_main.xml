@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".main.MainActivity">
 
     <Button
         android:id="@+id/infobtn"
@@ -58,6 +58,7 @@
         android:layout_height="300dp"
         android:progress="0"
         android:progressDrawable="@drawable/circle"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -73,6 +74,7 @@
         android:layout_height="150dp"
         android:gravity="center"
         android:textSize="30sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/pb_steps"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"

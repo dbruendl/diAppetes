@@ -1,6 +1,15 @@
-package com.example.diappetes;
+package com.example.diappetes.main;
 
-public class StepDetector {
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+
+import com.example.diappetes.SensorFilter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class StepDetectorSensorEventListenerImpl implements SensorEventListener {
 
     private static final int ACCEL_RING_SIZE = 50;
     private static final int VEL_RING_SIZE = 10;
@@ -19,12 +28,13 @@ public class StepDetector {
     private long lastStepTimeNs = 0;
     private float oldVelocityEstimate = 0;
 
-    private StepListener listener;
+    private List<StepListener> stepListeners = new ArrayList<>();
 
-    public void registerListener(StepListener listener) {
-        this.listener = listener;
+    public void registerListener(StepListener stepListener) {
+        if (!stepListeners.contains(stepListener)) {
+            stepListeners.add(stepListener);
+        }
     }
-
 
     public void updateAccel(long timeNs, float x, float y, float z) {
         float[] currentAccel = new float[3];
@@ -57,9 +67,27 @@ public class StepDetector {
 
         if (velocityEstimate > STEP_THRESHOLD && oldVelocityEstimate <= STEP_THRESHOLD
                 && (timeNs - lastStepTimeNs > STEP_DELAY_NS)) {
-            listener.step(timeNs);
+            notifyListeners();
             lastStepTimeNs = timeNs;
         }
         oldVelocityEstimate = velocityEstimate;
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            updateAccel(event.timestamp, event.values[0], event.values[1], event.values[2]);
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+    private void notifyListeners() {
+        for (StepListener stepListener : stepListeners) {
+            stepListener.step();
+        }
     }
 }

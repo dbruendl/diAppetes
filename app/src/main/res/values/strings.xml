@@ -1,6 +1,29 @@
 <resources>
     <string name="app_name">DiAPPetes</string>
-    <string name="walking">Do you wanna go for a walk?</string>
-    <string name="channel_notify" />
-    <string name="channel_description" />
+    <string name="walking">Do you want to go for a walk?</string>
+    <string name="channel_name">Some channel name</string>
+    <string name="channel_description">Some channel description</string>
+
+    <string name="login_username_hint">username</string>
+    <string name="login_password_hint">password</string>
+    <string name="login_invalid_username">Invalid username</string>
+
+    <string name="register_username_already_exists">Username already exists</string>
+    <string name="register_invalid_email">Invalid email</string>
+    <string name="register_invalid_username">Invalid username</string>
+    <string name="register_invalid_password">Invalid password</string>
+    <string name="register_passwords_do_not_match">Passwords do not match</string>
+
+    <string name="additional_data_form_first_name_hint">First name</string>
+    <string name="additional_data_form_last_name_hint">Last name</string>
+    <string name="additional_data_form_last_profession_hint">Profession</string>
+    <string name="additional_data_form_weight_hint">Weight</string>
+    <string name="additional_data_form_height_hint">Height</string>
+    <string name="additional_data_daily_step_goal_hint">Daily step goal</string>
+    <string name="additional_data_next">Next</string>
+    <string name="additional_data_invalid_first_name">Invalid first name</string>
+    <string name="additional_data_invalid_last_name">Invalid last name</string>
+    <string name="additional_data_invalid_profession">Invalid profession</string>
+    <string name="additional_data_invalid_weight">Invalid weight</string>
+    <string name="additional_data_invalid_height">Invalid height</string>
 </resources>
