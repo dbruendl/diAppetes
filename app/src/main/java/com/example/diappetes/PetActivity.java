@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,9 +13,13 @@ import android.widget.Toast;
 import com.example.diappetes.info.InfoActivity;
 import com.example.diappetes.main.MainActivity;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class PetActivity extends AppCompatActivity {
     int petstatus;
     int progress;
+    ImageView petimage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +34,7 @@ public class PetActivity extends AppCompatActivity {
                 startActivity(starthomeintent3);
             }
         });
-        Button infobtn3 = (Button)findViewById(R.id.infobtn);
+        Button infobtn3 = findViewById(R.id.infobtn);
         infobtn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,7 +50,7 @@ public class PetActivity extends AppCompatActivity {
                 startActivity(startstatintent3);
             }
         });
-       
+
         /* PET CODE BELOW
              0 - neutral        nothing happens
              1 - happy          during exercise/ rest of the week after finishing exercise
@@ -68,7 +73,6 @@ public class PetActivity extends AppCompatActivity {
         }
 
         String Toasty = "Progress= " + newString;
-        //Toast.makeText(getApplicationContext(),Toasty,Toast.LENGTH_SHORT).show();
 
         progress = Integer.parseInt(newString);
         petstatus=0;
@@ -83,28 +87,54 @@ public class PetActivity extends AppCompatActivity {
             petstatus = 0;
         }
 
-        String Toasty2="";
-        switch (petstatus){
-            case -2:
-                Toasty2 = "Super Sad";
-                break;
-            case -1:
-                Toasty2 = "Sad";
-                break;
-            case 0:
-                Toasty2 = "Neutral";
-                break;
-            case 1:
-                Toasty2 = "Happy";
-                break;
-            case 2:
-                Toasty2 = "Super Happy";
-                break;
+        petimage = findViewById(R.id.petimage);
 
-        }
-        Toast.makeText(getApplicationContext(),Toasty2,Toast.LENGTH_SHORT).show();
+        petimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                petstatus++;
+                if (petstatus>2)
+                    petstatus=2;
 
-        ImageView petimage = findViewById(R.id.petimage);
+                switch (petstatus){
+                    case 1:
+                        petimage.setImageResource(R.drawable.happystatus);
+                        break;
+                    case 2:
+                        petimage.setImageResource(R.drawable.superhappystatus);
+                        break;
+                    case 0:
+                    default:
+                        petimage.setImageResource(R.drawable.neutralstatus);
+                        break;
+                }
+
+                new CountDownTimer(700, 1000) { // 1000 = 1 sec
+
+                    public void onTick(long millisUntilFinished) {
+                    }
+
+                    public void onFinish() {
+                        petstatus--;
+                        switch (petstatus){
+                            case 1:
+                                petimage.setImageResource(R.drawable.happystatus);
+                                break;
+                            case 2:
+                                petimage.setImageResource(R.drawable.superhappystatus);
+                                break;
+                            case 0:
+                            default:
+                                petimage.setImageResource(R.drawable.neutralstatus);
+                                break;
+                        }
+                    }
+                }.start();
+
+                //Toast.makeText(getApplicationContext(),"Toasty",Toast.LENGTH_SHORT).show();
+            }
+        });
+
         switch (petstatus){
             case 1:
                 petimage.setImageResource(R.drawable.happystatus);
@@ -117,10 +147,6 @@ public class PetActivity extends AppCompatActivity {
                 petimage.setImageResource(R.drawable.neutralstatus);
                 break;
         }
-        
-        
-        
-        
-        
+
     }
 }
