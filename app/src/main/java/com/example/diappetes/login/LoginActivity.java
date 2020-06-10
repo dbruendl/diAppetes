@@ -14,6 +14,8 @@ import com.example.diappetes.StatActivity;
 import com.example.diappetes.ViewModelProviderFactory;
 import com.example.diappetes.register.RegisterActivity;
 
+import java.util.Calendar;
+
 import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;

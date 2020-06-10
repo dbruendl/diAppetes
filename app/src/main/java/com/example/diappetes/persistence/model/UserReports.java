@@ -7,8 +7,9 @@ import androidx.room.Relation;
 import java.util.List;
 
 public class UserReports {
-    @Embedded
-    public User user;
-    @Relation(parentColumn = "uid",entityColumn = "uid")
+    @Embedded public User user;
+    @Relation(
+            parentColumn = "uid",
+            entityColumn = "userId")
     public List<Report> reports;
 }
