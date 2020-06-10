@@ -39,9 +39,8 @@ import com.example.diappetes.sentilo.SentiloUpdateService;
 import com.example.diappetes.tracker.SimpleStepGoalTrackerImpl;
 import com.example.diappetes.tracker.StepGoalTracker;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.Date;
+
+import java.util.Calendar;
 
 import javax.inject.Inject;
 
@@ -55,9 +54,8 @@ public class MainActivity extends AppCompatActivity {
     private final static String SENTILO_IDENTITY_KEY = "c7337d3fc4ec28d0dddc81478808a8b6b82beb83110fcb00157cc0a711956475";
     private final static String CHANNEL_ID = "69"; //nice
     private final static long GO_FOR_WALK_NOTIFICATION_INTERVAL_IN_MS = 18 /* h */ * 60 /* m */ * 60 /* s */ * 1000 /* ms */;
-    //private LocalDateTime date = LocalDateTime.now();
+    private Calendar calendar = Calendar.getInstance();
 
-    //private final static long GO_FOR_WALK_NOTIFICATION_INTERVAL_IN_MS = 24 /* h */ * 60 /* m */ * 60 /* s */ * 1000 /* ms */;
     private StepDetectorSensorEventListenerImpl simpleStepDetector;
     private SensorManager sensorManager;
     private int goal = 10;
@@ -104,10 +102,10 @@ public class MainActivity extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
         assert alarmManager != null;
 
-        alarmManager.set(
-                AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime() + GO_FOR_WALK_NOTIFICATION_INTERVAL_IN_MS,
-                pendingIntent);
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 18);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);

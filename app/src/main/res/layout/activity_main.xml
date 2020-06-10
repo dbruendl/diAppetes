@@ -84,17 +84,17 @@
 
     <TextView
         android:id="@+id/infomaintxt"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
+        android:layout_width="239dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:gravity="center"
-        android:text="Do you wanna go for the walk?"
+        android:text="Do you wanna go for a walk?"
         android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/pb_steps"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.896" />
+        app:layout_constraintVertical_bias="0.754" />
 
     <ImageView
         android:id="@+id/petmini"
