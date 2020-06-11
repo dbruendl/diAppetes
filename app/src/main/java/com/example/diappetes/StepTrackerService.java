@@ -26,6 +26,9 @@ import dagger.hilt.android.AndroidEntryPoint;
  * {@link StepDetectorSensorEventListenerImpl} which is registered on a {@link SensorManager} and
  * creates an infinite loop to be able to wait for {@link android.hardware.SensorEvent}'s
  * indefinitely.
+ *
+ * This service is started in the foreground using {@link #startForeground(int, Notification)}
+ * showing a notification to indicate the app is tracking a users steps.
  */
 @AndroidEntryPoint
 public class StepTrackerService extends IntentService {
