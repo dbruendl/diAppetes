@@ -11,7 +11,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -23,14 +22,17 @@ import android.widget.ToggleButton;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.android.volley.toolbox.Volley;
 import com.example.diappetes.BatteryStatusChangedReceiver;
 import com.example.diappetes.PetActivity;
 import com.example.diappetes.R;
 import com.example.diappetes.StatActivity;
+import com.example.diappetes.StepTrackerService;
 import com.example.diappetes.WalkReminderNotificationReceiver;
 import com.example.diappetes.info.InfoActivity;
+import com.example.diappetes.login.LoginViewModel;
 import com.example.diappetes.observer.PetStepGoalObserver;
 import com.example.diappetes.observer.ProgressBarStepGoalObserver;
 import com.example.diappetes.observer.TextViewStepGoalObserver;
@@ -41,17 +43,22 @@ import com.example.diappetes.sentilo.SentiloUpdateService;
 import com.example.diappetes.tracker.SimpleStepGoalTrackerImpl;
 import com.example.diappetes.tracker.StepGoalTracker;
 
-
 import java.util.Calendar;
 
 import javax.inject.Inject;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
 import static com.example.diappetes.WalkReminderNotificationReceiver.KEY_CHANNEL_ID;
 
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
 
     @Inject
     public AppDatabase appDatabase;
+
+    @Inject
+    public LoginViewModel loginViewModel;
 
     private final static String SENTILO_IDENTITY_KEY = "c7337d3fc4ec28d0dddc81478808a8b6b82beb83110fcb00157cc0a711956475";
     private final static String CHANNEL_ID = "69"; //nice
@@ -108,6 +115,9 @@ public class MainActivity extends AppCompatActivity {
         calendar.set(Calendar.HOUR_OF_DAY, 18);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
+        Intent startStepTrackerServiceIntent = new Intent(this, StepTrackerService.class)
+                .putExtra(StepTrackerService.UID_INTENT_KEY, "t");
+        startService(startStepTrackerServiceIntent);
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);

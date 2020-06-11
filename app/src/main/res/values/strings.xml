@@ -26,4 +26,6 @@
     <string name="additional_data_invalid_profession">Invalid profession</string>
     <string name="additional_data_invalid_weight">Invalid weight</string>
     <string name="additional_data_invalid_height">Invalid height</string>
+
+    <string name="step_tracker_service_description">Tracks a users steps</string>
 </resources>

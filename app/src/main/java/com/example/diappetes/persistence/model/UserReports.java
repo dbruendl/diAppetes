@@ -12,4 +12,13 @@ public class UserReports {
             parentColumn = "uid",
             entityColumn = "userId")
     public List<Report> reports;
+
+    public Report getReportForToday() {
+        for (Report report : reports) {
+            if(report.isFromToday()) {
+                return report;
+            }
+        }
+        return null;
+    }
 }

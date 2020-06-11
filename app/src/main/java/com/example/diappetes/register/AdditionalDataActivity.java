@@ -3,13 +3,12 @@ package com.example.diappetes.register;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.diappetes.R;
-import com.example.diappetes.ViewModelProviderFactory;
 import com.example.diappetes.databinding.ActivityRegisterFormBinding;
 import com.example.diappetes.login.LoginActivity;
-import com.example.diappetes.login.ValidationException;
 
 import javax.inject.Inject;
 
@@ -18,14 +17,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class AdditionalDataActivity extends DaggerAppCompatActivity {
+public class AdditionalDataActivity extends AppCompatActivity {
 
     public static final String INTENT_KEY_EMAIL = "EMAIL";
     public static final String INTENT_KEY_UID = "UID";
     public static final String INTENT_KEY_PASSWORD = "PASSWORD";
-
-    @Inject
-    ViewModelProviderFactory viewModelProviderFactory;
 
     private ActivityRegisterFormBinding binding;
     private AdditionalDataViewModel additionalDataViewModel; // TODO
@@ -37,7 +33,7 @@ public class AdditionalDataActivity extends DaggerAppCompatActivity {
         binding = ActivityRegisterFormBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        additionalDataViewModel = new ViewModelProvider(this, viewModelProviderFactory)
+        additionalDataViewModel = new ViewModelProvider(this)
                 .get(AdditionalDataViewModel.class);
 
         binding.next.setOnClickListener(v -> {

@@ -32,6 +32,10 @@ public class LoginViewModel extends ViewModel {
                 });
     }
 
+    public String getLoggedInUID() {
+        return loggedInUser.uid;
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();

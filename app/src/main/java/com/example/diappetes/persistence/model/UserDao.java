@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Transaction;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -24,5 +25,9 @@ public interface UserDao {
 
     @Transaction
     @Query("SELECT * FROM user WHERE uid = :uid")
-    Observable<List<UserReports>> getAll(String uid);
+    Observable<UserReports> findUserReportsByUid(String uid);
+
+    @Update
+    @Transaction
+    Completable updateReport(Report report);
 }

@@ -3,10 +3,10 @@ package com.example.diappetes.register;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.diappetes.R;
-import com.example.diappetes.ViewModelProviderFactory;
 import com.example.diappetes.databinding.ActivityRegisterBinding;
 
 import javax.inject.Inject;
@@ -14,16 +14,12 @@ import javax.inject.Inject;
 import dagger.android.support.DaggerAppCompatActivity;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 import static com.example.diappetes.register.AdditionalDataActivity.INTENT_KEY_EMAIL;
 import static com.example.diappetes.register.AdditionalDataActivity.INTENT_KEY_PASSWORD;
 import static com.example.diappetes.register.AdditionalDataActivity.INTENT_KEY_UID;
 
-public class RegisterActivity extends DaggerAppCompatActivity {
-
-    @Inject
-    ViewModelProviderFactory viewModelProviderFactory;
+public class RegisterActivity extends AppCompatActivity {
 
     private RegisterViewModel registerViewModel;
     private ActivityRegisterBinding activityRegisterBinding;
@@ -35,7 +31,7 @@ public class RegisterActivity extends DaggerAppCompatActivity {
         activityRegisterBinding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(activityRegisterBinding.getRoot());
 
-        registerViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(RegisterViewModel.class);
+        registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
 
         // In android error record there is info about null error inside setOnClickListener below
         activityRegisterBinding.finishregisterbtn.setOnClickListener(v -> {

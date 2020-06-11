@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,7 +14,6 @@ import com.example.diappetes.main.MainActivity;
 import com.example.diappetes.PetActivity;
 import com.example.diappetes.R;
 import com.example.diappetes.StatActivity;
-import com.example.diappetes.ViewModelProviderFactory;
 import com.example.diappetes.databinding.ActivityInfoBinding;
 
 import java.text.DateFormat;
@@ -23,20 +23,21 @@ import java.util.Calendar;
 import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class InfoActivity extends DaggerAppCompatActivity {
+@AndroidEntryPoint
+public class InfoActivity extends AppCompatActivity {
+    @Inject
+    public InfoViewModel infoViewModel;
+
     RecyclerView.Adapter userAdapter;
     RecyclerView.LayoutManager userLayoutManager;
 
     ActivityInfoBinding activityInfoBinding;
 
-    @Inject
-    ViewModelProviderFactory viewModelProviderFactory;
-
-    private InfoViewModel infoViewModel;
     private Disposable findAllUsersDisposable;
 
     @Override
@@ -44,8 +45,6 @@ public class InfoActivity extends DaggerAppCompatActivity {
         super.onCreate(savedInstanceState);
         activityInfoBinding = ActivityInfoBinding.inflate(getLayoutInflater());
         setContentView(activityInfoBinding.getRoot());
-
-        infoViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(InfoViewModel.class);
 
         activityInfoBinding.userRecyclerView.setHasFixedSize(true);
 

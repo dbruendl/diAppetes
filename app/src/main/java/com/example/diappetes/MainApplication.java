@@ -1,14 +1,10 @@
 package com.example.diappetes;
 
-import com.example.diappetes.di.DaggerApplicationComponent;
+import android.app.Application;
 
-import dagger.android.AndroidInjector;
-import dagger.android.DaggerApplication;
+import dagger.hilt.android.HiltAndroidApp;
 
-public class MainApplication extends DaggerApplication {
+@HiltAndroidApp
+public class MainApplication extends Application {
 
-    @Override
-    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-        return DaggerApplicationComponent.builder().application(this).build();
-    }
 }

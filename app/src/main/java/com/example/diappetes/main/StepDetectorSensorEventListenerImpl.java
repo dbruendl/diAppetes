@@ -9,6 +9,8 @@ import com.example.diappetes.SensorFilter;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+
 public class StepDetectorSensorEventListenerImpl implements SensorEventListener {
 
     private static final int ACCEL_RING_SIZE = 50;

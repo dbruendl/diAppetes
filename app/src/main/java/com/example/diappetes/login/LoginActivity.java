@@ -5,29 +5,27 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.room.EmptyResultSetException;
 
 import com.example.diappetes.main.MainActivity;
 import com.example.diappetes.R;
 import com.example.diappetes.StatActivity;
-import com.example.diappetes.ViewModelProviderFactory;
 import com.example.diappetes.register.RegisterActivity;
-
-import java.util.Calendar;
 
 import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class LoginActivity extends DaggerAppCompatActivity {
+@AndroidEntryPoint
+public class LoginActivity extends AppCompatActivity {
     @Inject
-    ViewModelProviderFactory viewModelProviderFactory;
-
-    private LoginViewModel loginViewModel;
+    public LoginViewModel loginViewModel;
 
     private Disposable loginDisposable;
 
@@ -36,8 +34,6 @@ public class LoginActivity extends DaggerAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Button loginBtn = findViewById(R.id.signinbtn);
-
-        loginViewModel = new ViewModelProvider(this, viewModelProviderFactory).get(LoginViewModel.class);
 
         /*
          *loginBtn send the data to CheckInput, and checks if email or password is already registered
