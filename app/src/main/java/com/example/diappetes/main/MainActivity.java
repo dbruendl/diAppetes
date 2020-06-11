@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         calendar.set(Calendar.HOUR_OF_DAY, 18);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
-        activityMainBinding.toggleStepTracking.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        activityMainBinding.trackSteps.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 Intent startStepTrackerServiceIntent = new Intent(this, StepTrackerService.class)
                         .putExtra(StepTrackerService.UID_INTENT_KEY, LOGGED_IN_USER_ID)

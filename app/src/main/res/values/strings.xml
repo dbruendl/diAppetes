@@ -6,7 +6,7 @@
 
     <!-- Main -->
     <string name="main_toggle_step_tracking_button_text">ToggleButton</string>
-    <string name="main_go_for_walk_text">Do you want to go for a walk?</string>
+    <string name="main_go_for_walk_text">Should we track your steps?</string>
     <string name="main_home_tab_text">Home</string>
     <string name="main_info_tab_text">Info</string>
     <string name="main_pet_tab_text">Pet</string>
