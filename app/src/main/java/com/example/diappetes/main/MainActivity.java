@@ -116,7 +116,8 @@ public class MainActivity extends AppCompatActivity {
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
         Intent startStepTrackerServiceIntent = new Intent(this, StepTrackerService.class)
-                .putExtra(StepTrackerService.UID_INTENT_KEY, "t");
+                .putExtra(StepTrackerService.UID_INTENT_KEY, "t")
+                .putExtra(StepTrackerService.NOTIFICATION_CHANNEL_INTENT_KEY, CHANNEL_ID);
         startService(startStepTrackerServiceIntent);
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -126,18 +127,16 @@ public class MainActivity extends AppCompatActivity {
 
         toggleStepTrackingButton = findViewById(R.id.toggleButton);
 
-        toggleStepTrackingButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    stepGoalProgressBar.setVisibility(View.VISIBLE);
-                    textViewTotalSteps.setVisibility(View.VISIBLE);
+        toggleStepTrackingButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                stepGoalProgressBar.setVisibility(View.VISIBLE);
+                textViewTotalSteps.setVisibility(View.VISIBLE);
 
-                    sensorManager.registerListener(simpleStepDetector, accel, SensorManager.SENSOR_DELAY_FASTEST);
-                } else {
-                    stepGoalProgressBar.setVisibility(View.GONE);
-                    textViewTotalSteps.setVisibility(View.GONE);
-                    sensorManager.unregisterListener(simpleStepDetector);
-                }
+                sensorManager.registerListener(simpleStepDetector, accel, SensorManager.SENSOR_DELAY_FASTEST);
+            } else {
+                stepGoalProgressBar.setVisibility(View.GONE);
+                textViewTotalSteps.setVisibility(View.GONE);
+                sensorManager.unregisterListener(simpleStepDetector);
             }
         });
 

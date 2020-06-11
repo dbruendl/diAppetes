@@ -27,5 +27,8 @@
     <string name="additional_data_invalid_weight">Invalid weight</string>
     <string name="additional_data_invalid_height">Invalid height</string>
 
+    <!-- Step tracker service -->
+    <string name="step_tracker_notification_title">Tracking your steps</string>
     <string name="step_tracker_service_description">Tracks a users steps</string>
+
 </resources>
