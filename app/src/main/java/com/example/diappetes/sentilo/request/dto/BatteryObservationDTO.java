@@ -9,11 +9,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BatteryObservationDTO {
 
-    /**
-     * e.g. "54" without the {@literal %} sign
-     */
+
     @SerializedName("value")
-    private final String batteryPercentage;
+    private final String value;
 
     /**
      * (latitude, longitude) e.g. "41.22157865201759 1.7300500669616392"

@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Build;
@@ -24,6 +25,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.toolbox.Volley;
+import com.example.diappetes.BatteryStatusChangedReceiver;
 import com.example.diappetes.PetActivity;
 import com.example.diappetes.R;
 import com.example.diappetes.StatActivity;
@@ -128,6 +130,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        BatteryStatusChangedReceiver bscr = new BatteryStatusChangedReceiver(sentiloConnector);
+        registerReceiver(bscr, ifilter);
 
         Button infobtn = findViewById(R.id.infobtn);
         infobtn.setOnClickListener(new View.OnClickListener() {

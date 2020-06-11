@@ -10,8 +10,9 @@ import java.util.Map;
 
 public class SentiloConnectorVolleyImpl implements SentiloConnector {
 
-    private static final String HEADER_KEY_SENTILO_IDENTITY_KEY = "IDENTITY_KEY";
-    private static final String SENTILO_URL = "https://api-sentilo.diba.cat/data/vilanovailageltru@hygieia/hygieia_1_battery/";
+    private static final String HEADER_KEY_IDENTITY_KEY = "IDENTITY_KEY";
+    private static final String UPDATE_BATTERY_URL = "https://api-sentilo.diba.cat/data/vilanovailageltru@hygieia/hygieia_1_battery/";
+    private static final String UPDATE_STEPS_URL = "https://api-sentilo.diba.cat/data/vilanovailageltru@hygieia/hygieia_1_steps/";
     private static final Map<String, String> requestHeaders = new HashMap<>();
 
     private final Response.Listener<String> responseListener;
@@ -30,7 +31,7 @@ public class SentiloConnectorVolleyImpl implements SentiloConnector {
     }
 
     private SentiloConnectorVolleyImpl(RequestQueue requestQueue, String identityKey, Response.Listener<String> responseListener, Response.ErrorListener errorListener) {
-        requestHeaders.put(HEADER_KEY_SENTILO_IDENTITY_KEY, identityKey);
+        requestHeaders.put(HEADER_KEY_IDENTITY_KEY, identityKey);
 
         this.requestQueue = requestQueue;
         this.responseListener = responseListener;
@@ -39,6 +40,11 @@ public class SentiloConnectorVolleyImpl implements SentiloConnector {
 
     @Override
     public void updateBatteryLocation(SentiloRequestDTO sentiloRequestDTO) {
-        requestQueue.add(new GsonRequest<>(SENTILO_URL, requestHeaders, sentiloRequestDTO, responseListener, errorListener));
+        requestQueue.add(new GsonRequest<>(UPDATE_BATTERY_URL, requestHeaders, sentiloRequestDTO, responseListener, errorListener));
+    }
+
+    @Override
+    public void updateSteps(SentiloRequestDTO sentiloRequestDTO){
+        requestQueue.add(new GsonRequest<>(UPDATE_STEPS_URL, requestHeaders, sentiloRequestDTO, responseListener, errorListener));
     }
 }

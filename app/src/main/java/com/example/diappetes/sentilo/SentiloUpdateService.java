@@ -1,5 +1,9 @@
 package com.example.diappetes.sentilo;
 
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.BatteryManager;
+
 import androidx.lifecycle.Observer;
 
 import com.example.diappetes.sentilo.request.dto.BatteryObservationDTO;
@@ -33,16 +37,16 @@ public class SentiloUpdateService implements Observer<Integer> {
     }
 
     private void sendUpdateRequest(int totalSteps) {
-        // TODO add total steps to request body
-        SentiloRequestDTO requestDTO = SentiloRequestDTO.builder()
+
+        SentiloRequestDTO requestStepDTO = SentiloRequestDTO.builder()
                 .batteryObservationDTOList(Collections.singletonList(
                         BatteryObservationDTO.builder()
-                                .batteryPercentage("56")
+                                .value(String.valueOf(totalSteps))
                                 .location("41.22157865201759 1.7300500669616392")
                                 .build()
                 ))
                 .build();
 
-        sentiloConnector.updateBatteryLocation(requestDTO);
+        sentiloConnector.updateSteps(requestStepDTO);
     }
 }
