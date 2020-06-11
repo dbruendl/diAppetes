@@ -7,7 +7,7 @@
     >
 
 
-    <solid android:color="@color/colorAccent"/>
+    <solid android:color="@color/primaryColor"/>
 
 
 </shape>
