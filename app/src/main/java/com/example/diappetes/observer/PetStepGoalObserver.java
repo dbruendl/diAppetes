@@ -15,6 +15,8 @@ import lombok.Builder;
  * - progress between 0 - 99    ={@literal >} {@link R.drawable#happystatus}
  * - progress {@literal >}= 100 ={@literal >} {@link R.drawable#superhappystatus}
  * - progress {@literal <} 0    ={@literal >} {@link R.drawable#neutralstatus}
+ *
+ * Default image is {@link R.drawable#neutralstatus}
  */
 @Builder
 public class PetStepGoalObserver implements Observer<Report> {
@@ -25,6 +27,8 @@ public class PetStepGoalObserver implements Observer<Report> {
     public PetStepGoalObserver(ImageView imageView, int stepGoal) {
         this.imageView = imageView;
         this.stepGoal = stepGoal;
+
+        imageView.setImageResource(R.drawable.neutralstatus);
     }
 
     @Override

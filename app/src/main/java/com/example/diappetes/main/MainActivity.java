@@ -73,28 +73,20 @@ public class MainActivity extends AppCompatActivity {
     private Calendar calendar = Calendar.getInstance();
 
     public int progress;
-    private TextView textViewTotalSteps;
-    private ProgressBar stepGoalProgressBar;
-    ImageView imageViewPetMini;
 
     @Override
     @RequiresApi(api = Build.VERSION_CODES.M)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(R.layout.activity_main);
+        setContentView(activityMainBinding.getRoot());
 
         SentiloConnector sentiloConnector = new SentiloConnectorVolleyImpl(Volley.newRequestQueue(this), SENTILO_IDENTITY_KEY);
         LiveData<Report> userReportForToday = mainViewModel.getUserReportForToday(LOGGED_IN_USER_ID);
 
-        textViewTotalSteps = findViewById(R.id.tv_steps);
-        stepGoalProgressBar = findViewById(R.id.pb_steps);
-        imageViewPetMini = findViewById(R.id.petmini);
-        imageViewPetMini.setImageResource(R.drawable.neutralstatus);
-
-        userReportForToday.observe(this, new PetStepGoalObserver(imageViewPetMini, USER_STEP_GOAL));
-        userReportForToday.observe(this, new ProgressBarStepGoalObserver(stepGoalProgressBar, USER_STEP_GOAL));
-        userReportForToday.observe(this, new TextViewStepObserver(textViewTotalSteps));
+        userReportForToday.observe(this, new PetStepGoalObserver(activityMainBinding.petmini, USER_STEP_GOAL));
+        userReportForToday.observe(this, new ProgressBarStepGoalObserver(activityMainBinding.pbSteps, USER_STEP_GOAL));
+        userReportForToday.observe(this, new TextViewStepObserver(activityMainBinding.tvSteps));
         userReportForToday.observe(this, new SentiloUpdateService(sentiloConnector, SENTILO_STEP_UPDATE_INTERVAL));
 
         createNotificationChannel();
@@ -111,24 +103,22 @@ public class MainActivity extends AppCompatActivity {
         calendar.set(Calendar.HOUR_OF_DAY, 18);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
-        ToggleButton toggleButton = findViewById(R.id.toggleButton);
-
-        toggleButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        activityMainBinding.toggleButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 Intent startStepTrackerServiceIntent = new Intent(this, StepTrackerService.class)
                         .putExtra(StepTrackerService.UID_INTENT_KEY, LOGGED_IN_USER_ID)
                         .putExtra(StepTrackerService.NOTIFICATION_CHANNEL_INTENT_KEY, CHANNEL_ID);
                 startService(startStepTrackerServiceIntent);
 
-                stepGoalProgressBar.setVisibility(View.VISIBLE);
-                textViewTotalSteps.setVisibility(View.VISIBLE);
+                activityMainBinding.pbSteps.setVisibility(View.VISIBLE);
+                activityMainBinding.tvSteps.setVisibility(View.VISIBLE);
             } else {
                 Intent stopStepTrackerServiceIntent = new Intent(this, StepTrackerService.class);
 
                 stopService(stopStepTrackerServiceIntent);
 
-                stepGoalProgressBar.setVisibility(View.GONE);
-                textViewTotalSteps.setVisibility(View.GONE);
+                activityMainBinding.pbSteps.setVisibility(View.GONE);
+                activityMainBinding.tvSteps.setVisibility(View.GONE);
             }
         });
 
@@ -136,35 +126,23 @@ public class MainActivity extends AppCompatActivity {
         BatteryStatusChangedReceiver bscr = new BatteryStatusChangedReceiver(sentiloConnector);
         registerReceiver(bscr, ifilter);
 
-        Button infobtn = findViewById(R.id.infobtn);
-        infobtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent startinfointent = new Intent(getApplicationContext(), InfoActivity.class);
-                startActivity(startinfointent);
+        activityMainBinding.infobtn.setOnClickListener(v -> {
+            Intent startinfointent = new Intent(getApplicationContext(), InfoActivity.class);
+            startActivity(startinfointent);
 
-            }
         });
 
-        Button petbtn = findViewById(R.id.petbtn);
-        petbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), PetActivity.class);
+        activityMainBinding.petbtn.setOnClickListener(v -> {
+            Intent i = new Intent(getApplicationContext(), PetActivity.class);
 
-                String strName = progress + "";
-                i.putExtra("STRING_I_NEED", strName);
-                startActivity(i);
-            }
+            String strName = progress + "";
+            i.putExtra("STRING_I_NEED", strName);
+            startActivity(i);
         });
 
-        Button statbtn = findViewById(R.id.statbtn);
-        statbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent startstatintent = new Intent(getApplicationContext(), StatActivity.class);
-                startActivity(startstatintent);
-            }
+        activityMainBinding.statbtn.setOnClickListener(v -> {
+            Intent startstatintent = new Intent(getApplicationContext(), StatActivity.class);
+            startActivity(startstatintent);
         });
     }
 
