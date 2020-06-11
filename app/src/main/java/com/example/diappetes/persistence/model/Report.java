@@ -24,4 +24,8 @@ public class Report {
     boolean isFromToday() {
         return DateUtils.isToday(created);
     }
+
+    public float progress(int stepGoal) {
+        return (float) steps / stepGoal;
+    }
 }

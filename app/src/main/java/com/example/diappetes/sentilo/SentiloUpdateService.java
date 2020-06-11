@@ -1,11 +1,8 @@
 package com.example.diappetes.sentilo;
 
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.BatteryManager;
-
 import androidx.lifecycle.Observer;
 
+import com.example.diappetes.persistence.model.Report;
 import com.example.diappetes.sentilo.request.dto.BatteryObservationDTO;
 import com.example.diappetes.sentilo.request.dto.SentiloRequestDTO;
 
@@ -15,7 +12,7 @@ import java.util.Collections;
  * Counts the total amount of steps a user has taken and sends an update request to a Sentilo api
  * at a configurable interval.
  */
-public class SentiloUpdateService implements Observer<Integer> {
+public class SentiloUpdateService implements Observer<Report> {
 
     private final SentiloConnector sentiloConnector;
     private final int stepUpdateInterval;
@@ -26,9 +23,9 @@ public class SentiloUpdateService implements Observer<Integer> {
     }
 
     @Override
-    public void onChanged(Integer totalSteps) {
-        if(updateIntervalReached(totalSteps)) {
-            sendUpdateRequest(totalSteps);
+    public void onChanged(Report report) {
+        if(updateIntervalReached(report.steps)) {
+            sendUpdateRequest(report.steps);
         }
     }
 

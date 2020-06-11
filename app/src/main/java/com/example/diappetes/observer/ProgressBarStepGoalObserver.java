@@ -4,17 +4,22 @@ import android.widget.ProgressBar;
 
 import androidx.lifecycle.Observer;
 
+import com.example.diappetes.persistence.model.Report;
+
 import lombok.RequiredArgsConstructor;
 
 /**
  * Observes a percentage float value and updates a progress bar accordingly
  */
 @RequiredArgsConstructor
-public class ProgressBarStepGoalObserver implements Observer<Float> {
+public class ProgressBarStepGoalObserver implements Observer<Report> {
     private final ProgressBar progressBar;
+    private final int stepGoal;
 
     @Override
-    public void onChanged(Float progress) {
+    public void onChanged(Report report) {
+        float progress = report.progress(stepGoal);
+
         progressBar.setProgress((int) (progress * 100));
     }
 }

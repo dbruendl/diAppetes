@@ -7,8 +7,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +19,7 @@ import android.widget.ToggleButton;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
+import androidx.lifecycle.LiveData;
 
 import com.android.volley.toolbox.Volley;
 import com.example.diappetes.BatteryStatusChangedReceiver;
@@ -30,18 +28,17 @@ import com.example.diappetes.R;
 import com.example.diappetes.StatActivity;
 import com.example.diappetes.StepTrackerService;
 import com.example.diappetes.WalkReminderNotificationReceiver;
+import com.example.diappetes.databinding.ActivityMainBinding;
 import com.example.diappetes.info.InfoActivity;
+import com.example.diappetes.login.LoginViewModel;
 import com.example.diappetes.observer.PetStepGoalObserver;
 import com.example.diappetes.observer.ProgressBarStepGoalObserver;
-import com.example.diappetes.observer.TestObserver;
-import com.example.diappetes.observer.TextViewStepGoalObserver;
+import com.example.diappetes.observer.TextViewStepObserver;
 import com.example.diappetes.persistence.AppDatabase;
 import com.example.diappetes.persistence.model.Report;
 import com.example.diappetes.sentilo.SentiloConnector;
 import com.example.diappetes.sentilo.SentiloConnectorVolleyImpl;
 import com.example.diappetes.sentilo.SentiloUpdateService;
-import com.example.diappetes.tracker.SimpleStepGoalTrackerImpl;
-import com.example.diappetes.tracker.StepGoalTracker;
 
 import java.util.Calendar;
 
@@ -60,49 +57,45 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     public MainViewModel mainViewModel;
 
+    @Inject
+    public LoginViewModel loginViewModel;
+
+    public ActivityMainBinding activityMainBinding;
+
     private final static String SENTILO_IDENTITY_KEY = "c7337d3fc4ec28d0dddc81478808a8b6b82beb83110fcb00157cc0a711956475";
     private final static String CHANNEL_ID = "69"; //nice
-    private final static long GO_FOR_WALK_NOTIFICATION_INTERVAL_IN_MS = 18 /* h */ * 60 /* m */ * 60 /* s */ * 1000 /* ms */;
+    private static final int SENTILO_STEP_UPDATE_INTERVAL = 10;
+
+    // TODO: replace this with a call to the respective login manager
+    private final static String LOGGED_IN_USER_ID = "t";
+    private final static int USER_STEP_GOAL = 10;
+
     private Calendar calendar = Calendar.getInstance();
 
-    private StepDetectorSensorEventListenerImpl simpleStepDetector;
-    private SensorManager sensorManager;
-    private int goal = 10;
-    private int send = 3;
-    private Sensor accel;
     public int progress;
     private TextView textViewTotalSteps;
     private ProgressBar stepGoalProgressBar;
-    private ToggleButton toggleStepTrackingButton;
     ImageView imageViewPetMini;
 
     @Override
     @RequiresApi(api = Build.VERSION_CODES.M)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main);
 
         SentiloConnector sentiloConnector = new SentiloConnectorVolleyImpl(Volley.newRequestQueue(this), SENTILO_IDENTITY_KEY);
-        StepGoalTracker stepGoalTracker = new SimpleStepGoalTrackerImpl(goal);
-
-        Observer<Report> observer = new TestObserver();
-        mainViewModel.getUserReportForToday("t").observe(this, observer);
-
-        SentiloUpdateService sentiloUpdateService = new SentiloUpdateService(sentiloConnector, send);
-        stepGoalTracker.totalSteps().observe(this, sentiloUpdateService);
-
-        imageViewPetMini = findViewById(R.id.petmini);
-        imageViewPetMini.setImageResource(R.drawable.neutralstatus);
-        PetStepGoalObserver petStepGoalObserver = new PetStepGoalObserver(imageViewPetMini);
-        stepGoalTracker.progress().observe(this, petStepGoalObserver);
-
-        stepGoalProgressBar = findViewById(R.id.pb_steps);
-        ProgressBarStepGoalObserver progressBarStepGoalObserver = new ProgressBarStepGoalObserver(stepGoalProgressBar);
-        stepGoalTracker.progress().observe(this, progressBarStepGoalObserver);
+        LiveData<Report> userReportForToday = mainViewModel.getUserReportForToday(LOGGED_IN_USER_ID);
 
         textViewTotalSteps = findViewById(R.id.tv_steps);
-        TextViewStepGoalObserver textViewStepGoalObserver = new TextViewStepGoalObserver(textViewTotalSteps);
-        stepGoalTracker.totalSteps().observe(this, textViewStepGoalObserver);
+        stepGoalProgressBar = findViewById(R.id.pb_steps);
+        imageViewPetMini = findViewById(R.id.petmini);
+        imageViewPetMini.setImageResource(R.drawable.neutralstatus);
+
+        userReportForToday.observe(this, new PetStepGoalObserver(imageViewPetMini, USER_STEP_GOAL));
+        userReportForToday.observe(this, new ProgressBarStepGoalObserver(stepGoalProgressBar, USER_STEP_GOAL));
+        userReportForToday.observe(this, new TextViewStepObserver(textViewTotalSteps));
+        userReportForToday.observe(this, new SentiloUpdateService(sentiloConnector, SENTILO_STEP_UPDATE_INTERVAL));
 
         createNotificationChannel();
 
@@ -118,24 +111,17 @@ public class MainActivity extends AppCompatActivity {
         calendar.set(Calendar.HOUR_OF_DAY, 18);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        simpleStepDetector = new StepDetectorSensorEventListenerImpl();
-        simpleStepDetector.registerListener(stepGoalTracker);
+        ToggleButton toggleButton = findViewById(R.id.toggleButton);
 
-        toggleStepTrackingButton = findViewById(R.id.toggleButton);
-
-        toggleStepTrackingButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        toggleButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 Intent startStepTrackerServiceIntent = new Intent(this, StepTrackerService.class)
-                        .putExtra(StepTrackerService.UID_INTENT_KEY, "t")
+                        .putExtra(StepTrackerService.UID_INTENT_KEY, LOGGED_IN_USER_ID)
                         .putExtra(StepTrackerService.NOTIFICATION_CHANNEL_INTENT_KEY, CHANNEL_ID);
                 startService(startStepTrackerServiceIntent);
 
                 stepGoalProgressBar.setVisibility(View.VISIBLE);
                 textViewTotalSteps.setVisibility(View.VISIBLE);
-
-                sensorManager.registerListener(simpleStepDetector, accel, SensorManager.SENSOR_DELAY_FASTEST);
             } else {
                 Intent stopStepTrackerServiceIntent = new Intent(this, StepTrackerService.class);
 
@@ -143,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
 
                 stepGoalProgressBar.setVisibility(View.GONE);
                 textViewTotalSteps.setVisibility(View.GONE);
-                sensorManager.unregisterListener(simpleStepDetector);
             }
         });
 

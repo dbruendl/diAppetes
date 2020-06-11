@@ -2,33 +2,32 @@ package com.example.diappetes.tracker;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.diappetes.main.StepListener;
+
 import lombok.Getter;
 
 @Getter
-public class SimpleStepGoalTrackerImpl implements StepGoalTracker {
+public class SimpleStepGoalTrackerImpl implements StepGoalTracker, StepListener {
     private final int stepGoal;
-
     private final MutableLiveData<Float> progress;
-    private final MutableLiveData<Integer> totalSteps;
+
+    private int totalSteps;
 
     public SimpleStepGoalTrackerImpl(int stepGoal) {
         this.stepGoal = stepGoal;
         this.progress = new MutableLiveData<>();
-        this.totalSteps = new MutableLiveData<>();
-        totalSteps.setValue(0);
+        this.totalSteps = 0;
     }
 
     @Override
     public void step() {
-        int totalStepsPrevious = totalStepsOrZero();
-
-        this.totalSteps.postValue(++totalStepsPrevious);
+        totalSteps++;
 
         calculateProgress();
     }
 
     private void calculateProgress() {
-        float progress = (float) totalStepsOrZero() / stepGoal;
+        float progress = (float) totalSteps / stepGoal;
 
         this.progress.postValue(progress);
     }
@@ -36,14 +35,5 @@ public class SimpleStepGoalTrackerImpl implements StepGoalTracker {
     @Override
     public MutableLiveData<Float> progress() {
         return progress;
-    }
-
-    @Override
-    public MutableLiveData<Integer> totalSteps() {
-        return totalSteps;
-    }
-
-    private int totalStepsOrZero() {
-        return this.totalSteps.getValue() == null ? 0 : this.totalSteps.getValue();
     }
 }

@@ -36,6 +36,10 @@ public class LoginViewModel extends ViewModel {
         return loggedInUser.uid;
     }
 
+    public int getLoggedInUserDailyStepGoal() {
+        return loggedInUser.dailyStepGoal;
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();

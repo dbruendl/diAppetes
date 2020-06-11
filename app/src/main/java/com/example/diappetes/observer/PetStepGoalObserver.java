@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import androidx.lifecycle.Observer;
 
 import com.example.diappetes.R;
+import com.example.diappetes.persistence.model.Report;
 
 import lombok.Builder;
 
@@ -16,16 +17,19 @@ import lombok.Builder;
  * - progress {@literal <} 0    ={@literal >} {@link R.drawable#neutralstatus}
  */
 @Builder
-public class PetStepGoalObserver implements Observer<Float> {
+public class PetStepGoalObserver implements Observer<Report> {
 
     private final ImageView imageView;
+    private final int stepGoal;
 
-    public PetStepGoalObserver(ImageView imageView) {
+    public PetStepGoalObserver(ImageView imageView, int stepGoal) {
         this.imageView = imageView;
+        this.stepGoal = stepGoal;
     }
 
     @Override
-    public void onChanged(Float progress) {
+    public void onChanged(Report report) {
+        float progress = report.progress(stepGoal);
         float progressInPercentage = progress * 100;
 
         if(progressInPercentage > 0 && progressInPercentage < 100) {
