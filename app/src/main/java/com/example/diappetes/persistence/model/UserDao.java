@@ -1,11 +1,14 @@
 package com.example.diappetes.persistence.model;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Transaction;
 import androidx.room.Update;
 
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Completable;
@@ -25,7 +28,7 @@ public interface UserDao {
 
     @Transaction
     @Query("SELECT * FROM user WHERE uid = :uid")
-    Observable<UserReports> findUserReportsByUid(String uid);
+    Single<UserReports> findUserReportsByUid(String uid);
 
     @Update
     @Transaction
@@ -33,4 +36,7 @@ public interface UserDao {
 
     @Insert
     Completable insertReport(Report report);
+
+    @Query("SELECT * FROM report WHERE userId = :uid AND created BETWEEN :startOfTodayTimestamp AND :endOfTodayTimestamp")
+    LiveData<Report> findUserReportForToday(String uid, long startOfTodayTimestamp, long endOfTodayTimestamp);
 }

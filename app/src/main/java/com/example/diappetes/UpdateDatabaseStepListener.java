@@ -4,7 +4,9 @@ import com.example.diappetes.main.StepListener;
 import com.example.diappetes.persistence.model.Report;
 import com.example.diappetes.persistence.model.UserDao;
 
+import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Updates a user's totalSteps field when receiving a step or creates a new Report if none exist
@@ -21,6 +23,7 @@ public class UpdateDatabaseStepListener implements StepListener {
     @Override
     public void step() {
         Disposable findUserDisposable = userDao.findUserReportsByUid(uid)
+                .subscribeOn(Schedulers.io())
                 .flatMapCompletable(userReports -> {
                     Report reportForToday = userReports.getReportForToday();
 

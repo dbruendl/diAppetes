@@ -13,7 +13,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,7 +21,7 @@ import android.widget.ToggleButton;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.Observer;
 
 import com.android.volley.toolbox.Volley;
 import com.example.diappetes.BatteryStatusChangedReceiver;
@@ -32,11 +31,12 @@ import com.example.diappetes.StatActivity;
 import com.example.diappetes.StepTrackerService;
 import com.example.diappetes.WalkReminderNotificationReceiver;
 import com.example.diappetes.info.InfoActivity;
-import com.example.diappetes.login.LoginViewModel;
 import com.example.diappetes.observer.PetStepGoalObserver;
 import com.example.diappetes.observer.ProgressBarStepGoalObserver;
+import com.example.diappetes.observer.TestObserver;
 import com.example.diappetes.observer.TextViewStepGoalObserver;
 import com.example.diappetes.persistence.AppDatabase;
+import com.example.diappetes.persistence.model.Report;
 import com.example.diappetes.sentilo.SentiloConnector;
 import com.example.diappetes.sentilo.SentiloConnectorVolleyImpl;
 import com.example.diappetes.sentilo.SentiloUpdateService;
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     public AppDatabase appDatabase;
 
     @Inject
-    public LoginViewModel loginViewModel;
+    public MainViewModel mainViewModel;
 
     private final static String SENTILO_IDENTITY_KEY = "c7337d3fc4ec28d0dddc81478808a8b6b82beb83110fcb00157cc0a711956475";
     private final static String CHANNEL_ID = "69"; //nice
@@ -84,6 +84,9 @@ public class MainActivity extends AppCompatActivity {
 
         SentiloConnector sentiloConnector = new SentiloConnectorVolleyImpl(Volley.newRequestQueue(this), SENTILO_IDENTITY_KEY);
         StepGoalTracker stepGoalTracker = new SimpleStepGoalTrackerImpl(goal);
+
+        Observer<Report> observer = new TestObserver();
+        mainViewModel.getUserReportForToday("t").observe(this, observer);
 
         SentiloUpdateService sentiloUpdateService = new SentiloUpdateService(sentiloConnector, send);
         stepGoalTracker.totalSteps().observe(this, sentiloUpdateService);
