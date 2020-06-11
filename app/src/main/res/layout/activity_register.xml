@@ -12,11 +12,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:ems="10"
-        android:hint="Username"
+        android:hint="@string/login_username_hint"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupemailtxt" />
+        app:layout_constraintTop_toBottomOf="@+id/signupemailtxt"
+        android:autofillHints="username" />
 
     <EditText
         android:id="@+id/signuppasswordtxt2"
@@ -25,12 +26,13 @@
         android:layout_marginTop="35dp"
         android:layout_marginBottom="340dp"
         android:ems="10"
-        android:hint="Repeat password"
+        android:hint="@string/register_repeat_password_hint"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signuppasswordtxt" />
+        app:layout_constraintTop_toBottomOf="@+id/signuppasswordtxt"
+        android:autofillHints="password" />
 
     <Button
         android:id="@+id/finishregisterbtn"
@@ -38,9 +40,8 @@
         android:layout_height="80dp"
         android:layout_marginTop="99dp"
         android:layout_marginBottom="164dp"
-        android:text="Sign up"
+        android:text="@string/register_submit_text"
         android:textSize="20sp"
-        android:backgroundTint="#fc9df4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -53,13 +54,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:ems="10"
-        android:hint="E-mail"
+        android:hint="@string/register_email_hint"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/usernametxt"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.666" />
+        app:layout_constraintVertical_bias="0.666"
+        android:autofillHints="emailAddress" />
 
     <EditText
         android:id="@+id/signuppasswordtxt"
@@ -67,11 +69,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/register_password_hint"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernametxt" />
+        app:layout_constraintTop_toBottomOf="@+id/usernametxt"
+        android:autofillHints="password" />
 
     <TextView
         android:id="@+id/signuperrortxt"

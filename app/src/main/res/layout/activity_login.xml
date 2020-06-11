@@ -13,9 +13,8 @@
         android:layout_height="80dp"
         android:layout_marginTop="34dp"
         android:layout_marginBottom="160dp"
-        android:text="Sign up"
+        android:text="@string/login_register_text"
         android:textSize="20sp"
-        android:backgroundTint="#fc9df4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -33,7 +32,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.186" />
+        app:layout_constraintVertical_bias="0.186"
+        android:autofillHints="username" />
 
     <EditText
         android:id="@+id/passwordtxt"
@@ -46,15 +46,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.319" />
+        app:layout_constraintVertical_bias="0.319"
+        android:autofillHints="password" />
 
     <Button
         android:id="@+id/signinbtn"
         android:layout_width="160dp"
         android:layout_height="80dp"
-        android:text="Sign in"
+        android:text="@string/login_sign_in_text"
         android:textSize="20sp"
-        android:backgroundTint="#fc9df4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -79,8 +79,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:text="hack btn"
-        android:backgroundTint="#fc9df4"
+        android:text="@string/login_hack_me_in_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

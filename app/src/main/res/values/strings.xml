@@ -4,10 +4,25 @@
     <string name="channel_name">Some channel name</string>
     <string name="channel_description">Some channel description</string>
 
+    <!-- Main -->
+    <string name="main_toggle_step_tracking_button_text">ToggleButton</string>
+    <string name="main_go_for_walk_text">Do you want to go for a walk?</string>
+    <string name="main_home_tab_text">Home</string>
+    <string name="main_info_tab_text">Info</string>
+    <string name="main_pet_tab_text">Pet</string>
+    <string name="main_stat_tab_text">Stat</string>
+
     <string name="login_username_hint">username</string>
     <string name="login_password_hint">password</string>
     <string name="login_invalid_username">Invalid username</string>
+    <string name="login_hack_me_in_text">Hack me in pls</string>
+    <string name="login_sign_in_text">Sign in</string>
+    <string name="login_register_text">Register</string>
 
+    <string name="register_email_hint">email</string>
+    <string name="register_submit_text">Submit</string>
+    <string name="register_repeat_password_hint">Repeat password</string>
+    <string name="register_password_hint">Password</string>
     <string name="register_username_already_exists">Username already exists</string>
     <string name="register_invalid_email">Invalid email</string>
     <string name="register_invalid_username">Invalid username</string>
@@ -30,5 +45,12 @@
     <!-- Step tracker service -->
     <string name="step_tracker_notification_title">Tracking your steps</string>
     <string name="step_tracker_service_description">Tracks a users steps</string>
+
+    <!-- Pet -->
+    <string name="pet_image_description">My pet</string>
+
+    <!-- Stat -->
+    <string name="stat_steps_taken_text">Steps taken</string>
+    <string name="stat_weight_change_graph">Weight change</string>
 
 </resources>

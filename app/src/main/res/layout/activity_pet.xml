@@ -10,8 +10,7 @@
         android:id="@+id/infobtn"
         android:layout_width="103dp"
         android:layout_height="80dp"
-        android:text="Info"
-        android:backgroundTint="#fc9df4"
+        android:text="@string/main_info_tab_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.334"
@@ -21,8 +20,7 @@
         android:id="@+id/petbtn"
         android:layout_width="103dp"
         android:layout_height="80dp"
-        android:text="Pet"
-        android:backgroundTint="#fc9df4"
+        android:text="@string/main_pet_tab_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.668"
@@ -32,8 +30,7 @@
         android:id="@+id/statbtn"
         android:layout_width="103dp"
         android:layout_height="80dp"
-        android:text="Stat"
-        android:backgroundTint="#fc9df4"
+        android:text="@string/main_stat_tab_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -43,8 +40,7 @@
         android:id="@+id/homebtn"
         android:layout_width="103dp"
         android:layout_height="80dp"
-        android:text="Home"
-        android:backgroundTint="#fc9df4"
+        android:text="@string/main_home_tab_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -59,6 +55,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.258" />
+        app:layout_constraintVertical_bias="0.258"
+        android:contentDescription="@string/pet_image_description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
