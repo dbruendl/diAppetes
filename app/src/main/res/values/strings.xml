@@ -59,13 +59,11 @@
         is characterized by insulin resistance. The insulin is ineffective in the body, resulting in
         rising blood sugar levels. To lower these blood sugar levels, the pancreas produces more
         insulin. Over time, this can exhaust the pancreas resulting in less insulin production and
-        rising blood sugar levels.\n
-        Insulin, a hormone produced by the pancreas, is essential for the
+        rising blood sugar levels.\nInsulin, a hormone produced by the pancreas, is essential for the
         processing of glucose from food in the body. Carbohydrates in food are broken down into
         glucose in the stomach and intestines. Glucose is then by cells in the intestines and
         released into the bloodstream to be transported throughout the body. Glucose is used for
-        energy production in cells.\n
-        However, glucose is unable to pass through the cell membrane of
+        energy production in cells.\nHowever, glucose is unable to pass through the cell membrane of
         most cells. Insulin stimulates the uptake of glucose into cells. Being unable to produce or
         use insulin effectively leads to increased blood sugar levels (hyperglycaemia), which can
         cause serious health problems.
@@ -99,11 +97,11 @@
     <string name="info_management_title">Management</string>
     <string name="info_management_description">Type 2 diabetes can be managed through lifestyle
         modification including regular exercise, a healthy diet, maintaining a healthy body weight
-        and smoking cessation. However, type 2 diabetes is a progressive disease, which means that
+        and smoking cessation.\nHowever, type 2 diabetes is a progressive disease, which means that
         the pancreas may not be able to produce enough insulin to keep the blood sugar level within
         the target range, regardless of the lifestyle modification. People with type 2 diabetes
         should then take oral medication to keep the blood sugar level within the target range.
-        If this is still not sufficient, insulin injections may be necessary.  The injections and
+        \nIf this is still not sufficient, insulin injections may be necessary.  The injections and
         oral medication are intended to be used in combination with regular exercise and healthy
         eating, not as a substitute.
     </string>
