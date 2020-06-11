@@ -24,6 +24,8 @@ public class SentiloUpdateService implements Observer<Report> {
 
     @Override
     public void onChanged(Report report) {
+        if(report == null) return;
+
         if(updateIntervalReached(report.steps)) {
             sendUpdateRequest(report.steps);
         }

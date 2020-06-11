@@ -17,6 +17,8 @@ public class TextViewStepObserver implements Observer<Report> {
 
     @Override
     public void onChanged(Report report) {
+        if(report == null) return;
+
         String text = "Steps taken " + report.steps;
 
         textView.setText(text);

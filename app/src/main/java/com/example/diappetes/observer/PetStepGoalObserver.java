@@ -33,6 +33,8 @@ public class PetStepGoalObserver implements Observer<Report> {
 
     @Override
     public void onChanged(Report report) {
+        if(report == null) return;
+
         float progress = report.progress(stepGoal);
         float progressInPercentage = progress * 100;
 
