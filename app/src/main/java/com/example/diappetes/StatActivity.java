@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.diappetes.databinding.ActivityStatBinding;
 import com.example.diappetes.info.InfoActivity;
 import com.example.diappetes.main.MainActivity;
 import com.jjoe64.graphview.GraphView;
@@ -18,14 +19,13 @@ public class StatActivity extends AppCompatActivity {
     Button homebtn4, infobtn4, petbtn4;
     private LineGraphSeries<DataPoint> series1, series2;
 
+    ActivityStatBinding activityStatBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stat);
-
-        homebtn4 = findViewById(R.id.homebtn);
-        petbtn4 = findViewById(R.id.petbtn);
-        infobtn4 = findViewById(R.id.infobtn);
+        activityStatBinding = ActivityStatBinding.inflate(getLayoutInflater());
+        setContentView(activityStatBinding.getRoot());
 
         double x,y;
 
@@ -57,32 +57,27 @@ public class StatActivity extends AppCompatActivity {
         series2.setColor(Color.RED);
         graphWeight.addSeries(series2);
 
+        activityStatBinding.navigationView.setSelectedItemId(R.id.tab_stat);
+        activityStatBinding.navigationView.setOnNavigationItemSelectedListener(item -> {
+            Intent startIntent;
 
-        // Menu
-        homebtn4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent starthomeintent4 = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(starthomeintent4);
+            switch (item.getItemId()) {
+                case R.id.tab_info:
+                    startIntent = new Intent(getApplicationContext(), InfoActivity.class);
+                    break;
+                case R.id.tab_pet:
+                    startIntent = new Intent(getApplicationContext(), PetActivity.class);
+                    break;
+                case R.id.tab_home:
+                    startIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    break;
+                default:
+                    return false;
             }
-        });
-        infobtn4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent startinfointent4 = new Intent(getApplicationContext(), InfoActivity.class);
-                startActivity(startinfointent4);
-            }
-        });
-        petbtn4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent startpetintent4 = new Intent(getApplicationContext(), PetActivity.class);
-                startActivity(startpetintent4);
-            }
-        });
 
+            startActivity(startIntent);
 
-
+            return true;
+        });
     }
-
 }

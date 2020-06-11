@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.diappetes.databinding.ActivityPetBinding;
 import com.example.diappetes.info.InfoActivity;
 import com.example.diappetes.main.MainActivity;
 
@@ -21,34 +22,35 @@ public class PetActivity extends AppCompatActivity {
     int progress;
     ImageView petimage;
 
+    ActivityPetBinding activityPetBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pet);
-        //Menu
-        Button homebtn3 = findViewById(R.id.homebtn);
-        homebtn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent starthomeintent3 = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(starthomeintent3);
+        activityPetBinding = ActivityPetBinding.inflate(getLayoutInflater());
+        setContentView(activityPetBinding.getRoot());
+
+        activityPetBinding.navigationView.setSelectedItemId(R.id.tab_pet);
+        activityPetBinding.navigationView.setOnNavigationItemSelectedListener(item -> {
+            Intent startIntent;
+
+            switch (item.getItemId()) {
+                case R.id.tab_info:
+                    startIntent = new Intent(getApplicationContext(), InfoActivity.class);
+                    break;
+                case R.id.tab_home:
+                    startIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    break;
+                case R.id.tab_stat:
+                    startIntent = new Intent(getApplicationContext(), StatActivity.class);
+                    break;
+                default:
+                    return false;
             }
-        });
-        Button infobtn3 = findViewById(R.id.infobtn);
-        infobtn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent startinfointent3 = new Intent(getApplicationContext(), InfoActivity.class);
-                startActivity(startinfointent3);
-            }
-        });
-        Button statbtn3 = findViewById(R.id.statbtn);
-        statbtn3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent startstatintent3 = new Intent(getApplicationContext(), StatActivity.class);
-                startActivity(startstatintent3);
-            }
+
+            startActivity(startIntent);
+
+            return true;
         });
 
         /* PET CODE BELOW

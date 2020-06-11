@@ -104,16 +104,10 @@ public class MainActivity extends AppCompatActivity {
                         .putExtra(StepTrackerService.UID_INTENT_KEY, LOGGED_IN_USER_ID)
                         .putExtra(StepTrackerService.NOTIFICATION_CHANNEL_INTENT_KEY, CHANNEL_ID);
                 startService(startStepTrackerServiceIntent);
-
-                activityMainBinding.pbSteps.setVisibility(View.VISIBLE);
-                activityMainBinding.tvSteps.setVisibility(View.VISIBLE);
             } else {
                 Intent stopStepTrackerServiceIntent = new Intent(this, StepTrackerService.class);
 
                 stopService(stopStepTrackerServiceIntent);
-
-                activityMainBinding.pbSteps.setVisibility(View.GONE);
-                activityMainBinding.tvSteps.setVisibility(View.GONE);
             }
         });
 
@@ -121,28 +115,28 @@ public class MainActivity extends AppCompatActivity {
         BatteryStatusChangedReceiver bscr = new BatteryStatusChangedReceiver(sentiloConnector);
         registerReceiver(bscr, ifilter);
 
-        activityMainBinding.infobtn.setOnClickListener(v -> {
-            Intent startinfointent = new Intent(getApplicationContext(), InfoActivity.class);
-            startActivity(startinfointent);
+        activityMainBinding.navigationView.setSelectedItemId(R.id.tab_home);
+        activityMainBinding.navigationView.setOnNavigationItemSelectedListener(item -> {
+            Intent startIntent;
 
+            switch (item.getItemId()) {
+                case R.id.tab_info:
+                    startIntent = new Intent(getApplicationContext(), InfoActivity.class);
+                    break;
+                case R.id.tab_pet:
+                    startIntent = new Intent(getApplicationContext(), PetActivity.class);
+                    break;
+                case R.id.tab_stat:
+                    startIntent = new Intent(getApplicationContext(), StatActivity.class);
+                    break;
+                default:
+                    return false;
+            }
+
+            startActivity(startIntent);
+
+            return true;
         });
-
-        activityMainBinding.petbtn.setOnClickListener(v -> {
-            Intent i = new Intent(getApplicationContext(), PetActivity.class);
-
-            String strName = progress + "";
-            i.putExtra("STRING_I_NEED", strName);
-            startActivity(i);
-        });
-
-        activityMainBinding.statbtn.setOnClickListener(v -> {
-            Intent startstatintent = new Intent(getApplicationContext(), StatActivity.class);
-            startActivity(startstatintent);
-        });
-    }
-
-    public void onDefaultToggleClick(View view) {
-        Toast.makeText(this, "DefaultToggleClick", Toast.LENGTH_SHORT).show();
     }
 
     private void createNotificationChannel() {
