@@ -10,7 +10,6 @@ import android.os.IBinder;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import com.example.diappetes.main.MainActivity;
 import com.example.diappetes.main.StepDetectorSensorEventListenerImpl;
