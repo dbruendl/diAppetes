@@ -21,6 +21,12 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
+/**
+ * Creates and registers a {@link UpdateDatabaseStepListener} to a
+ * {@link StepDetectorSensorEventListenerImpl} which is registered on a {@link SensorManager} and
+ * creates an infinite loop to be able to wait for {@link android.hardware.SensorEvent}'s
+ * indefinitely.
+ */
 @AndroidEntryPoint
 public class StepTrackerService extends IntentService {
 

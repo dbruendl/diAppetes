@@ -12,6 +12,9 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.diappetes.main.MainActivity;
 
+/**
+ * Sends a notification to the user to remind him that his pet is not happy yet
+ */
 public class WalkReminderNotificationReceiver extends BroadcastReceiver {
 
     private final String LOG_TAG = getClass().getSimpleName();
