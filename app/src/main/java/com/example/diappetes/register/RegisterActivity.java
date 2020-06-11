@@ -21,7 +21,9 @@ import static com.example.diappetes.register.AdditionalDataActivity.INTENT_KEY_U
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private RegisterViewModel registerViewModel;
+    @Inject
+    public RegisterViewModel registerViewModel;
+
     private ActivityRegisterBinding activityRegisterBinding;
     private Disposable validateUniqueUsernameDisposable;
 
@@ -30,8 +32,6 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityRegisterBinding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(activityRegisterBinding.getRoot());
-
-        registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
 
         // In android error record there is info about null error inside setOnClickListener below
         activityRegisterBinding.finishregisterbtn.setOnClickListener(v -> {

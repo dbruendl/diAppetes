@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.room.EmptyResultSetException;
 
+import com.example.diappetes.databinding.ActivityLoginBinding;
 import com.example.diappetes.main.MainActivity;
 import com.example.diappetes.R;
 import com.example.diappetes.StatActivity;
@@ -29,18 +30,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private Disposable loginDisposable;
 
+    ActivityLoginBinding activityLoginBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        Button loginBtn = findViewById(R.id.signinbtn);
+        activityLoginBinding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(activityLoginBinding.getRoot());
 
-        /*
-         *loginBtn send the data to CheckInput, and checks if email or password is already registered
-         * if one of the two inputs is empty or there is no register in the local database an Errortextmessage will appear
-         * if everything is correct the screen changes to the homescreen
-         */
-        loginBtn.setOnClickListener(v -> {
+        activityLoginBinding.signinbtn.setOnClickListener(v -> {
             String uid = ((TextView) findViewById(R.id.logintxt)).getText().toString();
             String password = ((TextView) findViewById(R.id.passwordtxt)).getText().toString();
             TextView errorTextView = findViewById(R.id.loginerrortxt);
@@ -60,21 +58,16 @@ public class LoginActivity extends AppCompatActivity {
                     });
         });
 
-        Button registerbtn = findViewById(R.id.registerbtn);
-        /*
-         * if the user is not registered yet this button takes him to the registerscreen
-         */
-        registerbtn.setOnClickListener(v -> {
+        activityLoginBinding.registerbtn.setOnClickListener(v -> {
             Intent startRegisterIntent = new Intent(getApplicationContext(), RegisterActivity.class);
             startActivity(startRegisterIntent);
         });
 
-        Button takemetostat = findViewById(R.id.takemetostat);
         /*
-         * this button is just for development and takes you directly to the stats page, just for testing not intended for
-         * the final project
+         * this button is just for development and takes you directly to the stats page, just for
+         * testing not intended for the final project
          */
-        takemetostat.setOnClickListener(v -> {
+        activityLoginBinding.hackMeInPls.setOnClickListener(v -> {
             Intent takeMeToStatIntent = new Intent(getApplicationContext(), StatActivity.class);
             startActivity(takeMeToStatIntent);
         });
