@@ -53,4 +53,18 @@
     <string name="stat_steps_taken_text">Steps taken</string>
     <string name="stat_weight_change_graph">Weight change</string>
 
+    <!-- Info -->
+    <string name="info_diabetes_title">General</string>
+    <string name="info_diabetes_description">Type 2 diabetes is the most common type of diabetes and is characterized by insulin resistance.</string>
+    <string name="info_diabetes_more_info">More</string>
+
+    <string name="info_causes_title">Causes</string>
+    <string name="info_causes_description">Type 2 diabetes is caused by several factors including genetic predisposition, increasing age and modifiable lifestyle factors</string>
+
+    <string name="info_complications_title">Complications</string>
+    <string name="info_complications_description">Type 2 diabetes patients have an increased risk of developing serious diseases</string>
+
+    <string name="info_management_title">Management</string>
+    <string name="info_management_description">Type 2 diabetes can be managed through lifestyle modification including regular exercise, a healthy diet, maintaining a healthy body weight and smoking cessation</string>
+
 </resources>
