@@ -30,7 +30,7 @@ public class StatActivity extends AppCompatActivity {
         double x,y;
 
         x = 0;   // SIN GRAPH
-        GraphView graphSteps = (GraphView) findViewById(R.id.graphSteps);
+        GraphView graphSteps = findViewById(R.id.graphSteps);
         series1 = new LineGraphSeries<>();
         int numDataPoints = 100;
         for(int i = 0; i < numDataPoints; i++){
