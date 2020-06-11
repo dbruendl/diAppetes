@@ -7,7 +7,7 @@ import com.example.diappetes.persistence.model.UserDao;
 import io.reactivex.disposables.Disposable;
 
 /**
- * Updates a user's totalSteps field when receiving a step
+ * Updates a user's totalSteps field when receiving a step or creates a new Report if none exist
  */
 public class UpdateDatabaseStepListener implements StepListener {
     private final String uid;
@@ -22,11 +22,19 @@ public class UpdateDatabaseStepListener implements StepListener {
     public void step() {
         Disposable findUserDisposable = userDao.findUserReportsByUid(uid)
                 .flatMapCompletable(userReports -> {
-                    Report report = userReports.getReportForToday();
+                    Report reportForToday = userReports.getReportForToday();
 
-                    report.steps = ++report.steps;
+                    if(reportForToday == null) {
+                        Report report = new Report(uid);
 
-                    return userDao.updateReport(report);
+                        report.steps = ++report.steps;
+
+                        return userDao.insertReport(report);
+                    }
+
+                    reportForToday.steps = ++reportForToday.steps;
+
+                    return userDao.updateReport(reportForToday);
                 })
                 .subscribe();
     }

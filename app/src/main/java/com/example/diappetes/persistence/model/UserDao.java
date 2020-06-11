@@ -30,4 +30,7 @@ public interface UserDao {
     @Update
     @Transaction
     Completable updateReport(Report report);
+
+    @Insert
+    Completable insertReport(Report report);
 }

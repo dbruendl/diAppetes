@@ -15,6 +15,12 @@ public class Report {
     public Integer steps;
     public String userId;
 
+    public Report(String userId) {
+        this.userId = userId;
+        this.created = new Date();
+        this.steps = 0;
+    }
+
     boolean isFromToday() {
         return DateUtils.isToday(created);
     }
