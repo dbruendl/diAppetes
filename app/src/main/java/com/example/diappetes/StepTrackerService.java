@@ -71,7 +71,7 @@ public class StepTrackerService extends IntentService {
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification = new NotificationCompat.Builder(this, notificationChannelId)
-                .setContentText(getText(R.string.step_tracker_notification_title))
+                .setContentTitle(getText(R.string.step_tracker_notification_title))
                 .setSmallIcon(R.drawable.ic_directions_run_black_24dp)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(false)
