@@ -4,21 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.diappetes.R;
 import com.example.diappetes.databinding.ActivityRegisterBinding;
 
 import javax.inject.Inject;
 
-import dagger.android.support.DaggerAppCompatActivity;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
-import static com.example.diappetes.register.AdditionalDataActivity.INTENT_KEY_EMAIL;
-import static com.example.diappetes.register.AdditionalDataActivity.INTENT_KEY_PASSWORD;
-import static com.example.diappetes.register.AdditionalDataActivity.INTENT_KEY_UID;
+import static com.example.diappetes.register.RegisterAdditionalDataActivity.INTENT_KEY_EMAIL;
+import static com.example.diappetes.register.RegisterAdditionalDataActivity.INTENT_KEY_PASSWORD;
+import static com.example.diappetes.register.RegisterAdditionalDataActivity.INTENT_KEY_UID;
 
 @AndroidEntryPoint
 public class RegisterActivity extends AppCompatActivity {
@@ -53,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
                 validateUniqueUsernameDisposable = registerViewModel.usernameAlreadyTaken(activityRegisterBinding.usernametxt.getText().toString())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(() -> {
-                            Intent startRegisterFormIntent = new Intent(getApplicationContext(), AdditionalDataActivity.class)
+                            Intent startRegisterFormIntent = new Intent(getApplicationContext(), RegisterAdditionalDataActivity.class)
                                     .putExtra(INTENT_KEY_EMAIL, activityRegisterBinding.signupemailtxt.getText().toString())
                                     .putExtra(INTENT_KEY_UID, activityRegisterBinding.usernametxt.getText().toString())
                                     .putExtra(INTENT_KEY_PASSWORD, activityRegisterBinding.signuppasswordtxt.getText().toString());

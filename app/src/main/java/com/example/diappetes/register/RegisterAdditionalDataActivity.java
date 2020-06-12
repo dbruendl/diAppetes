@@ -4,28 +4,26 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.diappetes.R;
-import com.example.diappetes.databinding.ActivityRegisterFormBinding;
+import com.example.diappetes.databinding.RegisterAdditionalDataActivityBinding;
 import com.example.diappetes.login.LoginActivity;
 
 import javax.inject.Inject;
 
-import dagger.android.support.DaggerAppCompatActivity;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 @AndroidEntryPoint
-public class AdditionalDataActivity extends AppCompatActivity {
+public class RegisterAdditionalDataActivity extends AppCompatActivity {
 
     public static final String INTENT_KEY_EMAIL = "EMAIL";
     public static final String INTENT_KEY_UID = "UID";
     public static final String INTENT_KEY_PASSWORD = "PASSWORD";
 
-    private ActivityRegisterFormBinding binding;
+    private RegisterAdditionalDataActivityBinding binding;
     private Disposable registerUserDisposable;
 
     @Inject
@@ -34,7 +32,7 @@ public class AdditionalDataActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityRegisterFormBinding.inflate(getLayoutInflater());
+        binding = RegisterAdditionalDataActivityBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         binding.next.setOnClickListener(v -> {
