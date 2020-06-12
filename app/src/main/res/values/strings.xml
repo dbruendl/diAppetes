@@ -105,4 +105,107 @@
         oral medication are intended to be used in combination with regular exercise and healthy
         eating, not as a substitute.
     </string>
+
+    <string name="info_stretch">Stretching information</string>
+    <string name="info_stretch_description">Stretching is a way to physically exercise in which we flex or extend specific muscles,
+        it is usually done to make the muscles feel better and to loosen them up to prevent injuries.
+        It is a sort of exercise which can have equally important benefits as walking or running.
+        Diabetes patients are frequently observed with limited joint mobility and this can lead to lower their quality of life.
+        Stretching can help people recover from injuries faster, prevent them, gain flexibility and range of motion, reduce the risk of falling, and improve sleep.
+        To reduce the risk of falling is very important in diabetes patients because it can mean having to stop exercising for a while because of an injury, which is not good for them.[1]
+        Stretching exercises do not have to be necessarily done alone at home and can be practiced in different ways.
+        Three very effective ways to stretch are yoga, tai chi and Pilates, they combine strengthening and movement with stretching for optimum results.
+        Another way to gain flexibility is by doing aquatic exercises in a pool, especially for people who are overweight, water removes the body weight while reducing the risk of injury.[2]
+        A few studies have been done about the benefits of stretching for the diabetes type 2 patients, but it is proven that 20 minutes of stretching has a significant effect on the reduction of the immediate blood glucose levels,
+        and that the effects remain for 1 hour after finishing the stretching exercises.[3]
+    </string>
+
+    <string name="info_how_to">How to stretch correctly</string>
+    <string name="info_how_to_description">Before beginning to stretch it is important to consult which exercises will be practiced with the doctor.
+        It is recommended to stretch after the muscles have had the chance to warm up a little, for example after walking for 5 minutes.
+        When we start stretching it is recommendable to complete at last one stretch per major muscle group (chest, back, arms, shoulders, legs and the calves),
+        each stretch should last between 15 and 30 seconds and we should complete equal stretching in both sides of the body.
+        It is important not to hold the breath while stretching and breathe deeply during the exercises to relax the muscles more.
+        Stretching should lengthen the muscle to the point of mild comfort, not by stretching longer you gain more flexibility faster, stretching exercises shouldn’t hurt.
+    </string>
+
+    <string name="info_exercises">Basic stretching exercises</string>
+    <string name="info_neck_look_forward_description">
+        1 - Let your arms hanging loosely at the sides\n
+        2 – Tilt your head first to one side then to the other\n
+        3 – Hold 5 seconds in each side\n
+        4 – Repeat 1 – 3 times\n
+    </string>
+
+    <string name="info_neck_look_to_the_side_description">
+        1 - Let your arms hanging loosely at the sides\n
+        2 – Tilt your head first to one side then to the other\n
+        3 – Hold 5 seconds in each side\n
+        4 – Repeat 1 – 3 times\n
+    </string>
+
+    <string name="info_shoulder_description">
+        1 – Place right hand on the left shoulder\n
+        2 – With the left hand, pull the right elbow across the chest toward left shoulder\n
+        3 – Hold for 10 – 15 seconds\n
+        4 – Repeat on the other side\n
+    </string>
+
+    <string name="info_back_description">
+        1 – Stand with your hands on the hips\n
+        2 – Gently twist the torso until stretch is felt\n
+        3 – Hold for 10 – 15 seconds\n
+        4 – Repeat on the other side\n
+        5 – Keep your knees slightly flexed\n
+    </string>
+
+    <string name="info_ankle_description">
+        1 – Stand and hold onto something to help keep balance or sit on a chair\n
+        2 – Lift one foot and rotate the ankle 8 – 10 times clockwise, and the same counterclockwise\n
+        3 – Repeat with the other foot\n
+    </string>
+
+    <string name="info_hamstring_description">
+        1 –  Keep your knees slightly flexed\n
+        2 – Stand or sit with your arms over your head\n
+        3 – Hold one elbow with the hand from the opposite arm\n
+        4 – Pull the elbow behind your head and gently lean to the side until stretch is felt\n
+        5 – Hold for 10 – 15 seconds\n
+        6 –  Repeat on the other side\n
+    </string>
+
+    <string name="info_hip_description">
+        1 – Stand with feet pointed straight ahead, a little more than shoulder-width apart\n
+        2 – Bend one knee and bend the hip towards it\n
+        3 – Hold for 10 – 15 seconds\n
+        4 – Repeat on the other side\n
+        5 – If necessary, hold on to something for balance\n
+    </string>
+
+    <string name="info_tights_description">
+        1 –  Sit on floor with left leg straight out in front\n
+        2 – Bend right leg, cross right foot over and place it outside left knee\n
+        3 – Bend left elbow and rest it outside right knee\n
+        4 – Place right hand behind hips on floor\n
+        5 –  Turn your head over right shoulder, rotate upper body right\n
+        6 –   Hold for 10 – 15 seconds\n
+        7 -  Repeat on the other side\n
+    </string>
+
+    <string name="info_lower_back_description">
+        1 – Lie on floor, extend arms overhead, keep legs straight\n
+        2 – Reach arms and legs in opposite directions\n
+        3 – Stretch 5 sec and then relax\n
+        4 – repeat 1 – 3 times\n
+    </string>
+
+    <string name="info_full_body_description">
+        1 –   Sit on the floor with the right leg straight out in front\n
+        2 –  Bend the left leg, cross left foot over and place it outside right the knee\n
+        3 –  Pull the left knee across the body toward the opposite shoulder\n
+        4 –  Hold for 10 – 20 seconds\n
+        5 –  Repeat on the other side\n
+    </string>
+
+
 </resources>
