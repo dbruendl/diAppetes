@@ -9,26 +9,21 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
 
 import com.android.volley.toolbox.Volley;
 import com.example.diappetes.BatteryStatusChangedReceiver;
-import com.example.diappetes.PetActivity;
+import com.example.diappetes.PetFragment;
 import com.example.diappetes.R;
-import com.example.diappetes.StatActivity;
-import com.example.diappetes.StepTrackerService;
+import com.example.diappetes.StatisticsFragment;
 import com.example.diappetes.WalkReminderNotificationReceiver;
 import com.example.diappetes.databinding.ActivityMainBinding;
 import com.example.diappetes.info.InfoActivity;
 import com.example.diappetes.login.LoginViewModel;
-import com.example.diappetes.observer.PetStepGoalObserver;
-import com.example.diappetes.observer.ProgressBarStepGoalObserver;
-import com.example.diappetes.observer.TextViewStepObserver;
 import com.example.diappetes.persistence.AppDatabase;
 import com.example.diappetes.persistence.model.Report;
 import com.example.diappetes.sentilo.SentiloConnector;
@@ -58,16 +53,17 @@ public class MainActivity extends AppCompatActivity {
     public ActivityMainBinding activityMainBinding;
 
     private final static String SENTILO_IDENTITY_KEY = "c7337d3fc4ec28d0dddc81478808a8b6b82beb83110fcb00157cc0a711956475";
-    private final static String CHANNEL_ID = "69"; //nice
+    public final static String CHANNEL_ID = "69"; //nice
     private static final int SENTILO_STEP_UPDATE_INTERVAL = 10;
 
     // TODO: replace this with a call to the respective login manager
     private final static String LOGGED_IN_USER_ID = "t";
-    private final static int USER_STEP_GOAL = 10;
 
     private Calendar calendar = Calendar.getInstance();
-
-    public int progress;
+    private StepTrackingFragment stepTrackingFragment = new StepTrackingFragment();
+    private PetFragment petFragment = new PetFragment();
+    private StatisticsFragment statisticsFragment = new StatisticsFragment();
+    private InfoActivity infoActivity = new InfoActivity();
 
     @Override
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -76,12 +72,14 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(activityMainBinding.getRoot());
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .add(R.id.fragment_container, stepTrackingFragment)
+                .commit();
+
         SentiloConnector sentiloConnector = new SentiloConnectorVolleyImpl(Volley.newRequestQueue(this), SENTILO_IDENTITY_KEY);
         LiveData<Report> userReportForToday = mainViewModel.getUserReportForToday(LOGGED_IN_USER_ID);
 
-        userReportForToday.observe(this, new PetStepGoalObserver(activityMainBinding.petmini, USER_STEP_GOAL));
-        userReportForToday.observe(this, new ProgressBarStepGoalObserver(activityMainBinding.pbSteps, USER_STEP_GOAL));
-        userReportForToday.observe(this, new TextViewStepObserver(activityMainBinding.tvSteps));
         userReportForToday.observe(this, new SentiloUpdateService(sentiloConnector, SENTILO_STEP_UPDATE_INTERVAL));
 
         createNotificationChannel();
@@ -98,42 +96,38 @@ public class MainActivity extends AppCompatActivity {
         calendar.set(Calendar.HOUR_OF_DAY, 18);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
-        activityMainBinding.trackSteps.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                Intent startStepTrackerServiceIntent = new Intent(this, StepTrackerService.class)
-                        .putExtra(StepTrackerService.UID_INTENT_KEY, LOGGED_IN_USER_ID)
-                        .putExtra(StepTrackerService.NOTIFICATION_CHANNEL_INTENT_KEY, CHANNEL_ID);
-                startService(startStepTrackerServiceIntent);
-            } else {
-                Intent stopStepTrackerServiceIntent = new Intent(this, StepTrackerService.class);
-
-                stopService(stopStepTrackerServiceIntent);
-            }
-        });
-
         IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         BatteryStatusChangedReceiver bscr = new BatteryStatusChangedReceiver(sentiloConnector);
         registerReceiver(bscr, ifilter);
 
         activityMainBinding.navigationView.setSelectedItemId(R.id.tab_home);
         activityMainBinding.navigationView.setOnNavigationItemSelectedListener(item -> {
-            Intent startIntent;
 
             switch (item.getItemId()) {
+                case R.id.tab_home:
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, stepTrackingFragment)
+                            .commit();
+                    break;
                 case R.id.tab_info:
-                    startIntent = new Intent(getApplicationContext(), InfoActivity.class);
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, infoActivity)
+                            .commit();
                     break;
                 case R.id.tab_pet:
-                    startIntent = new Intent(getApplicationContext(), PetActivity.class);
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, petFragment)
+                            .commit()
+                    ;
                     break;
                 case R.id.tab_stat:
-                    startIntent = new Intent(getApplicationContext(), StatActivity.class);
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, statisticsFragment)
+                            .commit();
                     break;
                 default:
                     return false;
             }
-
-            startActivity(startIntent);
 
             return true;
         });

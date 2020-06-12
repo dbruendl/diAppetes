@@ -2,22 +2,19 @@ package com.example.diappetes.login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.room.EmptyResultSetException;
 
 import com.example.diappetes.databinding.ActivityLoginBinding;
 import com.example.diappetes.main.MainActivity;
 import com.example.diappetes.R;
-import com.example.diappetes.StatActivity;
+import com.example.diappetes.StatisticsFragment;
 import com.example.diappetes.register.RegisterActivity;
 
 import javax.inject.Inject;
 
-import dagger.android.support.DaggerAppCompatActivity;
 import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -68,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
          * testing not intended for the final project
          */
         activityLoginBinding.hackMeInPls.setOnClickListener(v -> {
-            Intent takeMeToStatIntent = new Intent(getApplicationContext(), StatActivity.class);
+            Intent takeMeToStatIntent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(takeMeToStatIntent);
         });
     }

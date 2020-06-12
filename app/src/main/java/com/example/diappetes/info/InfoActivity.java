@@ -1,55 +1,32 @@
 package com.example.diappetes.info;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
-import com.example.diappetes.PetActivity;
-import com.example.diappetes.R;
-import com.example.diappetes.StatActivity;
 import com.example.diappetes.databinding.ActivityInfoBinding;
-import com.example.diappetes.main.MainActivity;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class InfoActivity extends AppCompatActivity {
+public class InfoActivity extends Fragment {
     @Inject
     public InfoViewModel infoViewModel;
 
-    ActivityInfoBinding activityInfoBinding;
+    ActivityInfoBinding binding;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        activityInfoBinding = ActivityInfoBinding.inflate(getLayoutInflater());
-        setContentView(activityInfoBinding.getRoot());
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = ActivityInfoBinding.inflate(inflater, container, false);
 
-        activityInfoBinding.navigationView.setSelectedItemId(R.id.tab_info);
-        activityInfoBinding.navigationView.setOnNavigationItemSelectedListener(item -> {
-
-            Intent startIntent;
-
-            switch (item.getItemId()) {
-                case R.id.tab_home:
-                    startIntent = new Intent(getApplicationContext(), MainActivity.class);
-                    break;
-                case R.id.tab_pet:
-                    startIntent = new Intent(getApplicationContext(), PetActivity.class);
-                    break;
-                case R.id.tab_stat:
-                    startIntent = new Intent(getApplicationContext(), StatActivity.class);
-                    break;
-                default:
-                    return false;
-            }
-
-            startActivity(startIntent);
-
-            return true;
-        });
+        return binding.getRoot();
     }
 }

@@ -37,11 +37,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".StatActivity"
+            android:name=".StatisticsFragment"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".PetActivity"
+            android:name=".PetFragment"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
