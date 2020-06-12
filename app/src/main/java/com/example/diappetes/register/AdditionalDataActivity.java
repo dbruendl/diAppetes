@@ -13,10 +13,12 @@ import com.example.diappetes.login.LoginActivity;
 import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+@AndroidEntryPoint
 public class AdditionalDataActivity extends AppCompatActivity {
 
     public static final String INTENT_KEY_EMAIL = "EMAIL";
@@ -24,17 +26,16 @@ public class AdditionalDataActivity extends AppCompatActivity {
     public static final String INTENT_KEY_PASSWORD = "PASSWORD";
 
     private ActivityRegisterFormBinding binding;
-    private AdditionalDataViewModel additionalDataViewModel; // TODO
     private Disposable registerUserDisposable;
+
+    @Inject
+    public AdditionalDataViewModel additionalDataViewModel; // TODO
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityRegisterFormBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        additionalDataViewModel = new ViewModelProvider(this)
-                .get(AdditionalDataViewModel.class);
 
         binding.next.setOnClickListener(v -> {
             Intent formIntent = getIntent();

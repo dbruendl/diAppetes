@@ -1,6 +1,5 @@
 package com.example.diappetes.register;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
 import com.example.diappetes.persistence.model.User;

@@ -12,6 +12,7 @@ import com.example.diappetes.databinding.ActivityRegisterBinding;
 import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
+import dagger.hilt.android.AndroidEntryPoint;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
@@ -19,6 +20,7 @@ import static com.example.diappetes.register.AdditionalDataActivity.INTENT_KEY_E
 import static com.example.diappetes.register.AdditionalDataActivity.INTENT_KEY_PASSWORD;
 import static com.example.diappetes.register.AdditionalDataActivity.INTENT_KEY_UID;
 
+@AndroidEntryPoint
 public class RegisterActivity extends AppCompatActivity {
 
     @Inject
