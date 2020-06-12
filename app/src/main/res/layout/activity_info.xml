@@ -8,11 +8,12 @@
     tools:context=".info.InfoActivity">
 
     <androidx.core.widget.NestedScrollView
-        android:layout_width="386dp"
-        android:layout_height="667dp"
+        android:layout_width="323dp"
+        android:layout_height="521dp"
+        android:layout_marginTop="64dp"
         app:layout_constraintBottom_toTopOf="@+id/navigation_bar"
-        app:layout_constraintLeft_toRightOf="parent"
-        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
