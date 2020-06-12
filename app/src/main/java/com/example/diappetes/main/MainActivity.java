@@ -117,8 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.tab_pet:
                     fragmentManager.beginTransaction()
                             .replace(R.id.fragment_container, petFragment)
-                            .commit()
-                    ;
+                            .commit();
                     break;
                 case R.id.tab_stat:
                     fragmentManager.beginTransaction()

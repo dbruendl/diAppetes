@@ -36,7 +36,6 @@ public class SentiloUpdateService implements Observer<Report> {
     }
 
     private void sendUpdateRequest(int totalSteps) {
-
         SentiloRequestDTO requestStepDTO = SentiloRequestDTO.builder()
                 .batteryObservationDTOList(Collections.singletonList(
                         BatteryObservationDTO.builder()
