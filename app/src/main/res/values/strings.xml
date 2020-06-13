@@ -54,7 +54,7 @@
     <string name="stat_weight_change_graph">Weight change</string>
 
     <!-- Info -->
-    <string name="info_diabetes_title">General</string>
+    <string name="info_diabetes_title">General diabetes Information</string>
     <string name="info_diabetes_short_description">Type 2 diabetes is the most common type of diabetes and
         is characterized by insulin resistance. The insulin is ineffective in the body, resulting in
         rising blood sugar levels...
@@ -110,7 +110,7 @@
         eating, not as a substitute.
     </string>
 
-    <string name="info_stretch">Stretching information</string>
+    <string name="info_stretch">How to stretch</string>
     <string name="info_stretch_short_description">Stretching is a way to physically exercise in which we flex or extend specific muscles,
         it is usually done to make the muscles feel better and to loosen them up to prevent injuries.
         It is a sort of exercise which can have equally important benefits as walking or running...
