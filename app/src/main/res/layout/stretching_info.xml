@@ -7,11 +7,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="@id/navigation_bar"
-        app:layout_constraintLeft_toRightOf="parent"
-        app:layout_constraintRight_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,9 +19,7 @@
                 tools:layout_editor_absoluteX="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/causes_card"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_margin="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -68,8 +62,7 @@
                         android:textAppearance="?attr/textAppearanceHeadline6" />
 
                     <ImageView
-                        android:id="@+id/imageView"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/neck_look_to_the_side" />
 
@@ -215,23 +208,4 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <LinearLayout
-        android:id="@+id/navigation_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/navigation_view"
-            style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:menu="@menu/bottom_navigation_menu">
-
-        </com.google.android.material.bottomnavigation.BottomNavigationView>
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
