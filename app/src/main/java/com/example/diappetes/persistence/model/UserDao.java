@@ -30,6 +30,10 @@ public interface UserDao {
     @Query("SELECT * FROM user WHERE uid = :uid")
     Single<UserReports> findUserReportsByUid(String uid);
 
+    @Transaction
+    @Query("SELECT * FROM user WHERE uid = :uid")
+    LiveData<UserReports> findUserReports(String uid);
+
     @Update
     @Transaction
     Completable updateReport(Report report);

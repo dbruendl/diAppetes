@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int SENTILO_STEP_UPDATE_INTERVAL = 10;
 
     // TODO: replace this with a call to the respective login manager
-    private final static String LOGGED_IN_USER_ID = "t";
+    public final static String LOGGED_IN_USER_ID = "t";
 
     private Calendar calendar = Calendar.getInstance();
     private StepTrackingFragment stepTrackingFragment = new StepTrackingFragment();
@@ -130,6 +130,8 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         });
+
+
     }
 
     private void createNotificationChannel() {

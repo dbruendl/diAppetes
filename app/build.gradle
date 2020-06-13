@@ -40,7 +40,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.android.support:cardview-v7:28.0.0'
     def lombok_version = "1.18.12"
     def room_version = "2.2.5"
     def dagger_version = "2.27"
@@ -74,7 +73,8 @@ dependencies {
             // Hilt dependencies
             "com.google.dagger:hilt-android:$hilt_version",
 
-            'com.google.android.material:material:1.3.0-alpha01'
+            'com.google.android.material:material:1.3.0-alpha01',
+            'com.github.PhilJay:MPAndroidChart:v3.1.0'
     )
     compileOnly(
             "org.projectlombok:lombok:$lombok_version",

@@ -16,4 +16,8 @@ public interface UserRepository {
     Observable<List<User>> findAll();
 
     LiveData<Report> findUserReportForToday(String uid);
+
+    LiveData<UserReports> findUserReports(String uid);
+
+    Completable updateReport(Report report);
 }

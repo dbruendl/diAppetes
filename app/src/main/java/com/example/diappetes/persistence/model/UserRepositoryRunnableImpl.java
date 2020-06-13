@@ -46,4 +46,14 @@ public class UserRepositoryRunnableImpl implements UserRepository {
 
         return userDao.findUserReportForToday(uid, startOfTodayTimestamp, endOfTodayTimestamp);
     }
+
+    @Override
+    public LiveData<UserReports> findUserReports(String uid) {
+        return userDao.findUserReports(uid);
+    }
+
+    @Override
+    public Completable updateReport(Report report) {
+        return userDao.insertReport(report);
+    }
 }
