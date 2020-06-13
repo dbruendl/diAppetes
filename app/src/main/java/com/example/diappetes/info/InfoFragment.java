@@ -58,7 +58,10 @@ public class InfoFragment extends Fragment {
         // Add the fragment to the activity, pushing this transaction
         // on to the back stack.
         FragmentTransaction ft = getParentFragmentManager().beginTransaction();
-        ft.setCustomAnimations(R.animator.slide_down,R.animator.slide_up);
+        ft.setCustomAnimations(R.animator.fragment_slide_left_enter,
+                R.animator.fragment_slide_left_exit,
+                R.animator.fragment_slide_right_enter,
+                R.animator.fragment_slide_right_exit);
         ft.replace(fragmentContainerId, stretchingInfoFragment);
         ft.addToBackStack(null);
         ft.commit();
