@@ -8,7 +8,6 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="@id/navigation_bar"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintRight_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -121,24 +120,4 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-    <LinearLayout
-        android:id="@+id/navigation_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/navigation_view"
-            style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:menu="@menu/bottom_navigation_menu">
-
-        </com.google.android.material.bottomnavigation.BottomNavigationView>
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

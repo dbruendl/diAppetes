@@ -61,6 +61,7 @@
                         android:layout_height="wrap_content">
 
                         <com.google.android.material.button.MaterialButton
+                            android:id="@+id/general_more"
                             style="?attr/borderlessButtonStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -115,6 +116,7 @@
                         android:layout_height="wrap_content">
 
                         <com.google.android.material.button.MaterialButton
+                            android:id="@+id/strechingMore"
                             style="?attr/borderlessButtonStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

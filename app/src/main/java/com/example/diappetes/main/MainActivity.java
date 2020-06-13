@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private StepTrackingFragment stepTrackingFragment = new StepTrackingFragment();
     private PetFragment petFragment = new PetFragment();
     private StatisticsFragment statisticsFragment = new StatisticsFragment();
-    private InfoFragment infoFragment = new InfoFragment();
+    private InfoFragment infoFragment = new InfoFragment(R.id.fragment_container);
 
     @Override
     @RequiresApi(api = Build.VERSION_CODES.M)
