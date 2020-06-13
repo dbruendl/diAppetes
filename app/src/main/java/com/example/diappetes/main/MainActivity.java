@@ -22,7 +22,7 @@ import com.example.diappetes.R;
 import com.example.diappetes.StatisticsFragment;
 import com.example.diappetes.WalkReminderNotificationReceiver;
 import com.example.diappetes.databinding.ActivityMainBinding;
-import com.example.diappetes.info.InfoActivity;
+import com.example.diappetes.info.InfoFragment;
 import com.example.diappetes.login.LoginViewModel;
 import com.example.diappetes.persistence.AppDatabase;
 import com.example.diappetes.persistence.model.Report;
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private StepTrackingFragment stepTrackingFragment = new StepTrackingFragment();
     private PetFragment petFragment = new PetFragment();
     private StatisticsFragment statisticsFragment = new StatisticsFragment();
-    private InfoActivity infoActivity = new InfoActivity();
+    private InfoFragment infoFragment = new InfoFragment();
 
     @Override
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.tab_info:
                     fragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, infoActivity)
+                            .replace(R.id.fragment_container, infoFragment)
                             .commit();
                     break;
                 case R.id.tab_pet:

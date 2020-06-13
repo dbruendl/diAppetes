@@ -9,23 +9,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.diappetes.databinding.ActivityInfoBinding;
+import com.example.diappetes.databinding.InfoLinksBinding;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class InfoActivity extends Fragment {
+public class InfoFragment extends Fragment {
     @Inject
     public InfoViewModel infoViewModel;
 
-    ActivityInfoBinding binding;
+    InfoLinksBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = ActivityInfoBinding.inflate(inflater, container, false);
+        binding = InfoLinksBinding.inflate(inflater, container, false);
 
         return binding.getRoot();
     }

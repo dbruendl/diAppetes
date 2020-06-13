@@ -33,7 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
         activityRegisterBinding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(activityRegisterBinding.getRoot());
 
-        // In android error record there is info about null error inside setOnClickListener below
+        // In android error record there is info_links about null error inside setOnClickListener below
         activityRegisterBinding.finishregisterbtn.setOnClickListener(v -> {
             String email = activityRegisterBinding.signupemailtxt.getText().toString();
             String username = activityRegisterBinding.usernametxt.getText().toString();
