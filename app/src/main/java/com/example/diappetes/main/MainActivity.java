@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     public final static String LOGGED_IN_USER_ID = "t";
 
     private Calendar calendar = Calendar.getInstance();
-    private StepTrackingFragment stepTrackingFragment = new StepTrackingFragment();
+    private StepTrackingFragment stepTrackingFragment = new StepTrackingFragment(R.id.fragment_container);
     private PetFragment petFragment = new PetFragment();
     private StatisticsFragment statisticsFragment = new StatisticsFragment();
     private InfoFragment infoFragment = new InfoFragment(R.id.fragment_container);

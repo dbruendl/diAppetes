@@ -2,16 +2,17 @@ package com.example.diappetes.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 
+import com.example.diappetes.CreateReportFragment;
 import com.example.diappetes.StepTrackerService;
 import com.example.diappetes.databinding.StepTrackingBinding;
 import com.example.diappetes.observer.PetStepGoalObserver;
@@ -19,17 +20,9 @@ import com.example.diappetes.observer.ProgressBarStepGoalObserver;
 import com.example.diappetes.observer.TextViewStepObserver;
 import com.example.diappetes.persistence.model.Report;
 
-import java.security.cert.Certificate;
-import java.util.Calendar;
-import java.util.Date;
-
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.Scheduler;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 @AndroidEntryPoint
 public class StepTrackingFragment extends Fragment {
@@ -40,7 +33,15 @@ public class StepTrackingFragment extends Fragment {
     @Inject
     public MainViewModel mainViewModel;
 
+    private final int fragmentContainerId;
+
     private StepTrackingBinding binding;
+
+    CreateReportFragment createReportFragment = new CreateReportFragment();
+
+    public StepTrackingFragment(@IdRes int fragmentContainerId) {
+        this.fragmentContainerId = fragmentContainerId;
+    }
 
     @Nullable
     @Override
@@ -66,20 +67,10 @@ public class StepTrackingFragment extends Fragment {
             }
         });
 
-        binding.saveReport.setOnClickListener(v -> {
-            Calendar calendar = Calendar.getInstance();
-
-            calendar.set(Calendar.DAY_OF_MONTH, binding.created.getDayOfMonth());
-            calendar.set(Calendar.MONTH, binding.created.getMonth());
-            calendar.set(Calendar.YEAR, binding.created.getYear());
-
-            Date date = calendar.getTime();
-            Integer steps = Integer.parseInt(binding.steps.getText().toString());
-
-            Disposable disposable = mainViewModel.createReport(MainActivity.LOGGED_IN_USER_ID, date, steps)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(() -> Log.i(getClass().getSimpleName(), "Report saved"), error -> Log.e(getClass().getSimpleName(), "Could not save report", error));
+        binding.createReportButton.setOnClickListener(v -> {
+            getParentFragmentManager().beginTransaction()
+                    .replace(fragmentContainerId, createReportFragment)
+                    .commit();
         });
 
         return binding.getRoot();

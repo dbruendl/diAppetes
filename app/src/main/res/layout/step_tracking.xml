@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:layout_width="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/content_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/petmini"
@@ -25,8 +22,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <ProgressBar
                 android:id="@+id/pb_steps"
@@ -42,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?android:attr/textColorSecondary"/>
+                android:textColor="?android:attr/textColorSecondary" />
         </LinearLayout>
 
 
@@ -54,7 +51,7 @@
             <CheckBox
                 android:id="@+id/trackSteps"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/infomaintxt"
@@ -67,33 +64,10 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/content_main">
+    <Button
+        android:id="@+id/createReportButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create report"/>
 
-        <DatePicker
-            android:id="@+id/created"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <EditText
-            android:id="@+id/steps"
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            android:hint="steps"
-            android:inputType="numberDecimal" />
-
-        <Button
-            android:id="@+id/saveReport"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="?attr/buttonBarButtonStyle"
-            android:text="Save" />
-
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
