@@ -1,9 +1,5 @@
 package com.example.diappetes.observer;
 
-import android.os.Build;
-import android.text.PrecomputedText;
-
-import androidx.annotation.RequiresApi;
 import androidx.lifecycle.Observer;
 
 import com.example.diappetes.DateUtils;
@@ -13,10 +9,14 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class UserReportsLineChartObserver implements Observer<UserReports> {
 
@@ -24,10 +24,18 @@ public class UserReportsLineChartObserver implements Observer<UserReports> {
 
     public UserReportsLineChartObserver(LineChart lineChart) {
         this.lineChart = lineChart;
+
+        lineChart.getXAxis().setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                Date date = new Date((long) value);
+
+                return new SimpleDateFormat("MM/dd", Locale.ENGLISH).format(date);
+            }
+        });
     }
 
     @Override
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void onChanged(UserReports userReports) {
         List<Entry> stepEntries = new ArrayList<>();
 
