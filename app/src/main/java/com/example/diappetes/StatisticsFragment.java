@@ -8,9 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.diappetes.databinding.StatisticsBinding;
-import com.example.diappetes.main.MainActivity;
+import com.example.diappetes.login.LoginViewModel;
 import com.example.diappetes.observer.UserReportsLineChartObserver;
 import com.example.diappetes.statistics.StatisticsViewModel;
 
@@ -25,12 +26,16 @@ public class StatisticsFragment extends Fragment {
     @Inject
     public StatisticsViewModel viewModel;
 
+    private LoginViewModel loginViewModel;
+
     @Nullable
     @Override
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = StatisticsBinding.inflate(inflater, container, false);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
-        viewModel.findAllReports(MainActivity.LOGGED_IN_USER_ID).observe(getActivity(), new UserReportsLineChartObserver(binding.weightStepChart));
+        viewModel.findAllReports(loginViewModel.getLoggedInUID()).observe(getActivity(), new UserReportsLineChartObserver(binding.weightStepChart));
 
         return binding.getRoot();
     }

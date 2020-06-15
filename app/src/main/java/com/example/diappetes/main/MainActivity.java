@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.android.volley.toolbox.Volley;
 import com.example.diappetes.BatteryStatusChangedReceiver;
@@ -35,6 +36,10 @@ import java.util.Calendar;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.example.diappetes.WalkReminderNotificationReceiver.KEY_CHANNEL_ID;
 
@@ -47,17 +52,12 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     public MainViewModel mainViewModel;
 
-    @Inject
-    public LoginViewModel loginViewModel;
-
+    private LoginViewModel loginViewModel;
     public ActivityMainBinding activityMainBinding;
 
     private final static String SENTILO_IDENTITY_KEY = "c7337d3fc4ec28d0dddc81478808a8b6b82beb83110fcb00157cc0a711956475";
     public final static String CHANNEL_ID = "69"; //nice
     private static final int SENTILO_STEP_UPDATE_INTERVAL = 10;
-
-    // TODO: replace this with a call to the respective login manager
-    public final static String LOGGED_IN_USER_ID = "t";
 
     private Calendar calendar = Calendar.getInstance();
     private StepTrackingFragment stepTrackingFragment = new StepTrackingFragment(R.id.fragment_container);
@@ -72,13 +72,15 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(activityMainBinding.getRoot());
 
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .add(R.id.fragment_container, stepTrackingFragment)
                 .commit();
 
         SentiloConnector sentiloConnector = new SentiloConnectorVolleyImpl(Volley.newRequestQueue(this), SENTILO_IDENTITY_KEY);
-        LiveData<Report> userReportForToday = mainViewModel.getUserReportForToday(LOGGED_IN_USER_ID);
+        LiveData<Report> userReportForToday = mainViewModel.getUserReportForToday(loginViewModel.getLoggedInUID());
 
         userReportForToday.observe(this, new SentiloUpdateService(sentiloConnector, SENTILO_STEP_UPDATE_INTERVAL));
 

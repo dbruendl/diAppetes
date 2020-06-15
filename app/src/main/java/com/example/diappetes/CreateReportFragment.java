@@ -9,9 +9,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.diappetes.databinding.CreateReportBinding;
-import com.example.diappetes.main.MainActivity;
+import com.example.diappetes.login.LoginViewModel;
 import com.example.diappetes.main.MainViewModel;
 
 import java.util.Calendar;
@@ -30,12 +31,15 @@ public class CreateReportFragment extends Fragment {
     @Inject
     public MainViewModel mainViewModel;
 
+    private LoginViewModel loginViewModel;
+
     CreateReportBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = CreateReportBinding.inflate(inflater, container, false);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         binding.saveReport.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
@@ -47,7 +51,7 @@ public class CreateReportFragment extends Fragment {
             Date date = calendar.getTime();
             Integer steps = Integer.parseInt(binding.steps.getText().toString());
 
-            Disposable disposable = mainViewModel.createReport(MainActivity.LOGGED_IN_USER_ID, date, steps)
+            Disposable disposable = mainViewModel.createReport(loginViewModel.getLoggedInUID(), date, steps)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(() -> Log.i(getClass().getSimpleName(), "Report saved"), error -> Log.e(getClass().getSimpleName(), "Could not save report", error));

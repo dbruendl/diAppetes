@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.room.EmptyResultSetException;
 
 import com.example.diappetes.databinding.ActivityLoginBinding;
@@ -22,8 +23,7 @@ import io.reactivex.schedulers.Schedulers;
 
 @AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
-    @Inject
-    public LoginViewModel loginViewModel;
+    private LoginViewModel loginViewModel;
 
     private Disposable loginDisposable;
 
@@ -34,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityLoginBinding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(activityLoginBinding.getRoot());
+
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         activityLoginBinding.signinbtn.setOnClickListener(v -> {
             String uid = ((TextView) findViewById(R.id.logintxt)).getText().toString();
