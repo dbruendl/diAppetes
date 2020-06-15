@@ -1,6 +1,7 @@
 package com.example.diappetes.persistence.model;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.diappetes.DateUtils;
@@ -16,9 +17,9 @@ public class Report {
     public String userId;
 
     public Report(String userId) {
+        this.steps = 0;
         this.userId = userId;
         this.created = new Date();
-        this.steps = 0;
     }
 
     boolean isFromToday() {

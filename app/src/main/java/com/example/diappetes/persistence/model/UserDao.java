@@ -36,11 +36,14 @@ public interface UserDao {
 
     @Update
     @Transaction
-    Completable updateReport(Report report);
+    void updateReport(Report report);
 
     @Insert
-    Completable insertReport(Report report);
+    void insertReport(Report report);
 
     @Query("SELECT * FROM report WHERE userId = :uid AND created BETWEEN :startOfTodayTimestamp AND :endOfTodayTimestamp")
     LiveData<Report> findUserReportForToday(String uid, long startOfTodayTimestamp, long endOfTodayTimestamp);
+
+    @Query("SELECT * FROM report WHERE userId = :uid AND created BETWEEN :startOfTodayTimestamp AND :endOfTodayTimestamp")
+    Single<Report> findUserReportForTodaySingle(String uid, long startOfTodayTimestamp, long endOfTodayTimestamp);
 }

@@ -14,7 +14,7 @@ import androidx.core.app.NotificationCompat;
 import com.example.diappetes.main.MainActivity;
 import com.example.diappetes.main.StepDetectorSensorEventListenerImpl;
 import com.example.diappetes.main.StepListener;
-import com.example.diappetes.persistence.model.UserDao;
+import com.example.diappetes.persistence.model.UserRepository;
 
 import javax.inject.Inject;
 
@@ -38,7 +38,7 @@ public class StepTrackerService extends IntentService {
     private static final int SERVICE_ID = 35325;
 
     @Inject
-    public UserDao userDao;
+    public UserRepository userRepository;
 
     private SensorManager sensorManager;
     private Sensor sensor;
@@ -59,7 +59,7 @@ public class StepTrackerService extends IntentService {
         // TODO: just returning without any logging or exception or sth?
         if (uid == null || notificationChannelId == null) return;
 
-        StepListener updateUserStepListener = new UpdateDatabaseStepListener(uid, userDao);
+        StepListener updateUserStepListener = new UpdateDatabaseStepListener(uid, userRepository);
         stepDetectorSensorEventListener = new StepDetectorSensorEventListenerImpl();
         stepDetectorSensorEventListener.registerListener(updateUserStepListener);
 

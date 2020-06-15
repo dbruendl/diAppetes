@@ -18,7 +18,13 @@ public interface UserRepository {
 
     LiveData<Report> findUserReportForToday(String uid);
 
+    Single<Report> findUserReportForTodaySingle(String uid);
+
     LiveData<UserReports> findUserReports(String uid);
 
-    Completable createReport(String uid, Date created, Integer steps);
+    void createReport(String uid, Date created, Integer steps);
+
+    void insertReport(Report report);
+
+    void updateReport(Report report);
 }

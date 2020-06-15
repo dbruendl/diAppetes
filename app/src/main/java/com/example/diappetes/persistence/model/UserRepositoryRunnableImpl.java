@@ -48,17 +48,36 @@ public class UserRepositoryRunnableImpl implements UserRepository {
     }
 
     @Override
+    public Single<Report> findUserReportForTodaySingle(String uid) {
+        Date today = new Date();
+        long startOfTodayTimestamp = DateUtils.getStartOfDayMillis(today);
+        long endOfTodayTimestamp = DateUtils.getEndOfDayMillis(today);
+
+        return userDao.findUserReportForTodaySingle(uid, startOfTodayTimestamp, endOfTodayTimestamp);
+    }
+
+    @Override
     public LiveData<UserReports> findUserReports(String uid) {
         return userDao.findUserReports(uid);
     }
 
     @Override
-    public Completable createReport(String uid, Date created, Integer steps) {
+    public void createReport(String uid, Date created, Integer steps) {
         Report report = new Report(uid);
 
         report.steps = steps;
-        report.created = created;
+        report.created = DateUtils.setStartOfDay(created);
 
-        return userDao.updateReport(report);
+        userDao.insertReport(report);
+    }
+
+    @Override
+    public void insertReport(Report report) {
+        userDao.insertReport(report);
+    }
+
+    @Override
+    public void updateReport(Report report) {
+        userDao.updateReport(report);
     }
 }

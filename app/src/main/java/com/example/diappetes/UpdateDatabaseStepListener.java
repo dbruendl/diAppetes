@@ -3,8 +3,9 @@ package com.example.diappetes;
 import com.example.diappetes.main.StepListener;
 import com.example.diappetes.persistence.model.Report;
 import com.example.diappetes.persistence.model.UserDao;
+import com.example.diappetes.persistence.model.UserRepository;
 
-import io.reactivex.Scheduler;
+import io.reactivex.Completable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
@@ -13,32 +14,27 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class UpdateDatabaseStepListener implements StepListener {
     private final String uid;
-    private final UserDao userDao;
+    private final UserRepository userRepository;
 
-    public UpdateDatabaseStepListener(String uid, UserDao userDao) {
+    public UpdateDatabaseStepListener(String uid, UserRepository userRepository) {
         this.uid = uid;
-        this.userDao = userDao;
+        this.userRepository = userRepository;
     }
 
     @Override
     public void step() {
-        Disposable findUserDisposable = userDao.findUserReportsByUid(uid)
+        Disposable findUserDisposable = userRepository.findUserReportForTodaySingle(uid)
                 .subscribeOn(Schedulers.io())
-                .flatMapCompletable(userReports -> {
-                    Report reportForToday = userReports.getReportForToday();
+                .subscribe(report -> {
+                    report.steps += 1;
 
-                    if(reportForToday == null) {
-                        Report report = new Report(uid);
+                    userRepository.updateReport(report);
+                }, error -> {
+                    Report report = new Report(uid);
 
-                        report.steps = ++report.steps;
+                    report.steps = ++report.steps;
 
-                        return userDao.insertReport(report);
-                    }
-
-                    reportForToday.steps = ++reportForToday.steps;
-
-                    return userDao.updateReport(reportForToday);
-                })
-                .subscribe();
+                    userRepository.insertReport(report);
+                });
     }
 }
