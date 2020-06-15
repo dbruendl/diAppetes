@@ -2,6 +2,7 @@ package com.example.diappetes.persistence.model;
 
 import androidx.lifecycle.LiveData;
 
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Completable;
@@ -19,5 +20,5 @@ public interface UserRepository {
 
     LiveData<UserReports> findUserReports(String uid);
 
-    Completable updateReport(Report report);
+    Completable createReport(String uid, Date created, Integer steps);
 }

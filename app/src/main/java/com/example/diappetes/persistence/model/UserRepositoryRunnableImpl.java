@@ -53,7 +53,12 @@ public class UserRepositoryRunnableImpl implements UserRepository {
     }
 
     @Override
-    public Completable updateReport(Report report) {
-        return userDao.insertReport(report);
+    public Completable createReport(String uid, Date created, Integer steps) {
+        Report report = new Report(uid);
+
+        report.steps = steps;
+        report.created = created;
+
+        return userDao.updateReport(report);
     }
 }

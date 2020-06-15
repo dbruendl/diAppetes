@@ -29,12 +29,7 @@ public class MainViewModel extends ViewModel {
         return userRepository.findUserReportForToday(uid);
     }
 
-    public Completable createReport(String uid, Date created, Integer steps) {
-        Report report = new Report(uid);
-
-        report.steps = steps;
-        report.created = created;
-
-        return userRepository.updateReport(report);
+    public LiveData<UserReports> findAllReports(String uid) {
+        return userRepository.findUserReports(uid);
     }
 }

@@ -20,36 +20,26 @@ import com.example.diappetes.observer.ProgressBarStepGoalObserver;
 import com.example.diappetes.observer.TextViewStepObserver;
 import com.example.diappetes.persistence.model.Report;
 
-import javax.inject.Inject;
-
-import dagger.hilt.android.AndroidEntryPoint;
-
-@AndroidEntryPoint
 public class StepTrackingFragment extends Fragment {
 
     private final static int USER_STEP_GOAL = 10;
 
-    @Inject
-    public MainViewModel mainViewModel;
-
     private final int fragmentContainerId;
     private final String loggedInUID;
+    private final LiveData<Report> reportForTodayLiveData;
 
     private StepTrackingBinding binding;
 
-    CreateReportFragment createReportFragment = new CreateReportFragment();
-
-    public StepTrackingFragment(@IdRes int fragmentContainerId, String loggedInUID) {
+    public StepTrackingFragment(@IdRes int fragmentContainerId, String loggedInUID, LiveData<Report> reportForTodayLiveData) {
         this.fragmentContainerId = fragmentContainerId;
         this.loggedInUID = loggedInUID;
+        this.reportForTodayLiveData = reportForTodayLiveData;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = StepTrackingBinding.inflate(inflater, container, false);
-
-        LiveData<Report> reportForTodayLiveData = mainViewModel.getUserReportForToday(loggedInUID);
 
         reportForTodayLiveData.observe(getActivity(), new PetStepGoalObserver(binding.petmini, USER_STEP_GOAL));
         reportForTodayLiveData.observe(getActivity(), new ProgressBarStepGoalObserver(binding.pbSteps, USER_STEP_GOAL));
@@ -69,6 +59,8 @@ public class StepTrackingFragment extends Fragment {
         });
 
         binding.createReportButton.setOnClickListener(v -> {
+            CreateReportFragment createReportFragment = new CreateReportFragment(loggedInUID);
+
             getParentFragmentManager().beginTransaction()
                     .replace(fragmentContainerId, createReportFragment)
                     .commit();

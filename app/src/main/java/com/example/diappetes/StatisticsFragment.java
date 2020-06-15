@@ -8,13 +8,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 
 import com.example.diappetes.databinding.StatisticsBinding;
-import com.example.diappetes.login.LoginService;
 import com.example.diappetes.observer.UserReportsLineChartObserver;
-import com.example.diappetes.statistics.StatisticsViewModel;
-
-import javax.inject.Inject;
+import com.example.diappetes.persistence.model.UserReports;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -22,13 +20,10 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class StatisticsFragment extends Fragment {
     StatisticsBinding binding;
 
-    @Inject
-    public StatisticsViewModel viewModel;
+    private final LiveData<UserReports> userReports;
 
-    private final String loggedInUID;
-
-    public StatisticsFragment(String loggedInUID) {
-        this.loggedInUID = loggedInUID;
+    public StatisticsFragment(LiveData<UserReports> userReports) {
+        this.userReports = userReports;
     }
 
     @Nullable
@@ -36,7 +31,7 @@ public class StatisticsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = StatisticsBinding.inflate(inflater, container, false);
 
-        viewModel.findAllReports(loggedInUID).observe(getActivity(), new UserReportsLineChartObserver(binding.weightStepChart));
+        userReports.observe(getActivity(), new UserReportsLineChartObserver(binding.weightStepChart));
 
         return binding.getRoot();
     }

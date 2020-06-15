@@ -26,6 +26,7 @@ import com.example.diappetes.info.InfoFragment;
 import com.example.diappetes.login.LoginService;
 import com.example.diappetes.persistence.AppDatabase;
 import com.example.diappetes.persistence.model.Report;
+import com.example.diappetes.persistence.model.UserRepository;
 import com.example.diappetes.sentilo.SentiloConnector;
 import com.example.diappetes.sentilo.SentiloConnectorVolleyImpl;
 import com.example.diappetes.sentilo.SentiloUpdateService;
@@ -46,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Inject
     public MainViewModel mainViewModel;
+
+    @Inject
+    public UserRepository userRepository;
 
     @Inject
     public LoginService loginService;
@@ -70,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding.navigationView.setSelectedItemId(R.id.tab_home);
 
         SentiloConnector sentiloConnector = new SentiloConnectorVolleyImpl(Volley.newRequestQueue(this), SENTILO_IDENTITY_KEY);
-        LiveData<Report> userReportForToday = mainViewModel.getUserReportForToday(loginService.getLoggedInUID());
+        LiveData<Report> userReportForToday = userRepository.findUserReportForToday(loginService.getLoggedInUID());
 
         userReportForToday.observe(this, new SentiloUpdateService(sentiloConnector, SENTILO_STEP_UPDATE_INTERVAL));
 
@@ -92,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         BatteryStatusChangedReceiver bscr = new BatteryStatusChangedReceiver(sentiloConnector);
         registerReceiver(bscr, ifilter);
 
-        StepTrackingFragment stepTrackingFragment = new StepTrackingFragment(R.id.fragment_container, loginService.getLoggedInUID());
+        StepTrackingFragment stepTrackingFragment = new StepTrackingFragment(R.id.fragment_container, loginService.getLoggedInUID(), userReportForToday);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, stepTrackingFragment)
@@ -117,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.tab_stat:
                     fragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, new StatisticsFragment(loginService.getLoggedInUID()))
+                            .replace(R.id.fragment_container, new StatisticsFragment(mainViewModel.findAllReports(loginService.getLoggedInUID())))
                             .commit();
                     break;
                 default:
