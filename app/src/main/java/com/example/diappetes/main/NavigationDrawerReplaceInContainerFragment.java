@@ -55,28 +55,29 @@ public class NavigationDrawerReplaceInContainerFragment extends BottomSheetDialo
                     fragmentManager.beginTransaction()
                             .replace(fragmentContainerId, stepTrackingFragment)
                             .commit();
-                    return true;
+                    break;
                 case R.id.tab_info:
                     fragmentManager.beginTransaction()
                             .replace(fragmentContainerId, infoFragment)
                             .commit();
-                    return true;
+                    break;
                 case R.id.tab_pet:
                     fragmentManager.beginTransaction()
                             .replace(fragmentContainerId, petFragment)
                             .commit();
-                    return true;
+                    break;
                 case R.id.tab_stat:
                     fragmentManager.beginTransaction()
                             .replace(R.id.fragment_container, statisticsFragment)
                             .commit();
-                    return true;
+                    break;
                 default:
                     return false;
             }
+            dismiss();
+            return true;
+
         });
         super.onActivityCreated(savedInstanceState);
     }
-
-
 }
