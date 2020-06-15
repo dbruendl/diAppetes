@@ -46,7 +46,8 @@ public class LoginActivity extends AppCompatActivity {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(() -> {
-                        Intent startHomeIntent = new Intent(getApplicationContext(), MainActivity.class);
+                        Intent startHomeIntent = new Intent(getApplicationContext(), MainActivity.class)
+                                .setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                         startActivity(startHomeIntent);
                     }, error -> {
                         if (error instanceof EmptyResultSetException) {

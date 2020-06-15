@@ -21,6 +21,5 @@
     <item
         android:id="@+id/tab_info"
         android:icon="@drawable/ic_baseline_info_24"
-        android:title="@string/main_info_tab_text"
-        />
+        android:title="@string/main_info_tab_text" />
 </menu>
