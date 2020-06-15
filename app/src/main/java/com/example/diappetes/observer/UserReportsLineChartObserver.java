@@ -37,6 +37,8 @@ public class UserReportsLineChartObserver implements Observer<UserReports> {
 
     @Override
     public void onChanged(UserReports userReports) {
+        if (userReports == null) return;
+
         List<Entry> stepEntries = new ArrayList<>();
 
         Collections.sort(userReports.reports, (report1, report2) -> report1.created.compareTo(report2.created));

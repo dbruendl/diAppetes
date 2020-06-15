@@ -14,7 +14,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.android.volley.toolbox.Volley;
 import com.example.diappetes.BatteryStatusChangedReceiver;
@@ -24,7 +23,7 @@ import com.example.diappetes.StatisticsFragment;
 import com.example.diappetes.WalkReminderNotificationReceiver;
 import com.example.diappetes.databinding.ActivityMainBinding;
 import com.example.diappetes.info.InfoFragment;
-import com.example.diappetes.login.LoginViewModel;
+import com.example.diappetes.login.LoginService;
 import com.example.diappetes.persistence.AppDatabase;
 import com.example.diappetes.persistence.model.Report;
 import com.example.diappetes.sentilo.SentiloConnector;
@@ -36,10 +35,6 @@ import java.util.Calendar;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
-import io.reactivex.Scheduler;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 import static com.example.diappetes.WalkReminderNotificationReceiver.KEY_CHANNEL_ID;
 
@@ -52,7 +47,9 @@ public class MainActivity extends AppCompatActivity {
     @Inject
     public MainViewModel mainViewModel;
 
-    private LoginViewModel loginViewModel;
+    @Inject
+    public LoginService loginService;
+
     public ActivityMainBinding activityMainBinding;
 
     private final static String SENTILO_IDENTITY_KEY = "c7337d3fc4ec28d0dddc81478808a8b6b82beb83110fcb00157cc0a711956475";
@@ -60,9 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int SENTILO_STEP_UPDATE_INTERVAL = 10;
 
     private Calendar calendar = Calendar.getInstance();
-    private StepTrackingFragment stepTrackingFragment = new StepTrackingFragment(R.id.fragment_container);
     private PetFragment petFragment = new PetFragment();
-    private StatisticsFragment statisticsFragment = new StatisticsFragment();
     private InfoFragment infoFragment = new InfoFragment(R.id.fragment_container);
 
     @Override
@@ -72,15 +67,10 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(activityMainBinding.getRoot());
 
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, stepTrackingFragment)
-                .commit();
+        activityMainBinding.navigationView.setSelectedItemId(R.id.tab_home);
 
         SentiloConnector sentiloConnector = new SentiloConnectorVolleyImpl(Volley.newRequestQueue(this), SENTILO_IDENTITY_KEY);
-        LiveData<Report> userReportForToday = mainViewModel.getUserReportForToday(loginViewModel.getLoggedInUID());
+        LiveData<Report> userReportForToday = mainViewModel.getUserReportForToday(loginService.getLoggedInUID());
 
         userReportForToday.observe(this, new SentiloUpdateService(sentiloConnector, SENTILO_STEP_UPDATE_INTERVAL));
 
@@ -102,9 +92,13 @@ public class MainActivity extends AppCompatActivity {
         BatteryStatusChangedReceiver bscr = new BatteryStatusChangedReceiver(sentiloConnector);
         registerReceiver(bscr, ifilter);
 
-        activityMainBinding.navigationView.setSelectedItemId(R.id.tab_home);
-        activityMainBinding.navigationView.setOnNavigationItemSelectedListener(item -> {
+        StepTrackingFragment stepTrackingFragment = new StepTrackingFragment(R.id.fragment_container, loginService.getLoggedInUID());
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, stepTrackingFragment)
+                .commit();
 
+        activityMainBinding.navigationView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.tab_home:
                     fragmentManager.beginTransaction()
@@ -123,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.tab_stat:
                     fragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, statisticsFragment)
+                            .replace(R.id.fragment_container, new StatisticsFragment(loginService.getLoggedInUID()))
                             .commit();
                     break;
                 default:

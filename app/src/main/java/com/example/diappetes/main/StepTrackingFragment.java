@@ -27,20 +27,21 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class StepTrackingFragment extends Fragment {
 
-    private final static String LOGGED_IN_USER_ID = "t";
     private final static int USER_STEP_GOAL = 10;
 
     @Inject
     public MainViewModel mainViewModel;
 
     private final int fragmentContainerId;
+    private final String loggedInUID;
 
     private StepTrackingBinding binding;
 
     CreateReportFragment createReportFragment = new CreateReportFragment();
 
-    public StepTrackingFragment(@IdRes int fragmentContainerId) {
+    public StepTrackingFragment(@IdRes int fragmentContainerId, String loggedInUID) {
         this.fragmentContainerId = fragmentContainerId;
+        this.loggedInUID = loggedInUID;
     }
 
     @Nullable
@@ -48,7 +49,7 @@ public class StepTrackingFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = StepTrackingBinding.inflate(inflater, container, false);
 
-        LiveData<Report> reportForTodayLiveData = mainViewModel.getUserReportForToday(LOGGED_IN_USER_ID);
+        LiveData<Report> reportForTodayLiveData = mainViewModel.getUserReportForToday(loggedInUID);
 
         reportForTodayLiveData.observe(getActivity(), new PetStepGoalObserver(binding.petmini, USER_STEP_GOAL));
         reportForTodayLiveData.observe(getActivity(), new ProgressBarStepGoalObserver(binding.pbSteps, USER_STEP_GOAL));
@@ -57,7 +58,7 @@ public class StepTrackingFragment extends Fragment {
         binding.trackSteps.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 Intent startStepTrackerServiceIntent = new Intent(getActivity(), StepTrackerService.class)
-                        .putExtra(StepTrackerService.UID_INTENT_KEY, LOGGED_IN_USER_ID)
+                        .putExtra(StepTrackerService.UID_INTENT_KEY, loggedInUID)
                         .putExtra(StepTrackerService.NOTIFICATION_CHANNEL_INTENT_KEY, MainActivity.CHANNEL_ID);
                 getActivity().startService(startStepTrackerServiceIntent);
             } else {
