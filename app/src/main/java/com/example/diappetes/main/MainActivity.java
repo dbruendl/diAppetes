@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
     private InfoFragment infoFragment;
     private NavigationDrawerReplaceInContainerFragment navigationDrawerReplaceInContainerFragment;
 
+    private BatteryStatusChangedReceiver batteryStatusChangedReceiver;
+
     private final static String SENTILO_IDENTITY_KEY = "c7337d3fc4ec28d0dddc81478808a8b6b82beb83110fcb00157cc0a711956475";
     public final static String CHANNEL_ID = "69"; //nice
     private static final int SENTILO_STEP_UPDATE_INTERVAL = 10;
@@ -101,9 +103,8 @@ public class MainActivity extends AppCompatActivity {
         calendar.set(Calendar.HOUR_OF_DAY, 18);
         alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
 
-        IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        BatteryStatusChangedReceiver bscr = new BatteryStatusChangedReceiver(sentiloConnector);
-        registerReceiver(bscr, ifilter);
+        batteryStatusChangedReceiver = new BatteryStatusChangedReceiver(sentiloConnector);
+        registerReceiver(batteryStatusChangedReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
         StepTrackingFragment stepTrackingFragment = new StepTrackingFragment(R.id.fragment_container, loginService.getLoggedInUID(), userReportForToday);
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -119,6 +120,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        unregisterReceiver(batteryStatusChangedReceiver);
     }
 
     @Override
