@@ -49,9 +49,13 @@ public class UserRepositoryRunnableImpl implements UserRepository {
 
     @Override
     public Single<Report> findUserReportForTodaySingle(String uid) {
-        Date today = new Date();
-        long startOfTodayTimestamp = DateUtils.getStartOfDayMillis(today);
-        long endOfTodayTimestamp = DateUtils.getEndOfDayMillis(today);
+        return findReportFor(uid, new Date());
+    }
+
+    @Override
+    public Single<Report> findReportFor(String uid, Date date) {
+        long startOfTodayTimestamp = DateUtils.getStartOfDayMillis(date);
+        long endOfTodayTimestamp = DateUtils.getEndOfDayMillis(date);
 
         return userDao.findUserReportForTodaySingle(uid, startOfTodayTimestamp, endOfTodayTimestamp);
     }

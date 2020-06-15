@@ -20,6 +20,8 @@ public interface UserRepository {
 
     Single<Report> findUserReportForTodaySingle(String uid);
 
+    Single<Report> findReportFor(String uid, Date date);
+
     LiveData<UserReports> findUserReports(String uid);
 
     void createReport(String uid, Date created, Integer steps);

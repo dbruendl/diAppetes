@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.diappetes.databinding.CreateReportBinding;
+import com.example.diappetes.persistence.model.Report;
 import com.example.diappetes.persistence.model.UserRepository;
 
 import java.util.Calendar;
@@ -54,22 +55,20 @@ public class CreateReportFragment extends Fragment {
             Date date = calendar.getTime();
             Integer steps = Integer.parseInt(binding.steps.getText().toString());
 
-            if(DateUtils.isToday(date)) {
-                reportDisposable = userRepository.findUserReportForTodaySingle(loggedInUID)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnError(error -> {
-                            userRepository.createReport(loggedInUID, date, steps);
-                        })
-                        .observeOn(Schedulers.io())
-                        .doOnSuccess(report -> {
-                            report.steps = steps;
+            reportDisposable = userRepository.findReportFor(loggedInUID, date)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(report -> {
+                        report.steps = steps;
 
-                            userRepository.updateReport(report);
-                        })
-                        .observeOn(Schedulers.io())
-                        .subscribe();
-            }
+                        userRepository.updateReport(report);
+                    }, throwable -> {
+                        Report report = new Report(loggedInUID);
+
+                        report.created = date;
+                        report.steps = steps;
+
+                        userRepository.insertReport(report);
+                    });
         });
 
         return binding.getRoot();
@@ -79,7 +78,7 @@ public class CreateReportFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
 
-        if(reportDisposable != null) {
+        if (reportDisposable != null) {
             reportDisposable.dispose();
         }
     }
