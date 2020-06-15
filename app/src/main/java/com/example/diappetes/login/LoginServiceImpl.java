@@ -6,6 +6,7 @@ import com.example.diappetes.register.InvalidPasswordException;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import io.reactivex.subjects.CompletableSubject;
 
 public class LoginServiceImpl implements LoginService {
 
@@ -28,6 +29,20 @@ public class LoginServiceImpl implements LoginService {
                     }
                     return Completable.error(new InvalidPasswordException());
                 });
+    }
+
+    @Override
+    public Completable logout() {
+        return Completable.create(emitter -> {
+           loggedInUID = null;
+
+           emitter.onComplete();
+        });
+    }
+
+    @Override
+    public boolean isLoggedIn() {
+        return loggedInUID != null;
     }
 
     @Override

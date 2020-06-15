@@ -2,28 +2,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/tab_home"
-        android:enabled="true"
         android:icon="@drawable/ic_baseline_home_24"
         android:title="@string/main_home_tab_text"
         />
 
     <item
         android:id="@+id/tab_info"
-        android:enabled="true"
         android:icon="@drawable/ic_baseline_info_24"
         android:title="@string/main_info_tab_text"
         />
 
     <item
         android:id="@+id/tab_pet"
-        android:enabled="true"
         android:icon="@drawable/ic_baseline_pets_24"
         android:title="@string/main_pet_tab_text"
         />
 
     <item
         android:id="@+id/tab_stat"
-        android:enabled="true"
         android:icon="@drawable/ic_baseline_show_chart_24"
         android:title="@string/main_stat_tab_text"
         />

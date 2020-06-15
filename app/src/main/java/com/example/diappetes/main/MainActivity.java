@@ -9,7 +9,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -23,10 +26,10 @@ import com.example.diappetes.StatisticsFragment;
 import com.example.diappetes.WalkReminderNotificationReceiver;
 import com.example.diappetes.databinding.ActivityMainBinding;
 import com.example.diappetes.info.InfoFragment;
+import com.example.diappetes.login.LoginActivity;
 import com.example.diappetes.login.LoginService;
 import com.example.diappetes.persistence.AppDatabase;
 import com.example.diappetes.persistence.model.Report;
-import com.example.diappetes.persistence.model.UserRepository;
 import com.example.diappetes.sentilo.SentiloConnector;
 import com.example.diappetes.sentilo.SentiloConnectorVolleyImpl;
 import com.example.diappetes.sentilo.SentiloUpdateService;
@@ -36,6 +39,7 @@ import java.util.Calendar;
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
+import io.reactivex.disposables.Disposable;
 
 import static com.example.diappetes.WalkReminderNotificationReceiver.KEY_CHANNEL_ID;
 
@@ -49,32 +53,37 @@ public class MainActivity extends AppCompatActivity {
     public MainViewModel mainViewModel;
 
     @Inject
-    public UserRepository userRepository;
-
-    @Inject
     public LoginService loginService;
 
-    public ActivityMainBinding activityMainBinding;
+    public ActivityMainBinding binding;
+
+    private StepTrackingFragment stepTrackingFragment;
+    private StatisticsFragment statisticsFragment;
+    private InfoFragment infoFragment;
+    private NavigationDrawerReplaceInContainerFragment navigationDrawerReplaceInContainerFragment;
 
     private final static String SENTILO_IDENTITY_KEY = "c7337d3fc4ec28d0dddc81478808a8b6b82beb83110fcb00157cc0a711956475";
     public final static String CHANNEL_ID = "69"; //nice
     private static final int SENTILO_STEP_UPDATE_INTERVAL = 10;
 
     private Calendar calendar = Calendar.getInstance();
-    private PetFragment petFragment = new PetFragment();
-    private InfoFragment infoFragment = new InfoFragment(R.id.fragment_container);
 
     @Override
     @RequiresApi(api = Build.VERSION_CODES.M)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(activityMainBinding.getRoot());
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        setSupportActionBar(binding.toolbar);
 
-        activityMainBinding.navigationView.setSelectedItemId(R.id.tab_home);
+        stepTrackingFragment = new StepTrackingFragment(R.id.fragment_container, loginService.getLoggedInUID(), mainViewModel.getUserReportForToday(loginService.getLoggedInUID()));
+        statisticsFragment = new StatisticsFragment(mainViewModel.findAllReports(loginService.getLoggedInUID()));
+        infoFragment = new InfoFragment(R.id.fragment_container);
+
+        navigationDrawerReplaceInContainerFragment = new NavigationDrawerReplaceInContainerFragment(R.id.fragment_container, new PetFragment(), infoFragment, stepTrackingFragment, statisticsFragment);
 
         SentiloConnector sentiloConnector = new SentiloConnectorVolleyImpl(Volley.newRequestQueue(this), SENTILO_IDENTITY_KEY);
-        LiveData<Report> userReportForToday = userRepository.findUserReportForToday(loginService.getLoggedInUID());
+        LiveData<Report> userReportForToday = mainViewModel.getUserReportForToday(loginService.getLoggedInUID());
 
         userReportForToday.observe(this, new SentiloUpdateService(sentiloConnector, SENTILO_STEP_UPDATE_INTERVAL));
 
@@ -101,37 +110,30 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, stepTrackingFragment)
                 .commit();
+    }
 
-        activityMainBinding.navigationView.setOnNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.tab_home:
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, stepTrackingFragment)
-                            .commit();
-                    break;
-                case R.id.tab_info:
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, infoFragment)
-                            .commit();
-                    break;
-                case R.id.tab_pet:
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, petFragment)
-                            .commit();
-                    break;
-                case R.id.tab_stat:
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.fragment_container, new StatisticsFragment(mainViewModel.findAllReports(loginService.getLoggedInUID())))
-                            .commit();
-                    break;
-                default:
-                    return false;
-            }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if(loginService.isLoggedIn()) {
+            getMenuInflater().inflate(R.menu.logged_in_toolbar, menu);
+        }
 
-            return true;
-        });
+        return true;
+    }
 
-
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                navigationDrawerReplaceInContainerFragment.show(fragmentManager, navigationDrawerReplaceInContainerFragment.getTag());
+                return true;
+            case R.id.action_logout:
+                Disposable loginDisposable = loginService.logout().subscribe(() -> startActivity(new Intent(getApplicationContext(), LoginActivity.class)));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void createNotificationChannel() {

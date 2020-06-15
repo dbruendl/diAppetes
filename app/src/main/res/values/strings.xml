@@ -53,6 +53,10 @@
     <string name="stat_steps_taken_text">Steps taken</string>
     <string name="stat_weight_change_graph">Weight change</string>
 
+    <!-- Toolbar -->
+    <string name="toolbar_navigation_button">Navigation</string>
+    <string name="toolbar_action_settings">Logout</string>
+
     <!-- Info -->
     <string name="info_diabetes_title">General diabetes Information</string>
     <string name="info_diabetes_short_description">Type 2 diabetes is the most common type of diabetes and
