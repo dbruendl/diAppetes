@@ -27,7 +27,7 @@ public class RegisterAdditionalDataActivity extends AppCompatActivity {
     private Disposable registerUserDisposable;
 
     @Inject
-    public AdditionalDataViewModel additionalDataViewModel; // TODO
+    AdditionalDataViewModel additionalDataViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

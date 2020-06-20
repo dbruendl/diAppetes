@@ -14,16 +14,12 @@ import java.util.Date;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor(onConstructor_ = @Inject)
 public class MainViewModel extends ViewModel {
 
     private final UserRepository userRepository;
-    private Observer<UserReports> userReportsObserver;
-
-    @Inject
-    public MainViewModel(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public LiveData<Report> getUserReportForToday(String uid) {
         return userRepository.findUserReportForToday(uid);

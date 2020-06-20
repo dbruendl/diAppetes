@@ -5,16 +5,12 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.diappetes.databinding.SettingsBinding;
 import com.example.diappetes.login.LoginService;
 import com.example.diappetes.observer.SettingChangedRepositoryUpdaterObserver;
 import com.example.diappetes.observer.StartStepTrackingServiceObserver;
-import com.example.diappetes.persistence.model.Setting;
-
-import java.util.Collections;
 
 import javax.inject.Inject;
 
@@ -26,11 +22,10 @@ import io.reactivex.schedulers.Schedulers;
 @AndroidEntryPoint
 public class SettingsActivity extends AppCompatActivity {
 
-    private final String LOG_TAG = getClass().getSimpleName();
-
     @Inject
     LoginService loginService;
 
+    @Inject
     SettingsViewModel settingsViewModel;
 
     SettingsBinding binding;
@@ -42,8 +37,6 @@ public class SettingsActivity extends AppCompatActivity {
         binding = SettingsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.settingsToolbar);
-
-        settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
 
         binding.settingsRecycler.setLayoutManager(new LinearLayoutManager(this));
 

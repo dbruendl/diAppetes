@@ -23,7 +23,8 @@ import io.reactivex.schedulers.Schedulers;
 
 @AndroidEntryPoint
 public class LoginActivity extends AppCompatActivity {
-    private LoginViewModel loginViewModel;
+    @Inject
+    LoginViewModel loginViewModel;
 
     private Disposable loginDisposable;
 
@@ -34,8 +35,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         activityLoginBinding = ActivityLoginBinding.inflate(getLayoutInflater());
         setContentView(activityLoginBinding.getRoot());
-
-        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
 
         activityLoginBinding.signinbtn.setOnClickListener(v -> {
             String uid = ((TextView) findViewById(R.id.logintxt)).getText().toString();

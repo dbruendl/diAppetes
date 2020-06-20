@@ -5,7 +5,6 @@ import androidx.lifecycle.Observer;
 import com.example.diappetes.persistence.model.Setting;
 import com.example.diappetes.persistence.model.SettingRepository;
 
-import io.reactivex.disposables.Disposable;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

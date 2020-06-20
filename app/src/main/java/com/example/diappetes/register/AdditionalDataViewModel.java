@@ -8,14 +8,11 @@ import com.example.diappetes.persistence.model.UserRepository;
 import javax.inject.Inject;
 
 import io.reactivex.Completable;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor(onConstructor_ = @Inject)
 public class AdditionalDataViewModel extends ViewModel {
     private final UserRepository userRepository;
-
-    @Inject
-    public AdditionalDataViewModel(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     Completable register(String uid, String email, String password, String firstName, String lastName,
                          String profession, Double weight, Double height, int dailyStepGoal) {

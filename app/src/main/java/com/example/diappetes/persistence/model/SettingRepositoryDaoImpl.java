@@ -1,7 +1,5 @@
 package com.example.diappetes.persistence.model;
 
-import androidx.lifecycle.LiveData;
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -13,11 +11,6 @@ import lombok.RequiredArgsConstructor;
 public class SettingRepositoryDaoImpl implements SettingRepository {
 
     private final SettingDao settingDao;
-
-    @Override
-    public LiveData<Setting> findById(int id) {
-        return settingDao.findById(id);
-    }
 
     @Override
     public void store(Setting setting) {

@@ -20,8 +20,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
 public class InfoFragment extends Fragment {
-    @Inject
-    public InfoViewModel infoViewModel;
 
     private final int fragmentContainerId;
 
