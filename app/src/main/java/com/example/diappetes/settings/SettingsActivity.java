@@ -50,12 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
         loadSettingsDisposable = settingsViewModel.findAll()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(settings -> {
-                    if (settings.size() == 0) {
-                        return new SettingsAdapter(Collections.singletonList(new Setting(1, "Enable step tracking")));
-                    }
-                    return new SettingsAdapter(settings);
-                })
+                .map(SettingsAdapter::new)
                 .subscribe(settingsAdapter -> {
                     settingsAdapter.getSettingChecked().observe(this, new SettingChangedRepositoryUpdaterObserver(settingsViewModel.getSettingRepository()));
                     settingsAdapter.getSettingChecked().observe(this, new StartStepTrackingServiceObserver(this, loginService.getLoggedInUID()));
