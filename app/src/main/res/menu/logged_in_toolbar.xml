@@ -4,6 +4,12 @@
 
     <item
         android:id="@+id/action_logout"
-        android:title="@string/toolbar_action_settings"
+        android:title="@string/toolbar_action_logout"
         app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/toolbar_action_settings"
+        app:showAsAction="never"
+        />
 </menu>

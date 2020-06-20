@@ -45,19 +45,6 @@ public class StepTrackingFragment extends Fragment {
         reportForTodayLiveData.observe(getActivity(), new ProgressBarStepGoalObserver(binding.pbSteps, USER_STEP_GOAL));
         reportForTodayLiveData.observe(getActivity(), new TextViewStepObserver(binding.tvSteps));
 
-        binding.trackSteps.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                Intent startStepTrackerServiceIntent = new Intent(getActivity(), StepTrackerService.class)
-                        .putExtra(StepTrackerService.UID_INTENT_KEY, loggedInUID)
-                        .putExtra(StepTrackerService.NOTIFICATION_CHANNEL_INTENT_KEY, MainActivity.CHANNEL_ID);
-                getActivity().startService(startStepTrackerServiceIntent);
-            } else {
-                Intent stopStepTrackerServiceIntent = new Intent(getActivity(), StepTrackerService.class);
-
-                getActivity().stopService(stopStepTrackerServiceIntent);
-            }
-        });
-
         binding.createReportButton.setOnClickListener(v -> {
             CreateReportFragment createReportFragment = new CreateReportFragment(loggedInUID);
 

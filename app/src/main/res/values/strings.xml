@@ -55,7 +55,11 @@
 
     <!-- Toolbar -->
     <string name="toolbar_navigation_button">Navigation</string>
-    <string name="toolbar_action_settings">Logout</string>
+    <string name="toolbar_action_logout">Logout</string>
+    <string name="toolbar_action_settings">Settings</string>
+
+    <!-- Settings -->
+    <string name="settings_step_tracking">Enable step tracking?</string>
 
     <!-- Info -->
     <string name="info_diabetes_title">General diabetes Information</string>

@@ -48,19 +48,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <CheckBox
-                android:id="@+id/trackSteps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/infomaintxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/main_go_for_walk_text"
-                android:textSize="15sp" />
-
         </LinearLayout>
     </LinearLayout>
 
@@ -68,6 +55,7 @@
         android:id="@+id/createReportButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create report"/>
+        android:text="Create report"
+        android:layout_gravity="center"/>
 
 </LinearLayout>

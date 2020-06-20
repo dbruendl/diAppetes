@@ -46,9 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(() -> {
-                        Intent startHomeIntent = new Intent(getApplicationContext(), MainActivity.class)
-                                .setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                        startActivity(startHomeIntent);
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     }, error -> {
                         if (error instanceof EmptyResultSetException) {
                             errorTextView.setText(R.string.login_invalid_username);

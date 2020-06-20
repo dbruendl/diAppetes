@@ -13,9 +13,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
 
 import com.android.volley.toolbox.Volley;
@@ -33,6 +33,7 @@ import com.example.diappetes.persistence.model.Report;
 import com.example.diappetes.sentilo.SentiloConnector;
 import com.example.diappetes.sentilo.SentiloConnectorVolleyImpl;
 import com.example.diappetes.sentilo.SentiloUpdateService;
+import com.example.diappetes.settings.SettingsActivity;
 
 import java.util.Calendar;
 
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private StepTrackingFragment stepTrackingFragment;
     private StatisticsFragment statisticsFragment;
     private InfoFragment infoFragment;
+    private SettingsActivity settingsActivity;
     private NavigationDrawerReplaceInContainerFragment navigationDrawerReplaceInContainerFragment;
 
     private BatteryStatusChangedReceiver batteryStatusChangedReceiver;
@@ -71,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
     private Calendar calendar = Calendar.getInstance();
 
     @Override
-    @RequiresApi(api = Build.VERSION_CODES.M)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         stepTrackingFragment = new StepTrackingFragment(R.id.fragment_container, loginService.getLoggedInUID(), mainViewModel.getUserReportForToday(loginService.getLoggedInUID()));
         statisticsFragment = new StatisticsFragment(mainViewModel.findAllReports(loginService.getLoggedInUID()));
         infoFragment = new InfoFragment(R.id.fragment_container);
+        settingsActivity = new SettingsActivity();
 
         navigationDrawerReplaceInContainerFragment = new NavigationDrawerReplaceInContainerFragment(R.id.fragment_container, new PetFragment(), infoFragment, stepTrackingFragment, statisticsFragment);
 
@@ -138,6 +140,9 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.action_logout:
                 Disposable loginDisposable = loginService.logout().subscribe(() -> startActivity(new Intent(getApplicationContext(), LoginActivity.class)));
+                return true;
+            case R.id.action_settings:
+                startActivityForResult(new Intent(this, SettingsActivity.class), 12312);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
