@@ -4,10 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.Relation;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class User {
@@ -39,7 +35,6 @@ public class User {
     @NonNull
     public Double height;
 
-    @NonNull
     @ColumnInfo(name = "daily_step_goal")
     public int dailyStepGoal;
 

@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.diappetes.R;
+import com.example.diappetes.persistence.model.Setting;
 
 import java.util.List;
 
@@ -55,8 +56,8 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Setting setting = settings.get(position);
 
-        holder.itemDescription.setText(setting.getDescription());
-        holder.enabled.setChecked(setting.isEnabled());
+        holder.itemDescription.setText(setting.description);
+        holder.enabled.setChecked(setting.enabled);
         holder.enabled.setOnCheckedChangeListener((buttonView, isChecked) -> {
             setting.setEnabled(isChecked);
             settingChecked.postValue(setting);

@@ -14,8 +14,6 @@ public interface UserRepository {
 
     Single<User> findByUid(String uid);
 
-    Observable<List<User>> findAll();
-
     LiveData<Report> findUserReportForToday(String uid);
 
     Single<Report> findUserReportForTodaySingle(String uid);

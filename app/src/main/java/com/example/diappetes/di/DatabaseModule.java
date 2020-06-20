@@ -6,6 +6,9 @@ import androidx.room.Room;
 
 import com.example.diappetes.persistence.AppDatabase;
 import com.example.diappetes.persistence.Migrations;
+import com.example.diappetes.persistence.model.SettingDao;
+import com.example.diappetes.persistence.model.SettingRepository;
+import com.example.diappetes.persistence.model.SettingRepositoryDaoImpl;
 import com.example.diappetes.persistence.model.UserDao;
 import com.example.diappetes.persistence.model.UserRepository;
 import com.example.diappetes.persistence.model.UserRepositoryRunnableImpl;
@@ -37,7 +40,19 @@ public class DatabaseModule {
 
     @Provides
     @Singleton
+    public static SettingDao settingDao(AppDatabase appDatabase) {
+        return appDatabase.settingDao();
+    }
+
+    @Provides
+    @Singleton
     public static UserRepository userRepository(UserDao userDao) {
         return new UserRepositoryRunnableImpl(userDao);
+    }
+
+    @Provides
+    @Singleton
+    public static SettingRepository settingRepository(SettingDao settingDao) {
+        return new SettingRepositoryDaoImpl(settingDao);
     }
 }

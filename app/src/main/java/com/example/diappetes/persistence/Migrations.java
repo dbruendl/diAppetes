@@ -9,7 +9,7 @@ public class Migrations {
             new Migration(1, 2) {
                 @Override
                 public void migrate(@NonNull SupportSQLiteDatabase database) {
-
+                    database.execSQL("INSERT INTO Setting VALUES (1, 'Enable step tracking', 'false')");
                 }
             }
     };

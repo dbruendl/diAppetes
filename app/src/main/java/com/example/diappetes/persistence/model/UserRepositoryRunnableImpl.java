@@ -34,11 +34,6 @@ public class UserRepositoryRunnableImpl implements UserRepository {
     }
 
     @Override
-    public Observable<List<User>> findAll() {
-        return userDao.getAll();
-    }
-
-    @Override
     public LiveData<Report> findUserReportForToday(String uid) {
         Date today = new Date();
         long startOfTodayTimestamp = DateUtils.getStartOfDayMillis(today);

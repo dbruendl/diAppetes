@@ -20,10 +20,6 @@ public class InfoViewModel extends ViewModel {
         this.userRepository = userRepository;
     }
 
-    public Observable<List<User>> findAll() {
-        return userRepository.findAll();
-    }
-
     @Override
     protected void onCleared() {
         super.onCleared();
