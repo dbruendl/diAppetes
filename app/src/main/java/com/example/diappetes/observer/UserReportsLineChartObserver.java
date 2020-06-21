@@ -53,9 +53,7 @@ public class UserReportsLineChartObserver implements Observer<UserReports> {
         }
 
         LineDataSet stepsDataSet = new LineDataSet(stepEntries, "Steps taken");
-
         LineData stepsLineData = new LineData(stepsDataSet);
-        stepsLineData.setValueTextColor(Color.WHITE);
 
         lineChart.setData(stepsLineData);
         lineChart.invalidate();

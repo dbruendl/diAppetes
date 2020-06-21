@@ -36,10 +36,7 @@ public class StatisticsFragment extends Fragment {
 
         LineChart chart = binding.weightStepChart;
 
-        chart.getAxis(YAxis.AxisDependency.LEFT).setTextColor(Color.WHITE);
         chart.getAxis(YAxis.AxisDependency.RIGHT).setEnabled(false);
-        chart.getXAxis().setTextColor(Color.WHITE);
-        chart.getLegend().setTextColor(Color.WHITE);
         chart.getDescription().setEnabled(false);
 
         userReports.observe(getActivity(), new UserReportsLineChartObserver(binding.weightStepChart));
