@@ -11,6 +11,9 @@ import com.example.diappetes.databinding.SettingsBinding;
 import com.example.diappetes.login.LoginService;
 import com.example.diappetes.observer.SettingChangedRepositoryUpdaterObserver;
 import com.example.diappetes.observer.StartStepTrackingServiceObserver;
+import com.example.diappetes.persistence.model.Setting;
+
+import java.util.Collections;
 
 import javax.inject.Inject;
 
@@ -43,7 +46,12 @@ public class SettingsActivity extends AppCompatActivity {
         loadSettingsDisposable = settingsViewModel.findAll()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(SettingsAdapter::new)
+                .map(settings -> {
+                    if(settings.size() == 0) {
+                        return new SettingsAdapter(Collections.singletonList(new Setting(1, "Enable step tracking")));
+                    }
+                    return new SettingsAdapter(settings);
+                })
                 .subscribe(settingsAdapter -> {
                     settingsAdapter.getSettingChecked().observe(this, new SettingChangedRepositoryUpdaterObserver(settingsViewModel.getSettingRepository()));
                     settingsAdapter.getSettingChecked().observe(this, new StartStepTrackingServiceObserver(this, loginService.getLoggedInUID()));
