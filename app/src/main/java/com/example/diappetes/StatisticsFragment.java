@@ -1,5 +1,6 @@
 package com.example.diappetes;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,8 @@ import androidx.lifecycle.LiveData;
 import com.example.diappetes.databinding.StatisticsBinding;
 import com.example.diappetes.observer.UserReportsLineChartObserver;
 import com.example.diappetes.persistence.model.UserReports;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.YAxis;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -30,6 +33,11 @@ public class StatisticsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = StatisticsBinding.inflate(inflater, container, false);
+
+        LineChart chart = binding.weightStepChart;
+
+        chart.getAxis(YAxis.AxisDependency.LEFT).setTextColor(Color.WHITE);
+        chart.getXAxis().setTextColor(Color.WHITE);
 
         userReports.observe(getActivity(), new UserReportsLineChartObserver(binding.weightStepChart));
 
